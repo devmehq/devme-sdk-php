@@ -1,7 +1,7 @@
 # DEV.ME SDK for PHP
 [![Build Status](https://github.com/devmehq/devme-sdk-php/actions/workflows/ci.yml/badge.svg)](https://github.com/devmehq/devme-sdk-php/actions/workflows/ci.yml)
-[![Composer Version](https://img.shields.io/packagist/v/devmehq/sdk-php.svg)](https://packagist.org/packages/devmehq/sdk-php)
-[![Downloads](https://img.shields.io/packagist/dm/devmehq/sdk-php.svg)](https://packagist.org/packages/devmehq/sdk-php)
+[![Composer Version](https://img.shields.io/packagist/v/devmehq/sdk-php)](https://packagist.org/packages/devmehq/sdk-php)
+[![Downloads](https://img.shields.io/packagist/dm/devmehq/sdk-php)](https://packagist.org/packages/devmehq/sdk-php)
 
 DEV.ME SDK for PHP
 
@@ -74,7 +74,7 @@ composer test
 ```
 
 ## Need Help?
-If you need help please drop us a message, and we would be glad to help @ [Contact us](http://dev.me/contact-us)
+If you need help please drop us a message, we would be glad to help @ [Contact us](http://dev.me/contact-us)
 
 
 ## Contributing

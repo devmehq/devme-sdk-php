@@ -73,7 +73,7 @@ class ApiException extends Exception
      *
      * @return string[]|null HTTP response header
      */
-    public function getResponseHeaders()
+    public function getResponseHeaders(): ?array
     {
         return $this->responseHeaders;
     }
@@ -91,7 +91,7 @@ class ApiException extends Exception
     /**
      * Gets the deserialized response object (during deserialization)
      *
-     * @return mixed the deserialized response object
+     * @return stdClass|string|null the deserialized response object
      */
     public function getResponseObject()
     {
@@ -105,7 +105,7 @@ class ApiException extends Exception
      *
      * @return void
      */
-    public function setResponseObject($obj)
+    public function setResponseObject($obj): void
     {
         $this->responseObject = $obj;
     }

@@ -87,7 +87,7 @@ class CurrencyApiTest extends TestCase
      *
      * @throws ApiException
      */
-    public function testsV1GetCurrencyDetails()
+    public function testsV1GetCurrencyDetails(): void
     {
         $result = $this->currencyApi->v1GetCurrencyDetails('USD');
         $this->assertEquals('USD', $result->getCode());
@@ -98,7 +98,7 @@ class CurrencyApiTest extends TestCase
      *
      *
      */
-    public function testsV1GetCurrencyExchangeRate()
+    public function testsV1GetCurrencyExchangeRate(): void
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
@@ -109,7 +109,7 @@ class CurrencyApiTest extends TestCase
      *
      *
      */
-    public function testsV1ListCurrencies()
+    public function testsV1ListCurrencies(): void
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

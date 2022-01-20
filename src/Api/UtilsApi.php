@@ -77,8 +77,7 @@ class UtilsApi
         Configuration   $config = null,
         HeaderSelector  $selector = null,
         int             $hostIndex = 0
-    )
-    {
+    ) {
         $this->client = $client ?: new Client();
         $this->config = $config ?: new Configuration();
         $this->headerSelector = $selector ?: new HeaderSelector();

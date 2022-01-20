@@ -64,7 +64,7 @@ class DomainApiTest extends TestCase
      *
      *
      */
-    public function testsV1GetDomainWhois()
+    public function testsV1GetDomainWhois(): void
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

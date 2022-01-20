@@ -20,22 +20,17 @@
 namespace DevmeSdk\Api;
 
 use DevmeSdk\ApiException;
-use DevmeSdk\Configuration;
-use DevmeSdk\HeaderSelector;
 use DevmeSdk\Model\GetIpDetailsOut;
 use DevmeSdk\Model\HttpErrorOut;
 use DevmeSdk\ObjectSerializer;
-use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\MultipartStream;
 use GuzzleHttp\Psr7\Query;
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\RequestOptions;
 use InvalidArgumentException;
-use RuntimeException;
 
 /**
  * IPApi Class Doc Comment
@@ -44,74 +39,8 @@ use RuntimeException;
  * @package  DevmeSdk
  * @author   DEV.ME Team
  */
-class IPApi
+class IPApi extends BaseApi
 {
-    /**
-     * @var ClientInterface
-     */
-    protected $client;
-
-    /**
-     * @var Configuration
-     */
-    protected $config;
-
-    /**
-     * @var HeaderSelector
-     */
-    protected $headerSelector;
-
-    /**
-     * @var int Host index
-     */
-    protected $hostIndex;
-
-    /**
-     * @param ClientInterface $client
-     * @param Configuration $config
-     * @param HeaderSelector $selector
-     * @param int $hostIndex (Optional) host index to select the list of hosts if defined in the OpenAPI spec
-     */
-    public function __construct(
-        ClientInterface $client = null,
-        Configuration   $config = null,
-        HeaderSelector  $selector = null,
-                        $hostIndex = 0
-    )
-    {
-        $this->client = $client ?: new Client();
-        $this->config = $config ?: new Configuration();
-        $this->headerSelector = $selector ?: new HeaderSelector();
-        $this->hostIndex = $hostIndex;
-    }
-
-    /**
-     * Get the host index
-     *
-     * @return int Host index
-     */
-    public function getHostIndex()
-    {
-        return $this->hostIndex;
-    }
-
-    /**
-     * Set the host index
-     *
-     * @param int $hostIndex Host index (required)
-     */
-    public function setHostIndex($hostIndex): void
-    {
-        $this->hostIndex = $hostIndex;
-    }
-
-    /**
-     * @return Configuration
-     */
-    public function getConfig()
-    {
-        return $this->config;
-    }
 
     /**
      * Operation v1GetIpDetails
@@ -131,13 +60,13 @@ class IPApi
     /**
      * Operation v1GetIpDetailsWithHttpInfo
      *
-     * @param string $ip ip - IP Address (optional)
+     * @param string|null $ip ip - IP Address (optional)
      *
      * @return array of \DevmeSdk\Model\GetIpDetailsOut|\DevmeSdk\Model\HttpErrorOut|\DevmeSdk\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
      * @throws InvalidArgumentException
-     * @throws ApiException on non-2xx response
+     * @throws ApiException|GuzzleException on non-2xx response
      */
-    public function v1GetIpDetailsWithHttpInfo($ip = null)
+    public function v1GetIpDetailsWithHttpInfo(string $ip = null): array
     {
         $request = $this->v1GetIpDetailsRequest($ip);
 
@@ -185,7 +114,7 @@ class IPApi
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\GetIpDetailsOut', []),
+                        ObjectSerializer::deserialize($content, GetIpDetailsOut::class, []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
@@ -198,13 +127,13 @@ class IPApi
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\HttpErrorOut', []),
+                        ObjectSerializer::deserialize($content, HttpErrorOut::class, []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\DevmeSdk\Model\GetIpDetailsOut';
+            $returnType = GetIpDetailsOut::class;
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -221,7 +150,7 @@ class IPApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\GetIpDetailsOut',
+                        GetIpDetailsOut::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -230,7 +159,7 @@ class IPApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\HttpErrorOut',
+                        HttpErrorOut::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -243,14 +172,13 @@ class IPApi
     /**
      * Create request for operation 'v1GetIpDetails'
      *
-     * @param string $ip ip - IP Address (optional)
+     * @param string|null $ip ip - IP Address (optional)
      *
      * @return Request
      * @throws InvalidArgumentException
      */
-    public function v1GetIpDetailsRequest($ip = null)
+    public function v1GetIpDetailsRequest(string $ip = null): Request
     {
-
         $resourcePath = '/v1-get-ip-details';
         $formParams = [];
         $queryParams = [];
@@ -260,13 +188,7 @@ class IPApi
 
         // query params
         if ($ip !== null) {
-            if ('form' === 'form' && is_array($ip)) {
-                foreach ($ip as $key => $value) {
-                    $queryParams[$key] = $value;
-                }
-            } else {
-                $queryParams['ip'] = $ip;
-            }
+            $queryParams['ip'] = $ip;
         }
 
 
@@ -336,33 +258,14 @@ class IPApi
     }
 
     /**
-     * Create http client option
-     *
-     * @return array of http client options
-     * @throws RuntimeException on file opening failure
-     */
-    protected function createHttpClientOption()
-    {
-        $options = [];
-        if ($this->config->getDebug()) {
-            $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
-            if (!$options[RequestOptions::DEBUG]) {
-                throw new RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
-            }
-        }
-
-        return $options;
-    }
-
-    /**
      * Operation v1GetIpDetailsAsync
      *
-     * @param string $ip ip - IP Address (optional)
+     * @param string|null $ip ip - IP Address (optional)
      *
      * @return PromiseInterface
      * @throws InvalidArgumentException
      */
-    public function v1GetIpDetailsAsync($ip = null)
+    public function v1GetIpDetailsAsync(string $ip = null): PromiseInterface
     {
         return $this->v1GetIpDetailsAsyncWithHttpInfo($ip)
             ->then(
@@ -375,14 +278,14 @@ class IPApi
     /**
      * Operation v1GetIpDetailsAsyncWithHttpInfo
      *
-     * @param string $ip ip - IP Address (optional)
+     * @param string|null $ip ip - IP Address (optional)
      *
      * @return PromiseInterface
      * @throws InvalidArgumentException
      */
-    public function v1GetIpDetailsAsyncWithHttpInfo($ip = null)
+    public function v1GetIpDetailsAsyncWithHttpInfo(string $ip = null): PromiseInterface
     {
-        $returnType = '\DevmeSdk\Model\GetIpDetailsOut';
+        $returnType = GetIpDetailsOut::class;
         $request = $this->v1GetIpDetailsRequest($ip);
 
         return $this->client

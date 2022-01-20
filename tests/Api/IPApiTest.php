@@ -64,7 +64,7 @@ class IPApiTest extends TestCase
      *
      *
      */
-    public function testsV1GetIpDetails()
+    public function testsV1GetIpDetails(): void
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

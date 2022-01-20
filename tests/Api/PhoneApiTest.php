@@ -64,7 +64,7 @@ class PhoneApiTest extends TestCase
      *
      *
      */
-    public function testsV1GetPhoneDetails()
+    public function testsV1GetPhoneDetails(): void
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

@@ -64,7 +64,7 @@ class CountryApiTest extends TestCase
      *
      *
      */
-    public function testsV1GetCountryDetails()
+    public function testsV1GetCountryDetails(): void
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');
@@ -75,7 +75,7 @@ class CountryApiTest extends TestCase
      *
      *
      */
-    public function testsV1ListCountries()
+    public function testsV1ListCountries(): void
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

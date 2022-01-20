@@ -80,8 +80,7 @@ class CurrencyApi
         Configuration   $config = null,
         HeaderSelector  $selector = null,
         int             $hostIndex = 0
-    )
-    {
+    ) {
         $this->client = $client ?: new Client();
         $this->config = $config ?: new Configuration();
         $this->headerSelector = $selector ?: new HeaderSelector();
@@ -299,7 +298,7 @@ class CurrencyApi
 
         // query params
         if ($amount !== null) {
-            if ('form' === 'form' && is_array($amount)) {
+            if (is_array($amount)) {
                 foreach ($amount as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -309,7 +308,7 @@ class CurrencyApi
         }
         // query params
         if ($from !== null) {
-            if ('form' === 'form' && is_array($from)) {
+            if (is_array($from)) {
                 foreach ($from as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -319,7 +318,7 @@ class CurrencyApi
         }
         // query params
         if ($to !== null) {
-            if ('form' === 'form' && is_array($to)) {
+            if (is_array($to)) {
                 foreach ($to as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -664,7 +663,7 @@ class CurrencyApi
 
         // query params
         if ($code !== null) {
-            if ('form' === 'form' && is_array($code)) {
+            if (is_array($code)) {
                 foreach ($code as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -674,7 +673,7 @@ class CurrencyApi
         }
         // query params
         if ($expand !== null) {
-            if ('form' === 'form' && is_array($expand)) {
+            if (is_array($expand)) {
                 foreach ($expand as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -684,7 +683,7 @@ class CurrencyApi
         }
         // query params
         if ($exclude !== null) {
-            if ('form' === 'form' && is_array($exclude)) {
+            if (is_array($exclude)) {
                 foreach ($exclude as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -694,7 +693,7 @@ class CurrencyApi
         }
         // query params
         if ($language !== null) {
-            if ('form' === 'form' && is_array($language)) {
+            if (is_array($language)) {
                 foreach ($language as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -704,7 +703,7 @@ class CurrencyApi
         }
         // query params
         if ($type !== null) {
-            if ('form' === 'form' && is_array($type)) {
+            if (is_array($type)) {
                 foreach ($type as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -1031,7 +1030,7 @@ class CurrencyApi
 
         // query params
         if ($from !== null) {
-            if ('form' === 'form' && is_array($from)) {
+            if (is_array($from)) {
                 foreach ($from as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -1041,7 +1040,7 @@ class CurrencyApi
         }
         // query params
         if ($to !== null) {
-            if ('form' === 'form' && is_array($to)) {
+            if (is_array($to)) {
                 foreach ($to as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -1368,7 +1367,7 @@ class CurrencyApi
 
         // query params
         if ($code !== null) {
-            if ('form' === 'form' && is_array($code)) {
+            if (is_array($code)) {
                 foreach ($code as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -1378,7 +1377,7 @@ class CurrencyApi
         }
         // query params
         if ($expand !== null) {
-            if ('form' === 'form' && is_array($expand)) {
+            if (is_array($expand)) {
                 foreach ($expand as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -1388,7 +1387,7 @@ class CurrencyApi
         }
         // query params
         if ($exclude !== null) {
-            if ('form' === 'form' && is_array($exclude)) {
+            if (is_array($exclude)) {
                 foreach ($exclude as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -1398,7 +1397,7 @@ class CurrencyApi
         }
         // query params
         if ($language !== null) {
-            if ('form' === 'form' && is_array($language)) {
+            if (is_array($language)) {
                 foreach ($language as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -1408,7 +1407,7 @@ class CurrencyApi
         }
         // query params
         if ($type !== null) {
-            if ('form' === 'form' && is_array($type)) {
+            if (is_array($type)) {
                 foreach ($type as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -1418,7 +1417,7 @@ class CurrencyApi
         }
         // query params
         if ($sort !== null) {
-            if ('form' === 'form' && is_array($sort)) {
+            if (is_array($sort)) {
                 foreach ($sort as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -1428,7 +1427,7 @@ class CurrencyApi
         }
         // query params
         if ($page !== null) {
-            if ('form' === 'form' && is_array($page)) {
+            if (is_array($page)) {
                 foreach ($page as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -1438,7 +1437,7 @@ class CurrencyApi
         }
         // query params
         if ($page_size !== null) {
-            if ('form' === 'form' && is_array($page_size)) {
+            if (is_array($page_size)) {
                 foreach ($page_size as $key => $value) {
                     $queryParams[$key] = $value;
                 }

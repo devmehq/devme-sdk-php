@@ -46,75 +46,8 @@ use RuntimeException;
  * @package  DevmeSdk
  * @author   DEV.ME Team
  */
-class CountryApi
+class CountryApi extends BaseApi
 {
-    /**
-     * @var ClientInterface
-     */
-    protected $client;
-
-    /**
-     * @var Configuration
-     */
-    protected $config;
-
-    /**
-     * @var HeaderSelector
-     */
-    protected $headerSelector;
-
-    /**
-     * @var int Host index
-     */
-    protected $hostIndex;
-
-    /**
-     * @param ClientInterface|null $client
-     * @param Configuration|null $config
-     * @param HeaderSelector|null $selector
-     * @param int $hostIndex (Optional) host index to select the list of hosts if defined in the OpenAPI spec
-     */
-    public function __construct(
-        ClientInterface $client = null,
-        Configuration   $config = null,
-        HeaderSelector  $selector = null,
-        int             $hostIndex = 0
-    )
-    {
-        $this->client = $client ?: new Client();
-        $this->config = $config ?: new Configuration();
-        $this->headerSelector = $selector ?: new HeaderSelector();
-        $this->hostIndex = $hostIndex;
-    }
-
-    /**
-     * Get the host index
-     *
-     * @return int Host index
-     */
-    public function getHostIndex(): int
-    {
-        return $this->hostIndex;
-    }
-
-    /**
-     * Set the host index
-     *
-     * @param int $hostIndex Host index (required)
-     */
-    public function setHostIndex(int $hostIndex): void
-    {
-        $this->hostIndex = $hostIndex;
-    }
-
-    /**
-     * @return Configuration
-     */
-    public function getConfig(): Configuration
-    {
-        return $this->config;
-    }
-
     /**
      * Operation v1GetCountryDetails
      *
@@ -125,7 +58,7 @@ class CountryApi
      *
      * @return GetCountryDetailsOut|HttpErrorOut
      * @throws InvalidArgumentException
-     * @throws ApiException on non-2xx response
+     * @throws ApiException|GuzzleException on non-2xx response
      */
     public function v1GetCountryDetails(string $code, array $expand = null, array $exclude = null, string $language = null)
     {
@@ -277,7 +210,7 @@ class CountryApi
 
         // query params
         if ($code !== null) {
-            if ('form' === 'form' && is_array($code)) {
+            if (is_array($code)) {
                 foreach ($code as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -287,7 +220,7 @@ class CountryApi
         }
         // query params
         if ($expand !== null) {
-            if ('form' === 'form' && is_array($expand)) {
+            if (is_array($expand)) {
                 foreach ($expand as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -297,7 +230,7 @@ class CountryApi
         }
         // query params
         if ($exclude !== null) {
-            if ('form' === 'form' && is_array($exclude)) {
+            if (is_array($exclude)) {
                 foreach ($exclude as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -307,7 +240,7 @@ class CountryApi
         }
         // query params
         if ($language !== null) {
-            if ('form' === 'form' && is_array($language)) {
+            if (is_array($language)) {
                 foreach ($language as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -383,25 +316,6 @@ class CountryApi
     }
 
     /**
-     * Create http client option
-     *
-     * @return array of http client options
-     * @throws RuntimeException on file opening failure
-     */
-    protected function createHttpClientOption(): array
-    {
-        $options = [];
-        if ($this->config->getDebug()) {
-            $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
-            if (!$options[RequestOptions::DEBUG]) {
-                throw new RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
-            }
-        }
-
-        return $options;
-    }
-
-    /**
      * Operation v1GetCountryDetailsAsync
      *
      * @param string $code code - country code ISO 4217 (required)
@@ -435,7 +349,7 @@ class CountryApi
      */
     public function v1GetCountryDetailsAsyncWithHttpInfo(string $code, array $expand = null, array $exclude = null, string $language = null): PromiseInterface
     {
-        $returnType = '\DevmeSdk\Model\GetCountryDetailsOut';
+        $returnType = GetCountryDetailsOut::class;
         $request = $this->v1GetCountryDetailsRequest($code, $expand, $exclude, $language);
 
         return $this->client
@@ -484,7 +398,7 @@ class CountryApi
      *
      * @return ListCountriesOut|HttpErrorOut
      * @throws ApiException on non-2xx response
-     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException|GuzzleException
      */
     public function v1ListCountries(array $code = null, array $expand = null, array $exclude = null, string $language = null, array $sort = null, string $page = null, string $page_size = null)
     {
@@ -591,7 +505,7 @@ class CountryApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\ListCountriesOut',
+                        ListCountriesOut::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -600,7 +514,7 @@ class CountryApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\HttpErrorOut',
+                        HttpErrorOut::class,
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -613,18 +527,18 @@ class CountryApi
     /**
      * Create request for operation 'v1ListCountries'
      *
-     * @param string[] $code code - country code ISO 4217 (optional)
-     * @param string[] $expand expand - expand properties (optional)
-     * @param string[] $exclude exclude - exclude properties (optional)
-     * @param string $language language - localisation language (optional)
-     * @param string[] $sort sort - sort properties (optional)
-     * @param string $page page - page number (optional)
-     * @param string $page_size pageSize - page size (optional)
+     * @param string[]|null $code code - country code ISO 4217 (optional)
+     * @param string[]|null $expand expand - expand properties (optional)
+     * @param string[]|null $exclude exclude - exclude properties (optional)
+     * @param string|null $language language - localisation language (optional)
+     * @param string[]|null $sort sort - sort properties (optional)
+     * @param string|null $page page - page number (optional)
+     * @param string|null $page_size pageSize - page size (optional)
      *
      * @return Request
      * @throws InvalidArgumentException
      */
-    public function v1ListCountriesRequest($code = null, $expand = null, $exclude = null, $language = null, $sort = null, $page = null, $page_size = null)
+    public function v1ListCountriesRequest(array $code = null, array $expand = null, array $exclude = null, string $language = null, array $sort = null, string $page = null, string $page_size = null): Request
     {
 
         $resourcePath = '/v1-list-countries';
@@ -636,7 +550,7 @@ class CountryApi
 
         // query params
         if ($code !== null) {
-            if ('form' === 'form' && is_array($code)) {
+            if (is_array($code)) {
                 foreach ($code as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -646,7 +560,7 @@ class CountryApi
         }
         // query params
         if ($expand !== null) {
-            if ('form' === 'form' && is_array($expand)) {
+            if (is_array($expand)) {
                 foreach ($expand as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -656,7 +570,7 @@ class CountryApi
         }
         // query params
         if ($exclude !== null) {
-            if ('form' === 'form' && is_array($exclude)) {
+            if (is_array($exclude)) {
                 foreach ($exclude as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -666,7 +580,7 @@ class CountryApi
         }
         // query params
         if ($language !== null) {
-            if ('form' === 'form' && is_array($language)) {
+            if (is_array($language)) {
                 foreach ($language as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -676,7 +590,7 @@ class CountryApi
         }
         // query params
         if ($sort !== null) {
-            if ('form' === 'form' && is_array($sort)) {
+            if (is_array($sort)) {
                 foreach ($sort as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -686,7 +600,7 @@ class CountryApi
         }
         // query params
         if ($page !== null) {
-            if ('form' === 'form' && is_array($page)) {
+            if (is_array($page)) {
                 foreach ($page as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -696,7 +610,7 @@ class CountryApi
         }
         // query params
         if ($page_size !== null) {
-            if ('form' === 'form' && is_array($page_size)) {
+            if (is_array($page_size)) {
                 foreach ($page_size as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -774,7 +688,7 @@ class CountryApi
     /**
      * Operation v1ListCountriesAsync
      *
-     * @param string[] $code code - country code ISO 4217 (optional)
+     * @param string[]|null $code code - country code ISO 4217 (optional)
      * @param string[] $expand expand - expand properties (optional)
      * @param string[] $exclude exclude - exclude properties (optional)
      * @param string $language language - localisation language (optional)
@@ -785,7 +699,7 @@ class CountryApi
      * @return PromiseInterface
      * @throws InvalidArgumentException
      */
-    public function v1ListCountriesAsync($code = null, $expand = null, $exclude = null, $language = null, $sort = null, $page = null, $page_size = null)
+    public function v1ListCountriesAsync(array $code = null, $expand = null, $exclude = null, $language = null, $sort = null, $page = null, $page_size = null): PromiseInterface
     {
         return $this->v1ListCountriesAsyncWithHttpInfo($code, $expand, $exclude, $language, $sort, $page, $page_size)
             ->then(
@@ -798,20 +712,20 @@ class CountryApi
     /**
      * Operation v1ListCountriesAsyncWithHttpInfo
      *
-     * @param string[] $code code - country code ISO 4217 (optional)
-     * @param string[] $expand expand - expand properties (optional)
-     * @param string[] $exclude exclude - exclude properties (optional)
-     * @param string $language language - localisation language (optional)
-     * @param string[] $sort sort - sort properties (optional)
-     * @param string $page page - page number (optional)
-     * @param string $page_size pageSize - page size (optional)
+     * @param string[]|null $code code - country code ISO 4217 (optional)
+     * @param string[]|null $expand expand - expand properties (optional)
+     * @param string[]|null $exclude exclude - exclude properties (optional)
+     * @param string|null $language language - localisation language (optional)
+     * @param string[]|null $sort sort - sort properties (optional)
+     * @param string|null $page page - page number (optional)
+     * @param string|null $page_size pageSize - page size (optional)
      *
      * @return PromiseInterface
      * @throws InvalidArgumentException
      */
-    public function v1ListCountriesAsyncWithHttpInfo($code = null, $expand = null, $exclude = null, $language = null, $sort = null, $page = null, $page_size = null)
+    public function v1ListCountriesAsyncWithHttpInfo(array $code = null, array $expand = null, array $exclude = null, string $language = null, array $sort = null, string $page = null, string $page_size = null): PromiseInterface
     {
-        $returnType = '\DevmeSdk\Model\ListCountriesOut';
+        $returnType = ListCountriesOut::class;
         $request = $this->v1ListCountriesRequest($code, $expand, $exclude, $language, $sort, $page, $page_size);
 
         return $this->client

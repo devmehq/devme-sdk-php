@@ -64,7 +64,7 @@ class EmailApiTest extends TestCase
      *
      *
      */
-    public function testsV1GetEmailDetails()
+    public function testsV1GetEmailDetails(): void
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

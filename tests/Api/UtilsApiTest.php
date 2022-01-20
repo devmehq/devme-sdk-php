@@ -64,7 +64,7 @@ class UtilsApiTest extends TestCase
      *
      *
      */
-    public function testsV1WhoAmI()
+    public function testsV1WhoAmI(): void
     {
         // TODO: implement
         $this->markTestIncomplete('Not implemented');

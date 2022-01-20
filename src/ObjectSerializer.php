@@ -44,7 +44,7 @@ class ObjectSerializer
      *
      * @param string $format the new date format to use
      */
-    public static function setDateTimeFormat($format)
+    public static function setDateTimeFormat(string $format): void
     {
         self::$dateTimeFormat = $format;
     }
@@ -53,12 +53,12 @@ class ObjectSerializer
      * Serialize data
      *
      * @param mixed $data the data to serialize
-     * @param string $type the OpenAPIToolsType of the data
-     * @param string $format the format of the OpenAPITools type of the data
+     * @param string|null $type the OpenAPIToolsType of the data
+     * @param string|null $format the format of the OpenAPITools type of the data
      *
      * @return scalar|object|array|null serialized form of $data
      */
-    public static function sanitizeForSerialization($data, $type = null, $format = null)
+    public static function sanitizeForSerialization($data, string $type = null, string $format = null)
     {
         if (is_scalar($data) || null === $data) {
             return $data;
@@ -82,7 +82,7 @@ class ObjectSerializer
                 foreach ($data::openAPITypes() as $property => $openAPIType) {
                     $getter = $data::getters()[$property];
                     $value = $data->$getter();
-                    if ($value !== null && !in_array($openAPIType, ['\DateTime', '\SplFileObject', 'array', 'bool', 'boolean', 'byte', 'double', 'float', 'int', 'integer', 'mixed', 'number', 'object', 'string', 'void'], true)) {
+                    if ($value !== null && !in_array($openAPIType, [DateTime::class, SplFileObject::class, 'array', 'bool', 'boolean', 'byte', 'double', 'float', 'int', 'integer', 'mixed', 'number', 'object', 'string', 'void'], true)) {
                         $callable = [$openAPIType, 'getAllowableEnumValues'];
                         if (is_callable($callable)) {
                             /** array $callable */
@@ -103,9 +103,9 @@ class ObjectSerializer
                 }
             }
             return (object)$values;
-        } else {
-            return (string)$data;
         }
+
+        return (string)$data;
     }
 
     /**
@@ -116,7 +116,7 @@ class ObjectSerializer
      *
      * @return string the serialized object
      */
-    public static function toPathValue($value)
+    public static function toPathValue(string $value): string
     {
         return rawurlencode(self::toString($value));
     }
@@ -135,11 +135,13 @@ class ObjectSerializer
     {
         if ($value instanceof DateTime) { // datetime in ISO8601 format
             return $value->format(self::$dateTimeFormat);
-        } elseif (is_bool($value)) {
-            return $value ? 'true' : 'false';
-        } else {
-            return $value;
         }
+
+        if (is_bool($value)) {
+            return $value ? 'true' : 'false';
+        }
+
+        return $value;
     }
 
     /**
@@ -156,9 +158,9 @@ class ObjectSerializer
     {
         if (is_array($object)) {
             return implode(',', $object);
-        } else {
-            return self::toString($object);
         }
+
+        return self::toString($object);
     }
 
     /**
@@ -170,7 +172,7 @@ class ObjectSerializer
      *
      * @return string the header string
      */
-    public static function toHeaderValue($value)
+    public static function toHeaderValue(string $value)
     {
         $callable = [$value, 'toHeaderValue'];
         if (is_callable($callable)) {
@@ -193,9 +195,9 @@ class ObjectSerializer
     {
         if ($value instanceof SplFileObject) {
             return $value->getRealPath();
-        } else {
-            return self::toString($value);
         }
+
+        return self::toString($value);
     }
 
     /**
@@ -208,7 +210,7 @@ class ObjectSerializer
      *
      * @return string
      */
-    public static function serializeCollection(array $collection, $style, $allowCollectionFormatMulti = false)
+    public static function serializeCollection(array $collection, string $style, bool $allowCollectionFormatMulti = false): string
     {
         if ($allowCollectionFormatMulti && ('multi' === $style)) {
             // http_build_query() almost does the job for us. We just
@@ -251,7 +253,7 @@ class ObjectSerializer
         }
 
         if (strcasecmp(substr($class, -2), '[]') === 0) {
-            $data = is_string($data) ? json_decode($data) : $data;
+            $data = is_string($data) ? json_decode($data, false) : $data;
 
             if (!is_array($data)) {
                 throw new InvalidArgumentException("Invalid array '$class'");
@@ -266,8 +268,8 @@ class ObjectSerializer
         }
 
         if (preg_match('/^(array<|map\[)/', $class)) { // for associative array e.g. array<string,int>
-            $data = is_string($data) ? json_decode($data) : $data;
-            settype($data, 'array');
+            $data = is_string($data) ? json_decode($data, false) : $data;
+            $data = (array)$data;
             $inner = substr($class, 4, -1);
             $deserialized = [];
             if (strrpos($inner, ",") !== false) {
@@ -281,15 +283,16 @@ class ObjectSerializer
         }
 
         if ($class === 'object') {
-            settype($data, 'array');
-            return $data;
-        } elseif ($class === 'mixed') {
+            return (array)$data;
+        }
+
+        if ($class === 'mixed') {
             settype($data, gettype($data));
             return $data;
         }
 
         if ($class === '\DateTime') {
-            // Some API's return an invalid, empty string as a
+            // Some APIs return an invalid, empty string as a
             // date-time property. DateTime::__construct() will return
             // the current time for empty input which is probably not
             // what is meant. The invalid empty string is probably to
@@ -322,7 +325,7 @@ class ObjectSerializer
                 $filename = tempnam(Configuration::getDefaultConfiguration()->getTempFolderPath(), '');
             }
 
-            $file = fopen($filename, 'w');
+            $file = fopen($filename, 'wb');
             while ($chunk = $data->read(200)) {
                 fwrite($file, $chunk);
             }
@@ -332,7 +335,7 @@ class ObjectSerializer
         }
 
         /** @psalm-suppress ParadoxicalCondition */
-        if (in_array($class, ['\DateTime', '\SplFileObject', 'array', 'bool', 'boolean', 'byte', 'double', 'float', 'int', 'integer', 'mixed', 'number', 'object', 'string', 'void'], true)) {
+        if (in_array($class, [DateTime::class, SplFileObject::class, 'array', 'bool', 'boolean', 'byte', 'double', 'float', 'int', 'integer', 'mixed', 'number', 'object', 'string', 'void'], true)) {
             settype($data, $class);
             return $data;
         }
@@ -344,35 +347,33 @@ class ObjectSerializer
                 throw new InvalidArgumentException("Invalid value for enum '$class', must be one of: '$imploded'");
             }
             return $data;
-        } else {
-            $data = is_string($data) ? json_decode($data) : $data;
-            // If a discriminator is defined and points to a valid subclass, use it.
-            $discriminator = $class::DISCRIMINATOR;
-            if (!empty($discriminator) && isset($data->{$discriminator}) && is_string($data->{$discriminator})) {
-                $subclass = '\DevmeSdk\Model\\' . $data->{$discriminator};
-                if (is_subclass_of($subclass, $class)) {
-                    $class = $subclass;
-                }
-            }
-
-            /** @var ModelInterface $instance */
-            $instance = new $class();
-            foreach ($instance::openAPITypes() as $property => $type) {
-                $propertySetter = $instance::setters()[$property];
-
-                if (!isset($propertySetter) || !isset($data->{$instance::attributeMap()[$property]})) {
-                    continue;
-                }
-
-                if (isset($data->{$instance::attributeMap()[$property]})) {
-                    $propertyValue = $data->{$instance::attributeMap()[$property]};
-                    var_dump($propertyValue);
-                    var_dump($type);
-                    $instance->$propertySetter(self::deserialize($propertyValue, $type, null));
-                }
-            }
-            return $instance;
         }
+
+        $data = is_string($data) ? json_decode($data) : $data;
+        // If a discriminator is defined and points to a valid subclass, use it.
+        $discriminator = $class::DISCRIMINATOR;
+        if (!empty($discriminator) && isset($data->{$discriminator}) && is_string($data->{$discriminator})) {
+            $subclass = '\DevmeSdk\Model\\' . $data->{$discriminator};
+            if (is_subclass_of($subclass, $class)) {
+                $class = $subclass;
+            }
+        }
+
+        /** @var ModelInterface $instance */
+        $instance = new $class();
+        foreach ($instance::openAPITypes() as $property => $type) {
+            $propertySetter = $instance::setters()[$property];
+
+            if (!isset($propertySetter, $data->{$instance::attributeMap()[$property]})) {
+                continue;
+            }
+
+            if (isset($data->{$instance::attributeMap()[$property]})) {
+                $propertyValue = $data->{$instance::attributeMap()[$property]};
+                $instance->$propertySetter(self::deserialize($propertyValue, $type, null));
+            }
+        }
+        return $instance;
     }
 
     /**
@@ -382,12 +383,8 @@ class ObjectSerializer
      *
      * @return string the shorten timestamp
      */
-    public static function sanitizeTimestamp($timestamp)
+    public static function sanitizeTimestamp(string $timestamp): string
     {
-        if (!is_string($timestamp)) {
-            return $timestamp;
-        }
-
         return preg_replace('/(:\d{2}.\d{6})\d*/', '$1', $timestamp);
     }
 
@@ -399,12 +396,12 @@ class ObjectSerializer
      *
      * @return string the sanitized filename
      */
-    public static function sanitizeFilename($filename)
+    public static function sanitizeFilename(string $filename): string
     {
         if (preg_match("/.*[\/\\\\](.*)$/", $filename, $match)) {
             return $match[1];
-        } else {
-            return $filename;
         }
+
+        return $filename;
     }
 }

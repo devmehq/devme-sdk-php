@@ -28,6 +28,7 @@ use DevmeSdk\ObjectSerializer;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\MultipartStream;
@@ -44,87 +45,21 @@ use RuntimeException;
  * @package  DevmeSdk
  * @author   DEV.ME Team
  */
-class EmailApi
+class EmailApi extends BaseApi
 {
-    /**
-     * @var ClientInterface
-     */
-    protected $client;
-
-    /**
-     * @var Configuration
-     */
-    protected $config;
-
-    /**
-     * @var HeaderSelector
-     */
-    protected $headerSelector;
-
-    /**
-     * @var int Host index
-     */
-    protected $hostIndex;
-
-    /**
-     * @param ClientInterface $client
-     * @param Configuration $config
-     * @param HeaderSelector $selector
-     * @param int $hostIndex (Optional) host index to select the list of hosts if defined in the OpenAPI spec
-     */
-    public function __construct(
-        ClientInterface $client = null,
-        Configuration   $config = null,
-        HeaderSelector  $selector = null,
-                        $hostIndex = 0
-    )
-    {
-        $this->client = $client ?: new Client();
-        $this->config = $config ?: new Configuration();
-        $this->headerSelector = $selector ?: new HeaderSelector();
-        $this->hostIndex = $hostIndex;
-    }
-
-    /**
-     * Get the host index
-     *
-     * @return int Host index
-     */
-    public function getHostIndex()
-    {
-        return $this->hostIndex;
-    }
-
-    /**
-     * Set the host index
-     *
-     * @param int $hostIndex Host index (required)
-     */
-    public function setHostIndex($hostIndex): void
-    {
-        $this->hostIndex = $hostIndex;
-    }
-
-    /**
-     * @return Configuration
-     */
-    public function getConfig()
-    {
-        return $this->config;
-    }
 
     /**
      * Operation v1GetEmailDetails
      *
      * @param string $email email - email address (required)
-     * @param bool $verify_mx verifyMx - verify domain dns for MX record (optional)
-     * @param bool $verify_smtp verifySmtp - verify mailbox with SMTP Connect and Reply (optional)
+     * @param bool|null $verify_mx verifyMx - verify domain dns for MX record (optional)
+     * @param bool|null $verify_smtp verifySmtp - verify mailbox with SMTP Connect and Reply (optional)
      *
      * @return GetEmailDetailsOut|HttpErrorOut|HttpErrorOut
      * @throws InvalidArgumentException
      * @throws ApiException on non-2xx response
      */
-    public function v1GetEmailDetails($email, $verify_mx = null, $verify_smtp = null)
+    public function v1GetEmailDetails(string $email, bool $verify_mx = null, bool $verify_smtp = null)
     {
         list($response) = $this->v1GetEmailDetailsWithHttpInfo($email, $verify_mx, $verify_smtp);
         return $response;
@@ -134,14 +69,14 @@ class EmailApi
      * Operation v1GetEmailDetailsWithHttpInfo
      *
      * @param string $email email - email address (required)
-     * @param bool $verify_mx verifyMx - verify domain dns for MX record (optional)
-     * @param bool $verify_smtp verifySmtp - verify mailbox with SMTP Connect and Reply (optional)
+     * @param bool|null $verify_mx verifyMx - verify domain dns for MX record (optional)
+     * @param bool|null $verify_smtp verifySmtp - verify mailbox with SMTP Connect and Reply (optional)
      *
      * @return array of \DevmeSdk\Model\GetEmailDetailsOut|\DevmeSdk\Model\HttpErrorOut|\DevmeSdk\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
      * @throws InvalidArgumentException
-     * @throws ApiException on non-2xx response
+     * @throws ApiException|GuzzleException on non-2xx response
      */
-    public function v1GetEmailDetailsWithHttpInfo($email, $verify_mx = null, $verify_smtp = null)
+    public function v1GetEmailDetailsWithHttpInfo(string $email, bool $verify_mx = null, bool $verify_smtp = null): array
     {
         $request = $this->v1GetEmailDetailsRequest($email, $verify_mx, $verify_smtp);
 
@@ -290,7 +225,7 @@ class EmailApi
 
         // query params
         if ($email !== null) {
-            if ('form' === 'form' && is_array($email)) {
+            if (is_array($email)) {
                 foreach ($email as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -300,7 +235,7 @@ class EmailApi
         }
         // query params
         if ($verify_mx !== null) {
-            if ('form' === 'form' && is_array($verify_mx)) {
+            if (is_array($verify_mx)) {
                 foreach ($verify_mx as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -310,7 +245,7 @@ class EmailApi
         }
         // query params
         if ($verify_smtp !== null) {
-            if ('form' === 'form' && is_array($verify_smtp)) {
+            if (is_array($verify_smtp)) {
                 foreach ($verify_smtp as $key => $value) {
                     $queryParams[$key] = $value;
                 }
@@ -385,36 +320,18 @@ class EmailApi
         );
     }
 
-    /**
-     * Create http client option
-     *
-     * @return array of http client options
-     * @throws RuntimeException on file opening failure
-     */
-    protected function createHttpClientOption()
-    {
-        $options = [];
-        if ($this->config->getDebug()) {
-            $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
-            if (!$options[RequestOptions::DEBUG]) {
-                throw new RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
-            }
-        }
-
-        return $options;
-    }
 
     /**
      * Operation v1GetEmailDetailsAsync
      *
      * @param string $email email - email address (required)
-     * @param bool $verify_mx verifyMx - verify domain dns for MX record (optional)
-     * @param bool $verify_smtp verifySmtp - verify mailbox with SMTP Connect and Reply (optional)
+     * @param bool|null $verify_mx verifyMx - verify domain dns for MX record (optional)
+     * @param bool|null $verify_smtp verifySmtp - verify mailbox with SMTP Connect and Reply (optional)
      *
      * @return PromiseInterface
      * @throws InvalidArgumentException
      */
-    public function v1GetEmailDetailsAsync($email, $verify_mx = null, $verify_smtp = null)
+    public function v1GetEmailDetailsAsync(string $email, bool $verify_mx = null, bool $verify_smtp = null): PromiseInterface
     {
         return $this->v1GetEmailDetailsAsyncWithHttpInfo($email, $verify_mx, $verify_smtp)
             ->then(
@@ -428,15 +345,15 @@ class EmailApi
      * Operation v1GetEmailDetailsAsyncWithHttpInfo
      *
      * @param string $email email - email address (required)
-     * @param bool $verify_mx verifyMx - verify domain dns for MX record (optional)
-     * @param bool $verify_smtp verifySmtp - verify mailbox with SMTP Connect and Reply (optional)
+     * @param bool|null $verify_mx verifyMx - verify domain dns for MX record (optional)
+     * @param bool|null $verify_smtp verifySmtp - verify mailbox with SMTP Connect and Reply (optional)
      *
      * @return PromiseInterface
      * @throws InvalidArgumentException
      */
-    public function v1GetEmailDetailsAsyncWithHttpInfo($email, $verify_mx = null, $verify_smtp = null)
+    public function v1GetEmailDetailsAsyncWithHttpInfo(string $email, bool $verify_mx = null, bool $verify_smtp = null): PromiseInterface
     {
-        $returnType = '\DevmeSdk\Model\GetEmailDetailsOut';
+        $returnType = GetEmailDetailsOut::class;
         $request = $this->v1GetEmailDetailsRequest($email, $verify_mx, $verify_smtp);
 
         return $this->client

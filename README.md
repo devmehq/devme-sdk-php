@@ -22,8 +22,8 @@ composer require devmehq/sdk-php
 
 ### Currency API Conversion
 ```php
-$config = \DevmeSdk\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'demo-key');
-$currencyApi = new \DevmeSdk\Api\CurrencyApi(
+$config = \Devme\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'demo-key');
+$currencyApi = new \Devme\Api\CurrencyApi(
     new \GuzzleHttp\Client(),
     $config
 );
@@ -42,8 +42,8 @@ $currencyApi->v1ConvertCurrency('USD', 'EUR', 10);
 
 ### IP API Geolocation, IP2Location, IP Data
 ```php
-$config = \DevmeSdk\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'demo-key');
-$ipApi = new \DevmeSdk\Api\IPApi(
+$config = \Devme\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'demo-key');
+$ipApi = new \Devme\Api\IPApi(
     new \GuzzleHttp\Client(),
     $config
 );

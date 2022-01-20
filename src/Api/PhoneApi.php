@@ -3,7 +3,7 @@
  * PhoneApi
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 
@@ -17,14 +17,14 @@
  */
 
 
-namespace DevmeSdk\Api;
+namespace Devme\Api;
 
-use DevmeSdk\ApiException;
-use DevmeSdk\Configuration;
-use DevmeSdk\HeaderSelector;
-use DevmeSdk\Model\GetPhoneDetailsOut;
-use DevmeSdk\Model\HttpErrorOut;
-use DevmeSdk\ObjectSerializer;
+use Devme\ApiException;
+use Devme\Configuration;
+use Devme\HeaderSelector;
+use Devme\Model\GetPhoneDetailsOut;
+use Devme\Model\HttpErrorOut;
+use Devme\ObjectSerializer;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ConnectException;
@@ -42,7 +42,7 @@ use RuntimeException;
  * PhoneApi Class Doc Comment
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 class PhoneApi extends BaseApi
@@ -67,7 +67,7 @@ class PhoneApi extends BaseApi
      *
      * @param string $phone phone - phone number to validate (required)
      *
-     * @return array of \DevmeSdk\Model\GetPhoneDetailsOut|\DevmeSdk\Model\HttpErrorOut|\DevmeSdk\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Devme\Model\GetPhoneDetailsOut|\Devme\Model\HttpErrorOut|\Devme\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
      * @throws InvalidArgumentException
      * @throws ApiException|GuzzleException on non-2xx response
      */
@@ -112,33 +112,33 @@ class PhoneApi extends BaseApi
 
             switch ($statusCode) {
                 case 200:
-                    if ('\DevmeSdk\Model\GetPhoneDetailsOut' === '\SplFileObject') {
+                    if ('\Devme\Model\GetPhoneDetailsOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\GetPhoneDetailsOut', []),
+                        ObjectSerializer::deserialize($content, '\Devme\Model\GetPhoneDetailsOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 case 401:
                 case 400:
-                    if ('\DevmeSdk\Model\HttpErrorOut' === '\SplFileObject') {
+                    if ('\Devme\Model\HttpErrorOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\HttpErrorOut', []),
+                        ObjectSerializer::deserialize($content, '\Devme\Model\HttpErrorOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\DevmeSdk\Model\GetPhoneDetailsOut';
+            $returnType = '\Devme\Model\GetPhoneDetailsOut';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -155,7 +155,7 @@ class PhoneApi extends BaseApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\GetPhoneDetailsOut',
+                        '\Devme\Model\GetPhoneDetailsOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -164,7 +164,7 @@ class PhoneApi extends BaseApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\HttpErrorOut',
+                        '\Devme\Model\HttpErrorOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);

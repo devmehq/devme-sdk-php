@@ -4,7 +4,7 @@
  *
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 
@@ -18,10 +18,10 @@
  */
 
 
-namespace DevmeSdk;
+namespace Devme;
 
 use DateTime;
-use DevmeSdk\Model\ModelInterface;
+use Devme\Model\ModelInterface;
 use Exception;
 use InvalidArgumentException;
 use Psr\Http\Message\StreamInterface;
@@ -31,7 +31,7 @@ use SplFileObject;
  * ObjectSerializer Class Doc Comment
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 class ObjectSerializer
@@ -353,7 +353,7 @@ class ObjectSerializer
         // If a discriminator is defined and points to a valid subclass, use it.
         $discriminator = $class::DISCRIMINATOR;
         if (!empty($discriminator) && isset($data->{$discriminator}) && is_string($data->{$discriminator})) {
-            $subclass = '\DevmeSdk\Model\\' . $data->{$discriminator};
+            $subclass = '\Devme\Model\\' . $data->{$discriminator};
             if (is_subclass_of($subclass, $class)) {
                 $class = $subclass;
             }

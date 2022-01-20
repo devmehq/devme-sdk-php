@@ -4,7 +4,7 @@
  *
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 
@@ -18,17 +18,17 @@
  */
 
 
-namespace DevmeSdk\Model;
+namespace Devme\Model;
 
 use ArrayAccess;
-use DevmeSdk\ObjectSerializer;
+use Devme\ObjectSerializer;
 use JsonSerializable;
 
 /**
  * HttpErrorOut Class Doc Comment
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  * @implements ArrayAccess
  * @template TKey int|null
@@ -54,7 +54,7 @@ class HttpErrorOut implements ModelInterface, ArrayAccess, JsonSerializable
         'status' => 'float',
         'name' => 'string',
         'message' => 'string',
-        'errors' => '\DevmeSdk\Model\Error[]'
+        'errors' => '\Devme\Model\Error[]'
     ];
 
     /**

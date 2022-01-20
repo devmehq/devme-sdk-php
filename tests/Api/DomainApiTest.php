@@ -3,7 +3,7 @@
  * DomainApiTest
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 
@@ -25,7 +25,7 @@ use PHPUnit\Framework\TestCase;
  * DomainApiTest Class Doc Comment
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 class DomainApiTest extends TestCase

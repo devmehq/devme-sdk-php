@@ -1,8 +1,8 @@
 <?php
-namespace DevmeSdk\Api;
+namespace Devme\Api;
 
-use DevmeSdk\Configuration;
-use DevmeSdk\HeaderSelector;
+use Devme\Configuration;
+use Devme\HeaderSelector;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\RequestOptions;

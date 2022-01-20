@@ -4,7 +4,7 @@
  *
  *
  * @category Class
- * @package  DevmeSdk\Model
+ * @package  Devme\Model
  * @author   DEV.ME Team
  */
 
@@ -18,12 +18,12 @@
  */
 
 
-namespace DevmeSdk\Model;
+namespace Devme\Model;
 
 /**
  * Interface abstracting model access.
  *
- * @package DevmeSdk\Model
+ * @package Devme\Model
  * @author  DEV.ME Team
  */
 interface ModelInterface

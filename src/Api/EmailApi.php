@@ -3,7 +3,7 @@
  * EmailApi
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 
@@ -17,14 +17,14 @@
  */
 
 
-namespace DevmeSdk\Api;
+namespace Devme\Api;
 
-use DevmeSdk\ApiException;
-use DevmeSdk\Configuration;
-use DevmeSdk\HeaderSelector;
-use DevmeSdk\Model\GetEmailDetailsOut;
-use DevmeSdk\Model\HttpErrorOut;
-use DevmeSdk\ObjectSerializer;
+use Devme\ApiException;
+use Devme\Configuration;
+use Devme\HeaderSelector;
+use Devme\Model\GetEmailDetailsOut;
+use Devme\Model\HttpErrorOut;
+use Devme\ObjectSerializer;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ConnectException;
@@ -42,7 +42,7 @@ use RuntimeException;
  * EmailApi Class Doc Comment
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 class EmailApi extends BaseApi
@@ -72,7 +72,7 @@ class EmailApi extends BaseApi
      * @param bool|null $verify_mx verifyMx - verify domain dns for MX record (optional)
      * @param bool|null $verify_smtp verifySmtp - verify mailbox with SMTP Connect and Reply (optional)
      *
-     * @return array of \DevmeSdk\Model\GetEmailDetailsOut|\DevmeSdk\Model\HttpErrorOut|\DevmeSdk\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Devme\Model\GetEmailDetailsOut|\Devme\Model\HttpErrorOut|\Devme\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
      * @throws InvalidArgumentException
      * @throws ApiException|GuzzleException on non-2xx response
      */
@@ -117,44 +117,44 @@ class EmailApi extends BaseApi
 
             switch ($statusCode) {
                 case 200:
-                    if ('\DevmeSdk\Model\GetEmailDetailsOut' === '\SplFileObject') {
+                    if ('\Devme\Model\GetEmailDetailsOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\GetEmailDetailsOut', []),
+                        ObjectSerializer::deserialize($content, '\Devme\Model\GetEmailDetailsOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 case 400:
-                    if ('\DevmeSdk\Model\HttpErrorOut' === '\SplFileObject') {
+                    if ('\Devme\Model\HttpErrorOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\HttpErrorOut', []),
+                        ObjectSerializer::deserialize($content, '\Devme\Model\HttpErrorOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 case 401:
-                    if ('\DevmeSdk\Model\HttpErrorOut' === '\SplFileObject') {
+                    if ('\Devme\Model\HttpErrorOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\HttpErrorOut', []),
+                        ObjectSerializer::deserialize($content, '\Devme\Model\HttpErrorOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\DevmeSdk\Model\GetEmailDetailsOut';
+            $returnType = '\Devme\Model\GetEmailDetailsOut';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -171,7 +171,7 @@ class EmailApi extends BaseApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\GetEmailDetailsOut',
+                        '\Devme\Model\GetEmailDetailsOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -179,7 +179,7 @@ class EmailApi extends BaseApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\HttpErrorOut',
+                        '\Devme\Model\HttpErrorOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -187,7 +187,7 @@ class EmailApi extends BaseApi
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\HttpErrorOut',
+                        '\Devme\Model\HttpErrorOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);

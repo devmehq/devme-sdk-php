@@ -3,7 +3,7 @@
  * CountryApi
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 
@@ -17,15 +17,15 @@
  */
 
 
-namespace DevmeSdk\Api;
+namespace Devme\Api;
 
-use DevmeSdk\ApiException;
-use DevmeSdk\Configuration;
-use DevmeSdk\HeaderSelector;
-use DevmeSdk\Model\GetCountryDetailsOut;
-use DevmeSdk\Model\HttpErrorOut;
-use DevmeSdk\Model\ListCountriesOut;
-use DevmeSdk\ObjectSerializer;
+use Devme\ApiException;
+use Devme\Configuration;
+use Devme\HeaderSelector;
+use Devme\Model\GetCountryDetailsOut;
+use Devme\Model\HttpErrorOut;
+use Devme\Model\ListCountriesOut;
+use Devme\ObjectSerializer;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ConnectException;
@@ -43,7 +43,7 @@ use RuntimeException;
  * CountryApi Class Doc Comment
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 class CountryApi extends BaseApi
@@ -74,7 +74,7 @@ class CountryApi extends BaseApi
      * @param string[]|null $exclude exclude - exclude properties (optional)
      * @param string|null $language language - localisation language (optional)
      *
-     * @return array of \DevmeSdk\Model\GetCountryDetailsOut|\DevmeSdk\Model\HttpErrorOut|\DevmeSdk\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Devme\Model\GetCountryDetailsOut|\Devme\Model\HttpErrorOut|\Devme\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
      * @throws InvalidArgumentException
      * @throws ApiException|GuzzleException on non-2xx response
      */
@@ -119,33 +119,33 @@ class CountryApi extends BaseApi
 
             switch ($statusCode) {
                 case 200:
-                    if ('\DevmeSdk\Model\GetCountryDetailsOut' === '\SplFileObject') {
+                    if ('\Devme\Model\GetCountryDetailsOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\GetCountryDetailsOut', []),
+                        ObjectSerializer::deserialize($content, '\Devme\Model\GetCountryDetailsOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 case 401:
                 case 400:
-                    if ('\DevmeSdk\Model\HttpErrorOut' === '\SplFileObject') {
+                    if ('\Devme\Model\HttpErrorOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\HttpErrorOut', []),
+                        ObjectSerializer::deserialize($content, '\Devme\Model\HttpErrorOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\DevmeSdk\Model\GetCountryDetailsOut';
+            $returnType = '\Devme\Model\GetCountryDetailsOut';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -162,7 +162,7 @@ class CountryApi extends BaseApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\GetCountryDetailsOut',
+                        '\Devme\Model\GetCountryDetailsOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -171,7 +171,7 @@ class CountryApi extends BaseApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\HttpErrorOut',
+                        '\Devme\Model\HttpErrorOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -417,7 +417,7 @@ class CountryApi extends BaseApi
      * @param string|null $page page - page number (optional)
      * @param string|null $page_size pageSize - page size (optional)
      *
-     * @return array of \DevmeSdk\Model\ListCountriesOut|\DevmeSdk\Model\HttpErrorOut|\DevmeSdk\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Devme\Model\ListCountriesOut|\Devme\Model\HttpErrorOut|\Devme\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
      * @throws ApiException on non-2xx response
      * @throws InvalidArgumentException|GuzzleException
      */
@@ -462,33 +462,33 @@ class CountryApi extends BaseApi
 
             switch ($statusCode) {
                 case 200:
-                    if ('\DevmeSdk\Model\ListCountriesOut' === '\SplFileObject') {
+                    if ('\Devme\Model\ListCountriesOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\ListCountriesOut', []),
+                        ObjectSerializer::deserialize($content, '\Devme\Model\ListCountriesOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 case 401:
                 case 400:
-                    if ('\DevmeSdk\Model\HttpErrorOut' === '\SplFileObject') {
+                    if ('\Devme\Model\HttpErrorOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\HttpErrorOut', []),
+                        ObjectSerializer::deserialize($content, '\Devme\Model\HttpErrorOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\DevmeSdk\Model\ListCountriesOut';
+            $returnType = '\Devme\Model\ListCountriesOut';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {

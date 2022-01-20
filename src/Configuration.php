@@ -3,7 +3,7 @@
  * Configuration
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 
@@ -17,7 +17,7 @@
  */
 
 
-namespace DevmeSdk;
+namespace Devme;
 
 use InvalidArgumentException;
 
@@ -25,7 +25,7 @@ use InvalidArgumentException;
  * Configuration Class Doc Comment
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 class Configuration
@@ -120,7 +120,7 @@ class Configuration
      */
     public static function toDebugReport(): string
     {
-        $report = 'PHP SDK (DevmeSdk) Debug Report:' . PHP_EOL;
+        $report = 'PHP SDK (Devme) Debug Report:' . PHP_EOL;
         $report .= '    OS: ' . php_uname() . PHP_EOL;
         $report .= '    PHP Version: ' . PHP_VERSION . PHP_EOL;
         $report .= '    The version of the OpenAPI document: 1.0.0' . PHP_EOL;

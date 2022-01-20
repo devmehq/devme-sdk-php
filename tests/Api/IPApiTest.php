@@ -3,7 +3,7 @@
  * IPApiTest
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 
@@ -25,7 +25,7 @@ use PHPUnit\Framework\TestCase;
  * IPApiTest Class Doc Comment
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 class IPApiTest extends TestCase

@@ -3,7 +3,7 @@
  * CurrencyApiTest
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 
@@ -19,15 +19,15 @@
 
 namespace Api;
 
-use DevmeSdk\Api\CurrencyApi;
-use DevmeSdk\ApiException;
-use DevmeSdk\Configuration;
+use Devme\Api\CurrencyApi;
+use Devme\ApiException;
+use Devme\Configuration;
 use PHPUnit\Framework\TestCase;
 
 /**
  * CurrencyApiTest Class Doc Comment
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 class CurrencyApiTest extends TestCase

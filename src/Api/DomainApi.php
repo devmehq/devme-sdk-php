@@ -3,7 +3,7 @@
  * DomainApi
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 
@@ -17,12 +17,12 @@
  */
 
 
-namespace DevmeSdk\Api;
+namespace Devme\Api;
 
-use DevmeSdk\ApiException;
-use DevmeSdk\Model\GetDomainWhoisOut;
-use DevmeSdk\Model\HttpErrorOut;
-use DevmeSdk\ObjectSerializer;
+use Devme\ApiException;
+use Devme\Model\GetDomainWhoisOut;
+use Devme\Model\HttpErrorOut;
+use Devme\ObjectSerializer;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
@@ -36,7 +36,7 @@ use InvalidArgumentException;
  * DomainApi Class Doc Comment
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 class DomainApi extends BaseApi
@@ -61,7 +61,7 @@ class DomainApi extends BaseApi
      *
      * @param string|null $domain domain - Domain name to get details for (optional)
      *
-     * @return array of \DevmeSdk\Model\GetDomainWhoisOut|\DevmeSdk\Model\HttpErrorOut|\DevmeSdk\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Devme\Model\GetDomainWhoisOut|\Devme\Model\HttpErrorOut|\Devme\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
      * @throws InvalidArgumentException
      * @throws ApiException|GuzzleException on non-2xx response
      */
@@ -106,7 +106,7 @@ class DomainApi extends BaseApi
 
             switch ($statusCode) {
                 case 200:
-                    if ('\DevmeSdk\Model\GetDomainWhoisOut' === '\SplFileObject') {
+                    if ('\Devme\Model\GetDomainWhoisOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
@@ -119,7 +119,7 @@ class DomainApi extends BaseApi
                     ];
                 case 401:
                 case 400:
-                    if ('\DevmeSdk\Model\HttpErrorOut' === '\SplFileObject') {
+                    if ('\Devme\Model\HttpErrorOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
@@ -149,7 +149,7 @@ class DomainApi extends BaseApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\GetDomainWhoisOut',
+                        '\Devme\Model\GetDomainWhoisOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -157,7 +157,7 @@ class DomainApi extends BaseApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\HttpErrorOut',
+                        '\Devme\Model\HttpErrorOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -165,7 +165,7 @@ class DomainApi extends BaseApi
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\HttpErrorOut',
+                        '\Devme\Model\HttpErrorOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);

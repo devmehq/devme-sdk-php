@@ -3,7 +3,7 @@
  * EmailApiTest
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 
@@ -25,7 +25,7 @@ use PHPUnit\Framework\TestCase;
  * EmailApiTest Class Doc Comment
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 class EmailApiTest extends TestCase

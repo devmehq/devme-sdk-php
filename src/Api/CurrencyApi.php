@@ -3,7 +3,7 @@
  * CurrencyApi
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 
@@ -17,17 +17,17 @@
  */
 
 
-namespace DevmeSdk\Api;
+namespace Devme\Api;
 
-use DevmeSdk\ApiException;
-use DevmeSdk\Configuration;
-use DevmeSdk\HeaderSelector;
-use DevmeSdk\Model\ConvertCurrencyOut;
-use DevmeSdk\Model\GetCurrencyDetailsOut;
-use DevmeSdk\Model\GetCurrencyExchangeRateOut;
-use DevmeSdk\Model\HttpErrorOut;
-use DevmeSdk\Model\ListCurrenciesOut;
-use DevmeSdk\ObjectSerializer;
+use Devme\ApiException;
+use Devme\Configuration;
+use Devme\HeaderSelector;
+use Devme\Model\ConvertCurrencyOut;
+use Devme\Model\GetCurrencyDetailsOut;
+use Devme\Model\GetCurrencyExchangeRateOut;
+use Devme\Model\HttpErrorOut;
+use Devme\Model\ListCurrenciesOut;
+use Devme\ObjectSerializer;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ConnectException;
@@ -44,7 +44,7 @@ use RuntimeException;
  * CurrencyApi Class Doc Comment
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 class CurrencyApi
@@ -139,7 +139,7 @@ class CurrencyApi
      * @param string $to to - currency to convert to (required)
      * @param float $amount amount - amount to convert (optional)
      *
-     * @return array of \DevmeSdk\Model\ConvertCurrencyOut|\DevmeSdk\Model\HttpErrorOut|\DevmeSdk\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Devme\Model\ConvertCurrencyOut|\Devme\Model\HttpErrorOut|\Devme\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
      * @throws InvalidArgumentException
      * @throws ApiException on non-2xx response
      */
@@ -184,44 +184,44 @@ class CurrencyApi
 
             switch ($statusCode) {
                 case 200:
-                    if ('\DevmeSdk\Model\ConvertCurrencyOut' === '\SplFileObject') {
+                    if ('\Devme\Model\ConvertCurrencyOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\ConvertCurrencyOut', []),
+                        ObjectSerializer::deserialize($content, '\Devme\Model\ConvertCurrencyOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 case 400:
-                    if ('\DevmeSdk\Model\HttpErrorOut' === '\SplFileObject') {
+                    if ('\Devme\Model\HttpErrorOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\HttpErrorOut', []),
+                        ObjectSerializer::deserialize($content, '\Devme\Model\HttpErrorOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 case 401:
-                    if ('\DevmeSdk\Model\HttpErrorOut' === '\SplFileObject') {
+                    if ('\Devme\Model\HttpErrorOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\HttpErrorOut', []),
+                        ObjectSerializer::deserialize($content, '\Devme\Model\HttpErrorOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\DevmeSdk\Model\ConvertCurrencyOut';
+            $returnType = '\Devme\Model\ConvertCurrencyOut';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -238,7 +238,7 @@ class CurrencyApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\ConvertCurrencyOut',
+                        '\Devme\Model\ConvertCurrencyOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -246,7 +246,7 @@ class CurrencyApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\HttpErrorOut',
+                        '\Devme\Model\HttpErrorOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -254,7 +254,7 @@ class CurrencyApi
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\HttpErrorOut',
+                        '\Devme\Model\HttpErrorOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -444,7 +444,7 @@ class CurrencyApi
      */
     public function v1ConvertCurrencyAsyncWithHttpInfo($from, $to, $amount = null)
     {
-        $returnType = '\DevmeSdk\Model\ConvertCurrencyOut';
+        $returnType = '\Devme\Model\ConvertCurrencyOut';
         $request = $this->v1ConvertCurrencyRequest($from, $to, $amount);
 
         return $this->client
@@ -508,7 +508,7 @@ class CurrencyApi
      * @param string $language language - localisation language (optional)
      * @param string $type type - type of currency (optional)
      *
-     * @return array of \DevmeSdk\Model\GetCurrencyDetailsOut|\DevmeSdk\Model\HttpErrorOut|\DevmeSdk\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Devme\Model\GetCurrencyDetailsOut|\Devme\Model\HttpErrorOut|\Devme\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
      * @throws InvalidArgumentException
      * @throws ApiException on non-2xx response
      */
@@ -553,7 +553,7 @@ class CurrencyApi
 
             switch ($statusCode) {
                 case 200:
-                    if ('\DevmeSdk\Model\GetCurrencyDetailsOut' === '\SplFileObject') {
+                    if ('\Devme\Model\GetCurrencyDetailsOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
@@ -565,32 +565,32 @@ class CurrencyApi
                         $response->getHeaders()
                     ];
                 case 400:
-                    if ('\DevmeSdk\Model\HttpErrorOut' === '\SplFileObject') {
+                    if ('\Devme\Model\HttpErrorOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\HttpErrorOut', []),
+                        ObjectSerializer::deserialize($content, '\Devme\Model\HttpErrorOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 case 401:
-                    if ('\DevmeSdk\Model\HttpErrorOut' === '\SplFileObject') {
+                    if ('\Devme\Model\HttpErrorOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\HttpErrorOut', []),
+                        ObjectSerializer::deserialize($content, '\Devme\Model\HttpErrorOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\DevmeSdk\Model\GetCurrencyDetailsOut';
+            $returnType = '\Devme\Model\GetCurrencyDetailsOut';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -607,7 +607,7 @@ class CurrencyApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\GetCurrencyDetailsOut',
+                        '\Devme\Model\GetCurrencyDetailsOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -615,7 +615,7 @@ class CurrencyApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\HttpErrorOut',
+                        '\Devme\Model\HttpErrorOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -623,7 +623,7 @@ class CurrencyApi
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\HttpErrorOut',
+                        '\Devme\Model\HttpErrorOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -814,7 +814,7 @@ class CurrencyApi
      */
     public function v1GetCurrencyDetailsAsyncWithHttpInfo($code, $expand = null, $exclude = null, $language = null, $type = null)
     {
-        $returnType = '\DevmeSdk\Model\GetCurrencyDetailsOut';
+        $returnType = '\Devme\Model\GetCurrencyDetailsOut';
         $request = $this->v1GetCurrencyDetailsRequest($code, $expand, $exclude, $language, $type);
 
         return $this->client
@@ -872,7 +872,7 @@ class CurrencyApi
      * @param string $from from - currency to get exchange rate from (required)
      * @param string $to to - currency to get exchange rate to (required)
      *
-     * @return array of \DevmeSdk\Model\GetCurrencyExchangeRateOut|\DevmeSdk\Model\HttpErrorOut|\DevmeSdk\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Devme\Model\GetCurrencyExchangeRateOut|\Devme\Model\HttpErrorOut|\Devme\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
      * @throws InvalidArgumentException
      * @throws ApiException on non-2xx response
      */
@@ -917,44 +917,44 @@ class CurrencyApi
 
             switch ($statusCode) {
                 case 200:
-                    if ('\DevmeSdk\Model\GetCurrencyExchangeRateOut' === '\SplFileObject') {
+                    if ('\Devme\Model\GetCurrencyExchangeRateOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\GetCurrencyExchangeRateOut', []),
+                        ObjectSerializer::deserialize($content, '\Devme\Model\GetCurrencyExchangeRateOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 case 400:
-                    if ('\DevmeSdk\Model\HttpErrorOut' === '\SplFileObject') {
+                    if ('\Devme\Model\HttpErrorOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\HttpErrorOut', []),
+                        ObjectSerializer::deserialize($content, '\Devme\Model\HttpErrorOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 case 401:
-                    if ('\DevmeSdk\Model\HttpErrorOut' === '\SplFileObject') {
+                    if ('\Devme\Model\HttpErrorOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\HttpErrorOut', []),
+                        ObjectSerializer::deserialize($content, '\Devme\Model\HttpErrorOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\DevmeSdk\Model\GetCurrencyExchangeRateOut';
+            $returnType = '\Devme\Model\GetCurrencyExchangeRateOut';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -971,7 +971,7 @@ class CurrencyApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\GetCurrencyExchangeRateOut',
+                        '\Devme\Model\GetCurrencyExchangeRateOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -979,7 +979,7 @@ class CurrencyApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\HttpErrorOut',
+                        '\Devme\Model\HttpErrorOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -987,7 +987,7 @@ class CurrencyApi
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\HttpErrorOut',
+                        '\Devme\Model\HttpErrorOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1145,7 +1145,7 @@ class CurrencyApi
      */
     public function v1GetCurrencyExchangeRateAsyncWithHttpInfo($from, $to)
     {
-        $returnType = '\DevmeSdk\Model\GetCurrencyExchangeRateOut';
+        $returnType = '\Devme\Model\GetCurrencyExchangeRateOut';
         $request = $this->v1GetCurrencyExchangeRateRequest($from, $to);
 
         return $this->client
@@ -1215,7 +1215,7 @@ class CurrencyApi
      * @param string $page page - page number (optional)
      * @param string $page_size pageSize - page size (optional)
      *
-     * @return array of \DevmeSdk\Model\ListCurrenciesOut|\DevmeSdk\Model\HttpErrorOut|\DevmeSdk\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Devme\Model\ListCurrenciesOut|\Devme\Model\HttpErrorOut|\Devme\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
      * @throws ApiException on non-2xx response
      * @throws InvalidArgumentException
      */
@@ -1260,44 +1260,44 @@ class CurrencyApi
 
             switch ($statusCode) {
                 case 200:
-                    if ('\DevmeSdk\Model\ListCurrenciesOut' === '\SplFileObject') {
+                    if ('\Devme\Model\ListCurrenciesOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\ListCurrenciesOut', []),
+                        ObjectSerializer::deserialize($content, '\Devme\Model\ListCurrenciesOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 case 400:
-                    if ('\DevmeSdk\Model\HttpErrorOut' === '\SplFileObject') {
+                    if ('\Devme\Model\HttpErrorOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\HttpErrorOut', []),
+                        ObjectSerializer::deserialize($content, '\Devme\Model\HttpErrorOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 case 401:
-                    if ('\DevmeSdk\Model\HttpErrorOut' === '\SplFileObject') {
+                    if ('\Devme\Model\HttpErrorOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\HttpErrorOut', []),
+                        ObjectSerializer::deserialize($content, '\Devme\Model\HttpErrorOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\DevmeSdk\Model\ListCurrenciesOut';
+            $returnType = '\Devme\Model\ListCurrenciesOut';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -1314,7 +1314,7 @@ class CurrencyApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\ListCurrenciesOut',
+                        '\Devme\Model\ListCurrenciesOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1322,7 +1322,7 @@ class CurrencyApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\HttpErrorOut',
+                        '\Devme\Model\HttpErrorOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1330,7 +1330,7 @@ class CurrencyApi
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\DevmeSdk\Model\HttpErrorOut',
+                        '\Devme\Model\HttpErrorOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1554,7 +1554,7 @@ class CurrencyApi
      */
     public function v1ListCurrenciesAsyncWithHttpInfo($code = null, $expand = null, $exclude = null, $language = null, $type = null, $sort = null, $page = null, $page_size = null)
     {
-        $returnType = '\DevmeSdk\Model\ListCurrenciesOut';
+        $returnType = '\Devme\Model\ListCurrenciesOut';
         $request = $this->v1ListCurrenciesRequest($code, $expand, $exclude, $language, $type, $sort, $page, $page_size);
 
         return $this->client

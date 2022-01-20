@@ -3,7 +3,7 @@
  * UtilsApi
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 
@@ -17,13 +17,13 @@
  */
 
 
-namespace DevmeSdk\Api;
+namespace Devme\Api;
 
-use DevmeSdk\ApiException;
-use DevmeSdk\Configuration;
-use DevmeSdk\HeaderSelector;
-use DevmeSdk\Model\WhoAmIOut;
-use DevmeSdk\ObjectSerializer;
+use Devme\ApiException;
+use Devme\Configuration;
+use Devme\HeaderSelector;
+use Devme\Model\WhoAmIOut;
+use Devme\ObjectSerializer;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ConnectException;
@@ -41,7 +41,7 @@ use RuntimeException;
  * UtilsApi Class Doc Comment
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 class UtilsApi
@@ -130,7 +130,7 @@ class UtilsApi
      * Operation v1WhoAmIWithHttpInfo
      *
      *
-     * @return array of \DevmeSdk\Model\WhoAmIOut, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \Devme\Model\WhoAmIOut, HTTP status code, HTTP response headers (array of strings)
      * @throws InvalidArgumentException
      * @throws ApiException|GuzzleException on non-2xx response
      */
@@ -174,20 +174,20 @@ class UtilsApi
             }
 
             if ($statusCode == 200) {
-                if ('\DevmeSdk\Model\WhoAmIOut' === '\SplFileObject') {
+                if ('\Devme\Model\WhoAmIOut' === '\SplFileObject') {
                     $content = $response->getBody(); //stream goes to serializer
                 } else {
                     $content = (string)$response->getBody();
                 }
 
                 return [
-                    ObjectSerializer::deserialize($content, '\DevmeSdk\Model\WhoAmIOut', []),
+                    ObjectSerializer::deserialize($content, '\Devme\Model\WhoAmIOut', []),
                     $response->getStatusCode(),
                     $response->getHeaders()
                 ];
             }
 
-            $returnType = '\DevmeSdk\Model\WhoAmIOut';
+            $returnType = '\Devme\Model\WhoAmIOut';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -203,7 +203,7 @@ class UtilsApi
             if ($e->getCode() == 200) {
                 $data = ObjectSerializer::deserialize(
                     $e->getResponseBody(),
-                    '\DevmeSdk\Model\WhoAmIOut',
+                    '\Devme\Model\WhoAmIOut',
                     $e->getResponseHeaders()
                 );
                 $e->setResponseObject($data);
@@ -340,7 +340,7 @@ class UtilsApi
      */
     public function v1WhoAmIAsyncWithHttpInfo(): PromiseInterface
     {
-        $returnType = '\DevmeSdk\Model\WhoAmIOut';
+        $returnType = '\Devme\Model\WhoAmIOut';
         $request = $this->v1WhoAmIRequest();
 
         return $this->client

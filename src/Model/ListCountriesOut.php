@@ -4,7 +4,7 @@
  *
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 
@@ -18,17 +18,17 @@
  */
 
 
-namespace DevmeSdk\Model;
+namespace Devme\Model;
 
 use ArrayAccess;
-use DevmeSdk\ObjectSerializer;
+use Devme\ObjectSerializer;
 use JsonSerializable;
 
 /**
  * ListCountriesOut Class Doc Comment
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  * @implements ArrayAccess
  * @template TKey int|null
@@ -53,7 +53,7 @@ class ListCountriesOut implements ModelInterface, ArrayAccess, JsonSerializable
     protected static $openAPITypes = [
         'page' => 'float',
         'total' => 'float',
-        'list' => '\DevmeSdk\Model\ListCountriesItem[]'
+        'list' => '\Devme\Model\ListCountriesItem[]'
     ];
 
     /**

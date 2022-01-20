@@ -3,7 +3,7 @@
  * ApiException
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 
@@ -17,13 +17,13 @@
  */
 
 
-namespace DevmeSdk;
+namespace Devme;
 
 /**
  * ApiException Class Doc Comment
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 class HeaderSelector

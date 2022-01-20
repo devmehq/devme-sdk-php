@@ -3,7 +3,7 @@
  * UtilsApiTest
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 
@@ -25,7 +25,7 @@ use PHPUnit\Framework\TestCase;
  * UtilsApiTest Class Doc Comment
  *
  * @category Class
- * @package  DevmeSdk
+ * @package  Devme
  * @author   DEV.ME Team
  */
 class UtilsApiTest extends TestCase

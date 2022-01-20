@@ -11,10 +11,13 @@
     </report>
   </coverage>
   <testsuites>
-    <testsuite name="php-lodash Test Suite">
+    <testsuite name="Test Suite">
       <directory suffix="Test.php">tests</directory>
     </testsuite>
   </testsuites>
+  <php>
+    <ini name="error_reporting" value="E_ALL"/>
+  </php>
   <logging>
     <junit outputFile="build/report.junit.xml"/>
   </logging>

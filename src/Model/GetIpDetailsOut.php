@@ -4,7 +4,7 @@
  *
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
  */
 
@@ -18,22 +18,23 @@
  */
 
 
-namespace Devme\Sdk\Model;
+namespace DevmeSdk\Model;
 
 use ArrayAccess;
-use Devme\Sdk\ObjectSerializer;
+use DevmeSdk\ObjectSerializer;
+use JsonSerializable;
 
 /**
  * GetIpDetailsOut Class Doc Comment
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
- * @implements \ArrayAccess<TKey, TValue>
+ * @implements ArrayAccess
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class GetIpDetailsOut implements ModelInterface, ArrayAccess, \JsonSerializable
+class GetIpDetailsOut implements ModelInterface, ArrayAccess, JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -55,7 +56,7 @@ class GetIpDetailsOut implements ModelInterface, ArrayAccess, \JsonSerializable
         'registered_country_code' => 'string',
         'asn' => 'string',
         'aso' => 'string',
-        'city' => '\Devme\Sdk\Model\GetIpDetailsCityOut'
+        'city' => '\DevmeSdk\Model\GetIpDetailsCityOut'
     ];
 
     /**
@@ -73,6 +74,68 @@ class GetIpDetailsOut implements ModelInterface, ArrayAccess, \JsonSerializable
         'aso' => null,
         'city' => null
     ];
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
+     * @var string[]
+     */
+    protected static $attributeMap = [
+        'ip' => 'ip',
+        'country_code' => 'countryCode',
+        'registered_country_code' => 'registeredCountryCode',
+        'asn' => 'asn',
+        'aso' => 'aso',
+        'city' => 'city'
+    ];
+    /**
+     * Array of attributes to setter functions (for deserialization of responses)
+     *
+     * @var string[]
+     */
+    protected static $setters = [
+        'ip' => 'setIp',
+        'country_code' => 'setCountryCode',
+        'registered_country_code' => 'setRegisteredCountryCode',
+        'asn' => 'setAsn',
+        'aso' => 'setAso',
+        'city' => 'setCity'
+    ];
+    /**
+     * Array of attributes to getter functions (for serialization of requests)
+     *
+     * @var string[]
+     */
+    protected static $getters = [
+        'ip' => 'getIp',
+        'country_code' => 'getCountryCode',
+        'registered_country_code' => 'getRegisteredCountryCode',
+        'asn' => 'getAsn',
+        'aso' => 'getAso',
+        'city' => 'getCity'
+    ];
+    /**
+     * Associative array for storing property values
+     *
+     * @var mixed[]
+     */
+    protected $container = [];
+
+    /**
+     * Constructor
+     *
+     * @param mixed[] $data Associated array of property values
+     *                      initializing the model
+     */
+    public function __construct(array $data = null)
+    {
+        $this->container['ip'] = $data['ip'] ?? null;
+        $this->container['country_code'] = $data['country_code'] ?? null;
+        $this->container['registered_country_code'] = $data['registered_country_code'] ?? null;
+        $this->container['asn'] = $data['asn'] ?? null;
+        $this->container['aso'] = $data['aso'] ?? null;
+        $this->container['city'] = $data['city'] ?? null;
+    }
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -93,49 +156,6 @@ class GetIpDetailsOut implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         return self::$openAPIFormats;
     }
-
-    /**
-     * Array of attributes where the key is the local name,
-     * and the value is the original name
-     *
-     * @var string[]
-     */
-    protected static $attributeMap = [
-        'ip' => 'ip',
-        'country_code' => 'countryCode',
-        'registered_country_code' => 'registeredCountryCode',
-        'asn' => 'asn',
-        'aso' => 'aso',
-        'city' => 'city'
-    ];
-
-    /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     *
-     * @var string[]
-     */
-    protected static $setters = [
-        'ip' => 'setIp',
-        'country_code' => 'setCountryCode',
-        'registered_country_code' => 'setRegisteredCountryCode',
-        'asn' => 'setAsn',
-        'aso' => 'setAso',
-        'city' => 'setCity'
-    ];
-
-    /**
-     * Array of attributes to getter functions (for serialization of requests)
-     *
-     * @var string[]
-     */
-    protected static $getters = [
-        'ip' => 'getIp',
-        'country_code' => 'getCountryCode',
-        'registered_country_code' => 'getRegisteredCountryCode',
-        'asn' => 'getAsn',
-        'aso' => 'getAso',
-        'city' => 'getCity'
-    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -178,28 +198,15 @@ class GetIpDetailsOut implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
-
     /**
-     * Associative array for storing property values
+     * Validate all the properties in the model
+     * return true if all passed
      *
-     * @var mixed[]
+     * @return bool True if all properties are valid
      */
-    protected $container = [];
-
-    /**
-     * Constructor
-     *
-     * @param mixed[] $data Associated array of property values
-     *                      initializing the model
-     */
-    public function __construct(array $data = null)
+    public function valid()
     {
-        $this->container['ip'] = $data['ip'] ?? null;
-        $this->container['country_code'] = $data['country_code'] ?? null;
-        $this->container['registered_country_code'] = $data['registered_country_code'] ?? null;
-        $this->container['asn'] = $data['asn'] ?? null;
-        $this->container['aso'] = $data['aso'] ?? null;
-        $this->container['city'] = $data['city'] ?? null;
+        return count($this->listInvalidProperties()) === 0;
     }
 
     /**
@@ -213,18 +220,6 @@ class GetIpDetailsOut implements ModelInterface, ArrayAccess, \JsonSerializable
 
         return $invalidProperties;
     }
-
-    /**
-     * Validate all the properties in the model
-     * return true if all passed
-     *
-     * @return bool True if all properties are valid
-     */
-    public function valid()
-    {
-        return count($this->listInvalidProperties()) === 0;
-    }
-
 
     /**
      * Gets ip
@@ -349,7 +344,7 @@ class GetIpDetailsOut implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets city
      *
-     * @return \Devme\Sdk\Model\GetIpDetailsCityOut|null
+     * @return GetIpDetailsCityOut|null
      */
     public function getCity()
     {
@@ -359,7 +354,7 @@ class GetIpDetailsOut implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets city
      *
-     * @param \Devme\Sdk\Model\GetIpDetailsCityOut|null $city city
+     * @param GetIpDetailsCityOut|null $city city
      *
      * @return self
      */

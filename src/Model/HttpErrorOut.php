@@ -4,7 +4,7 @@
  *
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
  */
 
@@ -18,22 +18,23 @@
  */
 
 
-namespace Devme\Sdk\Model;
+namespace DevmeSdk\Model;
 
 use ArrayAccess;
-use Devme\Sdk\ObjectSerializer;
+use DevmeSdk\ObjectSerializer;
+use JsonSerializable;
 
 /**
  * HttpErrorOut Class Doc Comment
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
- * @implements \ArrayAccess<TKey, TValue>
+ * @implements ArrayAccess
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class HttpErrorOut implements ModelInterface, ArrayAccess, \JsonSerializable
+class HttpErrorOut implements ModelInterface, ArrayAccess, JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -53,7 +54,7 @@ class HttpErrorOut implements ModelInterface, ArrayAccess, \JsonSerializable
         'status' => 'float',
         'name' => 'string',
         'message' => 'string',
-        'errors' => '\Devme\Sdk\Model\Error[]'
+        'errors' => '\DevmeSdk\Model\Error[]'
     ];
 
     /**
@@ -69,6 +70,60 @@ class HttpErrorOut implements ModelInterface, ArrayAccess, \JsonSerializable
         'message' => null,
         'errors' => null
     ];
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
+     * @var string[]
+     */
+    protected static $attributeMap = [
+        'status' => 'status',
+        'name' => 'name',
+        'message' => 'message',
+        'errors' => 'errors'
+    ];
+    /**
+     * Array of attributes to setter functions (for deserialization of responses)
+     *
+     * @var string[]
+     */
+    protected static $setters = [
+        'status' => 'setStatus',
+        'name' => 'setName',
+        'message' => 'setMessage',
+        'errors' => 'setErrors'
+    ];
+    /**
+     * Array of attributes to getter functions (for serialization of requests)
+     *
+     * @var string[]
+     */
+    protected static $getters = [
+        'status' => 'getStatus',
+        'name' => 'getName',
+        'message' => 'getMessage',
+        'errors' => 'getErrors'
+    ];
+    /**
+     * Associative array for storing property values
+     *
+     * @var mixed[]
+     */
+    protected $container = [];
+
+    /**
+     * Constructor
+     *
+     * @param mixed[] $data Associated array of property values
+     *                      initializing the model
+     */
+    public function __construct(array $data = null)
+    {
+        $this->container['status'] = $data['status'] ?? null;
+        $this->container['name'] = $data['name'] ?? null;
+        $this->container['message'] = $data['message'] ?? null;
+        $this->container['errors'] = $data['errors'] ?? null;
+    }
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -89,43 +144,6 @@ class HttpErrorOut implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         return self::$openAPIFormats;
     }
-
-    /**
-     * Array of attributes where the key is the local name,
-     * and the value is the original name
-     *
-     * @var string[]
-     */
-    protected static $attributeMap = [
-        'status' => 'status',
-        'name' => 'name',
-        'message' => 'message',
-        'errors' => 'errors'
-    ];
-
-    /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     *
-     * @var string[]
-     */
-    protected static $setters = [
-        'status' => 'setStatus',
-        'name' => 'setName',
-        'message' => 'setMessage',
-        'errors' => 'setErrors'
-    ];
-
-    /**
-     * Array of attributes to getter functions (for serialization of requests)
-     *
-     * @var string[]
-     */
-    protected static $getters = [
-        'status' => 'getStatus',
-        'name' => 'getName',
-        'message' => 'getMessage',
-        'errors' => 'getErrors'
-    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -168,26 +186,15 @@ class HttpErrorOut implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
-
     /**
-     * Associative array for storing property values
+     * Validate all the properties in the model
+     * return true if all passed
      *
-     * @var mixed[]
+     * @return bool True if all properties are valid
      */
-    protected $container = [];
-
-    /**
-     * Constructor
-     *
-     * @param mixed[] $data Associated array of property values
-     *                      initializing the model
-     */
-    public function __construct(array $data = null)
+    public function valid()
     {
-        $this->container['status'] = $data['status'] ?? null;
-        $this->container['name'] = $data['name'] ?? null;
-        $this->container['message'] = $data['message'] ?? null;
-        $this->container['errors'] = $data['errors'] ?? null;
+        return count($this->listInvalidProperties()) === 0;
     }
 
     /**
@@ -201,18 +208,6 @@ class HttpErrorOut implements ModelInterface, ArrayAccess, \JsonSerializable
 
         return $invalidProperties;
     }
-
-    /**
-     * Validate all the properties in the model
-     * return true if all passed
-     *
-     * @return bool True if all properties are valid
-     */
-    public function valid()
-    {
-        return count($this->listInvalidProperties()) === 0;
-    }
-
 
     /**
      * Gets status
@@ -289,7 +284,7 @@ class HttpErrorOut implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets errors
      *
-     * @return \Devme\Sdk\Model\Error[]|null
+     * @return Error[]|null
      */
     public function getErrors()
     {
@@ -299,7 +294,7 @@ class HttpErrorOut implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets errors
      *
-     * @param \Devme\Sdk\Model\Error[]|null $errors array of errors
+     * @param Error[]|null $errors array of errors
      *
      * @return self
      */

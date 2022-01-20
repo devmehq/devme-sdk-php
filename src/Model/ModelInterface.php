@@ -4,7 +4,7 @@
  *
  *
  * @category Class
- * @package  Devme\Sdk\Model
+ * @package  DevmeSdk\Model
  * @author   DEV.ME Team
  */
 
@@ -18,23 +18,16 @@
  */
 
 
-namespace Devme\Sdk\Model;
+namespace DevmeSdk\Model;
 
 /**
  * Interface abstracting model access.
  *
- * @package Devme\Sdk\Model
+ * @package DevmeSdk\Model
  * @author  DEV.ME Team
  */
 interface ModelInterface
 {
-    /**
-     * The original name of the model.
-     *
-     * @return string
-     */
-    public function getModelName();
-
     /**
      * Array of property to type mappings. Used for (de)serialization
      *
@@ -69,6 +62,13 @@ interface ModelInterface
      * @return array
      */
     public static function getters();
+
+    /**
+     * The original name of the model.
+     *
+     * @return string
+     */
+    public function getModelName();
 
     /**
      * Show all the invalid properties with reasons.

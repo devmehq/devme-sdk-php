@@ -4,7 +4,7 @@
  *
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
  */
 
@@ -18,22 +18,23 @@
  */
 
 
-namespace Devme\Sdk\Model;
+namespace DevmeSdk\Model;
 
 use ArrayAccess;
-use Devme\Sdk\ObjectSerializer;
+use DevmeSdk\ObjectSerializer;
+use JsonSerializable;
 
 /**
  * WhoAmIOut Class Doc Comment
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
- * @implements \ArrayAccess<TKey, TValue>
+ * @implements ArrayAccess
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class WhoAmIOut implements ModelInterface, ArrayAccess, \JsonSerializable
+class WhoAmIOut implements ModelInterface, ArrayAccess, JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -73,6 +74,68 @@ class WhoAmIOut implements ModelInterface, ArrayAccess, \JsonSerializable
         'req_ip_country' => null,
         'req_user_agent' => null
     ];
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
+     * @var string[]
+     */
+    protected static $attributeMap = [
+        'user_id' => 'userId',
+        'email' => 'email',
+        'username' => 'username',
+        'req_ip_address' => 'reqIpAddress',
+        'req_ip_country' => 'reqIpCountry',
+        'req_user_agent' => 'reqUserAgent'
+    ];
+    /**
+     * Array of attributes to setter functions (for deserialization of responses)
+     *
+     * @var string[]
+     */
+    protected static $setters = [
+        'user_id' => 'setUserId',
+        'email' => 'setEmail',
+        'username' => 'setUsername',
+        'req_ip_address' => 'setReqIpAddress',
+        'req_ip_country' => 'setReqIpCountry',
+        'req_user_agent' => 'setReqUserAgent'
+    ];
+    /**
+     * Array of attributes to getter functions (for serialization of requests)
+     *
+     * @var string[]
+     */
+    protected static $getters = [
+        'user_id' => 'getUserId',
+        'email' => 'getEmail',
+        'username' => 'getUsername',
+        'req_ip_address' => 'getReqIpAddress',
+        'req_ip_country' => 'getReqIpCountry',
+        'req_user_agent' => 'getReqUserAgent'
+    ];
+    /**
+     * Associative array for storing property values
+     *
+     * @var mixed[]
+     */
+    protected $container = [];
+
+    /**
+     * Constructor
+     *
+     * @param mixed[] $data Associated array of property values
+     *                      initializing the model
+     */
+    public function __construct(array $data = null)
+    {
+        $this->container['user_id'] = $data['user_id'] ?? null;
+        $this->container['email'] = $data['email'] ?? null;
+        $this->container['username'] = $data['username'] ?? null;
+        $this->container['req_ip_address'] = $data['req_ip_address'] ?? null;
+        $this->container['req_ip_country'] = $data['req_ip_country'] ?? null;
+        $this->container['req_user_agent'] = $data['req_user_agent'] ?? null;
+    }
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -93,49 +156,6 @@ class WhoAmIOut implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         return self::$openAPIFormats;
     }
-
-    /**
-     * Array of attributes where the key is the local name,
-     * and the value is the original name
-     *
-     * @var string[]
-     */
-    protected static $attributeMap = [
-        'user_id' => 'userId',
-        'email' => 'email',
-        'username' => 'username',
-        'req_ip_address' => 'reqIpAddress',
-        'req_ip_country' => 'reqIpCountry',
-        'req_user_agent' => 'reqUserAgent'
-    ];
-
-    /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     *
-     * @var string[]
-     */
-    protected static $setters = [
-        'user_id' => 'setUserId',
-        'email' => 'setEmail',
-        'username' => 'setUsername',
-        'req_ip_address' => 'setReqIpAddress',
-        'req_ip_country' => 'setReqIpCountry',
-        'req_user_agent' => 'setReqUserAgent'
-    ];
-
-    /**
-     * Array of attributes to getter functions (for serialization of requests)
-     *
-     * @var string[]
-     */
-    protected static $getters = [
-        'user_id' => 'getUserId',
-        'email' => 'getEmail',
-        'username' => 'getUsername',
-        'req_ip_address' => 'getReqIpAddress',
-        'req_ip_country' => 'getReqIpCountry',
-        'req_user_agent' => 'getReqUserAgent'
-    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -178,28 +198,15 @@ class WhoAmIOut implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
-
     /**
-     * Associative array for storing property values
+     * Validate all the properties in the model
+     * return true if all passed
      *
-     * @var mixed[]
+     * @return bool True if all properties are valid
      */
-    protected $container = [];
-
-    /**
-     * Constructor
-     *
-     * @param mixed[] $data Associated array of property values
-     *                      initializing the model
-     */
-    public function __construct(array $data = null)
+    public function valid()
     {
-        $this->container['user_id'] = $data['user_id'] ?? null;
-        $this->container['email'] = $data['email'] ?? null;
-        $this->container['username'] = $data['username'] ?? null;
-        $this->container['req_ip_address'] = $data['req_ip_address'] ?? null;
-        $this->container['req_ip_country'] = $data['req_ip_country'] ?? null;
-        $this->container['req_user_agent'] = $data['req_user_agent'] ?? null;
+        return count($this->listInvalidProperties()) === 0;
     }
 
     /**
@@ -213,18 +220,6 @@ class WhoAmIOut implements ModelInterface, ArrayAccess, \JsonSerializable
 
         return $invalidProperties;
     }
-
-    /**
-     * Validate all the properties in the model
-     * return true if all passed
-     *
-     * @return bool True if all properties are valid
-     */
-    public function valid()
-    {
-        return count($this->listInvalidProperties()) === 0;
-    }
-
 
     /**
      * Gets user_id

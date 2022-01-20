@@ -4,7 +4,7 @@
  *
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
  */
 
@@ -18,22 +18,23 @@
  */
 
 
-namespace Devme\Sdk\Model;
+namespace DevmeSdk\Model;
 
 use ArrayAccess;
-use Devme\Sdk\ObjectSerializer;
+use DevmeSdk\ObjectSerializer;
+use JsonSerializable;
 
 /**
  * Error Class Doc Comment
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
- * @implements \ArrayAccess<TKey, TValue>
+ * @implements ArrayAccess
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class Error implements ModelInterface, ArrayAccess, \JsonSerializable
+class Error implements ModelInterface, ArrayAccess, JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -69,6 +70,60 @@ class Error implements ModelInterface, ArrayAccess, \JsonSerializable
         'param' => null,
         'location' => null
     ];
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
+     * @var string[]
+     */
+    protected static $attributeMap = [
+        'value' => 'value',
+        'msg' => 'msg',
+        'param' => 'param',
+        'location' => 'location'
+    ];
+    /**
+     * Array of attributes to setter functions (for deserialization of responses)
+     *
+     * @var string[]
+     */
+    protected static $setters = [
+        'value' => 'setValue',
+        'msg' => 'setMsg',
+        'param' => 'setParam',
+        'location' => 'setLocation'
+    ];
+    /**
+     * Array of attributes to getter functions (for serialization of requests)
+     *
+     * @var string[]
+     */
+    protected static $getters = [
+        'value' => 'getValue',
+        'msg' => 'getMsg',
+        'param' => 'getParam',
+        'location' => 'getLocation'
+    ];
+    /**
+     * Associative array for storing property values
+     *
+     * @var mixed[]
+     */
+    protected $container = [];
+
+    /**
+     * Constructor
+     *
+     * @param mixed[] $data Associated array of property values
+     *                      initializing the model
+     */
+    public function __construct(array $data = null)
+    {
+        $this->container['value'] = $data['value'] ?? null;
+        $this->container['msg'] = $data['msg'] ?? null;
+        $this->container['param'] = $data['param'] ?? null;
+        $this->container['location'] = $data['location'] ?? null;
+    }
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -89,43 +144,6 @@ class Error implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         return self::$openAPIFormats;
     }
-
-    /**
-     * Array of attributes where the key is the local name,
-     * and the value is the original name
-     *
-     * @var string[]
-     */
-    protected static $attributeMap = [
-        'value' => 'value',
-        'msg' => 'msg',
-        'param' => 'param',
-        'location' => 'location'
-    ];
-
-    /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     *
-     * @var string[]
-     */
-    protected static $setters = [
-        'value' => 'setValue',
-        'msg' => 'setMsg',
-        'param' => 'setParam',
-        'location' => 'setLocation'
-    ];
-
-    /**
-     * Array of attributes to getter functions (for serialization of requests)
-     *
-     * @var string[]
-     */
-    protected static $getters = [
-        'value' => 'getValue',
-        'msg' => 'getMsg',
-        'param' => 'getParam',
-        'location' => 'getLocation'
-    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -168,26 +186,15 @@ class Error implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
-
     /**
-     * Associative array for storing property values
+     * Validate all the properties in the model
+     * return true if all passed
      *
-     * @var mixed[]
+     * @return bool True if all properties are valid
      */
-    protected $container = [];
-
-    /**
-     * Constructor
-     *
-     * @param mixed[] $data Associated array of property values
-     *                      initializing the model
-     */
-    public function __construct(array $data = null)
+    public function valid()
     {
-        $this->container['value'] = $data['value'] ?? null;
-        $this->container['msg'] = $data['msg'] ?? null;
-        $this->container['param'] = $data['param'] ?? null;
-        $this->container['location'] = $data['location'] ?? null;
+        return count($this->listInvalidProperties()) === 0;
     }
 
     /**
@@ -201,18 +208,6 @@ class Error implements ModelInterface, ArrayAccess, \JsonSerializable
 
         return $invalidProperties;
     }
-
-    /**
-     * Validate all the properties in the model
-     * return true if all passed
-     *
-     * @return bool True if all properties are valid
-     */
-    public function valid()
-    {
-        return count($this->listInvalidProperties()) === 0;
-    }
-
 
     /**
      * Gets value

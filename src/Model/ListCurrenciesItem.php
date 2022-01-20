@@ -4,7 +4,7 @@
  *
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
  */
 
@@ -18,32 +18,34 @@
  */
 
 
-namespace Devme\Sdk\Model;
+namespace DevmeSdk\Model;
 
 use ArrayAccess;
-use Devme\Sdk\ObjectSerializer;
+use DevmeSdk\ObjectSerializer;
+use InvalidArgumentException;
+use JsonSerializable;
 
 /**
  * ListCurrenciesItem Class Doc Comment
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
- * @implements \ArrayAccess<TKey, TValue>
+ * @implements ArrayAccess
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class ListCurrenciesItem implements ModelInterface, ArrayAccess, \JsonSerializable
+class ListCurrenciesItem implements ModelInterface, ArrayAccess, JsonSerializable
 {
     public const DISCRIMINATOR = null;
-
+    const TYPE_FIAT = 'fiat';
+    const TYPE_CRYPTO = 'crypto';
     /**
      * The original name of the model.
      *
      * @var string
      */
     protected static $openAPIModelName = 'ListCurrenciesItem';
-
     /**
      * Array of property to type mappings. Used for (de)serialization
      *
@@ -58,7 +60,6 @@ class ListCurrenciesItem implements ModelInterface, ArrayAccess, \JsonSerializab
         'type' => 'string',
         'units' => 'object'
     ];
-
     /**
      * Array of property to format mappings. Used for (de)serialization
      *
@@ -75,27 +76,6 @@ class ListCurrenciesItem implements ModelInterface, ArrayAccess, \JsonSerializab
         'type' => null,
         'units' => null
     ];
-
-    /**
-     * Array of property to type mappings. Used for (de)serialization
-     *
-     * @return array
-     */
-    public static function openAPITypes()
-    {
-        return self::$openAPITypes;
-    }
-
-    /**
-     * Array of property to format mappings. Used for (de)serialization
-     *
-     * @return array
-     */
-    public static function openAPIFormats()
-    {
-        return self::$openAPIFormats;
-    }
-
     /**
      * Array of attributes where the key is the local name,
      * and the value is the original name
@@ -141,6 +121,49 @@ class ListCurrenciesItem implements ModelInterface, ArrayAccess, \JsonSerializab
         'type' => 'getType',
         'units' => 'getUnits'
     ];
+    /**
+     * Associative array for storing property values
+     *
+     * @var mixed[]
+     */
+    protected $container = [];
+
+    /**
+     * Constructor
+     *
+     * @param mixed[] $data Associated array of property values
+     *                      initializing the model
+     */
+    public function __construct(array $data = null)
+    {
+        $this->container['code'] = $data['code'] ?? null;
+        $this->container['banknotes'] = $data['banknotes'] ?? null;
+        $this->container['coins'] = $data['coins'] ?? null;
+        $this->container['iso'] = $data['iso'] ?? null;
+        $this->container['name'] = $data['name'] ?? null;
+        $this->container['type'] = $data['type'] ?? null;
+        $this->container['units'] = $data['units'] ?? null;
+    }
+
+    /**
+     * Array of property to type mappings. Used for (de)serialization
+     *
+     * @return array
+     */
+    public static function openAPITypes()
+    {
+        return self::$openAPITypes;
+    }
+
+    /**
+     * Array of property to format mappings. Used for (de)serialization
+     *
+     * @return array
+     */
+    public static function openAPIFormats()
+    {
+        return self::$openAPIFormats;
+    }
 
     /**
      * Array of attributes where the key is the local name,
@@ -183,44 +206,15 @@ class ListCurrenciesItem implements ModelInterface, ArrayAccess, \JsonSerializab
         return self::$openAPIModelName;
     }
 
-    const TYPE_FIAT = 'fiat';
-    const TYPE_CRYPTO = 'crypto';
-
     /**
-     * Gets allowable values of the enum
+     * Validate all the properties in the model
+     * return true if all passed
      *
-     * @return string[]
+     * @return bool True if all properties are valid
      */
-    public function getTypeAllowableValues()
+    public function valid()
     {
-        return [
-            self::TYPE_FIAT,
-            self::TYPE_CRYPTO,
-        ];
-    }
-
-    /**
-     * Associative array for storing property values
-     *
-     * @var mixed[]
-     */
-    protected $container = [];
-
-    /**
-     * Constructor
-     *
-     * @param mixed[] $data Associated array of property values
-     *                      initializing the model
-     */
-    public function __construct(array $data = null)
-    {
-        $this->container['code'] = $data['code'] ?? null;
-        $this->container['banknotes'] = $data['banknotes'] ?? null;
-        $this->container['coins'] = $data['coins'] ?? null;
-        $this->container['iso'] = $data['iso'] ?? null;
-        $this->container['name'] = $data['name'] ?? null;
-        $this->container['type'] = $data['type'] ?? null;
-        $this->container['units'] = $data['units'] ?? null;
+        return count($this->listInvalidProperties()) === 0;
     }
 
     /**
@@ -245,16 +239,17 @@ class ListCurrenciesItem implements ModelInterface, ArrayAccess, \JsonSerializab
     }
 
     /**
-     * Validate all the properties in the model
-     * return true if all passed
+     * Gets allowable values of the enum
      *
-     * @return bool True if all properties are valid
+     * @return string[]
      */
-    public function valid()
+    public function getTypeAllowableValues()
     {
-        return count($this->listInvalidProperties()) === 0;
+        return [
+            self::TYPE_FIAT,
+            self::TYPE_CRYPTO,
+        ];
     }
-
 
     /**
      * Gets code
@@ -397,7 +392,7 @@ class ListCurrenciesItem implements ModelInterface, ArrayAccess, \JsonSerializab
     {
         $allowedValues = $this->getTypeAllowableValues();
         if (!is_null($type) && !in_array($type, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf(
                     "Invalid value '%s' for 'type', must be one of '%s'",
                     $type,

@@ -3,7 +3,7 @@
  * ApiException
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
  */
 
@@ -17,17 +17,29 @@
  */
 
 
-namespace Devme\Sdk;
+namespace DevmeSdk;
 
 /**
  * ApiException Class Doc Comment
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
  */
 class HeaderSelector
 {
+
+    /**
+     * @param string[] $accept
+     * @return array
+     */
+    public function selectHeadersForMultipart($accept)
+    {
+        $headers = $this->selectHeaders($accept, []);
+
+        unset($headers['Content-Type']);
+        return $headers;
+    }
 
     /**
      * @param string[] $accept
@@ -44,18 +56,6 @@ class HeaderSelector
         }
 
         $headers['Content-Type'] = $this->selectContentTypeHeader($contentTypes);
-        return $headers;
-    }
-
-    /**
-     * @param string[] $accept
-     * @return array
-     */
-    public function selectHeadersForMultipart($accept)
-    {
-        $headers = $this->selectHeaders($accept, []);
-
-        unset($headers['Content-Type']);
         return $headers;
     }
 

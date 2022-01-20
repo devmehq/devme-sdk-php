@@ -4,7 +4,7 @@
  *
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
  */
 
@@ -18,22 +18,24 @@
  */
 
 
-namespace Devme\Sdk\Model;
+namespace DevmeSdk\Model;
 
 use ArrayAccess;
-use Devme\Sdk\ObjectSerializer;
+use DevmeSdk\ObjectSerializer;
+use JsonSerializable;
+use phpDocumentor\Reflection\Types\Mixed_;
 
 /**
  * GetCurrencyDetailsOut Class Doc Comment
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
- * @implements \ArrayAccess<TKey, TValue>
+ * @implements ArrayAccess
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class GetCurrencyDetailsOut implements ModelInterface, ArrayAccess, \JsonSerializable
+class GetCurrencyDetailsOut implements ModelInterface, ArrayAccess, JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -51,7 +53,7 @@ class GetCurrencyDetailsOut implements ModelInterface, ArrayAccess, \JsonSeriali
      */
     protected static $openAPITypes = [
         'code' => 'string',
-        'name' => 'string'
+        'name' => 'object'
     ];
 
     /**
@@ -65,6 +67,52 @@ class GetCurrencyDetailsOut implements ModelInterface, ArrayAccess, \JsonSeriali
         'code' => null,
         'name' => null
     ];
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
+     * @var string[]
+     */
+    protected static $attributeMap = [
+        'code' => 'code',
+        'name' => 'name'
+    ];
+    /**
+     * Array of attributes to setter functions (for deserialization of responses)
+     *
+     * @var string[]
+     */
+    protected static $setters = [
+        'code' => 'setCode',
+        'name' => 'setName'
+    ];
+    /**
+     * Array of attributes to getter functions (for serialization of requests)
+     *
+     * @var string[]
+     */
+    protected static $getters = [
+        'code' => 'getCode',
+        'name' => 'getName'
+    ];
+    /**
+     * Associative array for storing property values
+     *
+     * @var mixed[]
+     */
+    protected $container = [];
+
+    /**
+     * Constructor
+     *
+     * @param mixed[] $data Associated array of property values
+     *                      initializing the model
+     */
+    public function __construct(array $data = null)
+    {
+        $this->container['code'] = $data['code'] ?? null;
+        $this->container['name'] = $data['name'] ?? null;
+    }
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -85,37 +133,6 @@ class GetCurrencyDetailsOut implements ModelInterface, ArrayAccess, \JsonSeriali
     {
         return self::$openAPIFormats;
     }
-
-    /**
-     * Array of attributes where the key is the local name,
-     * and the value is the original name
-     *
-     * @var string[]
-     */
-    protected static $attributeMap = [
-        'code' => 'code',
-        'name' => 'name'
-    ];
-
-    /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     *
-     * @var string[]
-     */
-    protected static $setters = [
-        'code' => 'setCode',
-        'name' => 'setName'
-    ];
-
-    /**
-     * Array of attributes to getter functions (for serialization of requests)
-     *
-     * @var string[]
-     */
-    protected static $getters = [
-        'code' => 'getCode',
-        'name' => 'getName'
-    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -158,24 +175,15 @@ class GetCurrencyDetailsOut implements ModelInterface, ArrayAccess, \JsonSeriali
         return self::$openAPIModelName;
     }
 
-
     /**
-     * Associative array for storing property values
+     * Validate all the properties in the model
+     * return true if all passed
      *
-     * @var mixed[]
+     * @return bool True if all properties are valid
      */
-    protected $container = [];
-
-    /**
-     * Constructor
-     *
-     * @param mixed[] $data Associated array of property values
-     *                      initializing the model
-     */
-    public function __construct(array $data = null)
+    public function valid()
     {
-        $this->container['code'] = $data['code'] ?? null;
-        $this->container['name'] = $data['name'] ?? null;
+        return count($this->listInvalidProperties()) === 0;
     }
 
     /**
@@ -189,18 +197,6 @@ class GetCurrencyDetailsOut implements ModelInterface, ArrayAccess, \JsonSeriali
 
         return $invalidProperties;
     }
-
-    /**
-     * Validate all the properties in the model
-     * return true if all passed
-     *
-     * @return bool True if all properties are valid
-     */
-    public function valid()
-    {
-        return count($this->listInvalidProperties()) === 0;
-    }
-
 
     /**
      * Gets code
@@ -257,7 +253,7 @@ class GetCurrencyDetailsOut implements ModelInterface, ArrayAccess, \JsonSeriali
      *
      * @return boolean
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset):bool
     {
         return isset($this->container[$offset]);
     }
@@ -269,7 +265,7 @@ class GetCurrencyDetailsOut implements ModelInterface, ArrayAccess, \JsonSeriali
      *
      * @return mixed|null
      */
-    public function offsetGet($offset)
+    public function offsetGet($offset):mixed
     {
         return $this->container[$offset] ?? null;
     }
@@ -282,7 +278,7 @@ class GetCurrencyDetailsOut implements ModelInterface, ArrayAccess, \JsonSeriali
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value):void
     {
         if (is_null($offset)) {
             $this->container[] = $value;
@@ -298,7 +294,7 @@ class GetCurrencyDetailsOut implements ModelInterface, ArrayAccess, \JsonSeriali
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset):void
     {
         unset($this->container[$offset]);
     }
@@ -310,7 +306,7 @@ class GetCurrencyDetailsOut implements ModelInterface, ArrayAccess, \JsonSeriali
      * @return mixed Returns data which can be serialized by json_encode(), which is a value
      * of any type other than a resource.
      */
-    public function jsonSerialize()
+    public function jsonSerialize():mixed
     {
         return ObjectSerializer::sanitizeForSerialization($this);
     }

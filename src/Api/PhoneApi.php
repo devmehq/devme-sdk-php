@@ -3,7 +3,7 @@
  * PhoneApi
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
  */
 
@@ -17,25 +17,32 @@
  */
 
 
-namespace Devme\Sdk\Api;
+namespace DevmeSdk\Api;
 
-use Devme\Sdk\ApiException;
-use Devme\Sdk\Configuration;
-use Devme\Sdk\HeaderSelector;
-use Devme\Sdk\ObjectSerializer;
+use DevmeSdk\ApiException;
+use DevmeSdk\Configuration;
+use DevmeSdk\HeaderSelector;
+use DevmeSdk\Model\GetPhoneDetailsOut;
+use DevmeSdk\Model\HttpErrorOut;
+use DevmeSdk\ObjectSerializer;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\MultipartStream;
+use GuzzleHttp\Psr7\Query;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
+use InvalidArgumentException;
+use RuntimeException;
 
 /**
  * PhoneApi Class Doc Comment
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
  */
 class PhoneApi
@@ -61,30 +68,21 @@ class PhoneApi
     protected $hostIndex;
 
     /**
-     * @param ClientInterface $client
-     * @param Configuration $config
-     * @param HeaderSelector $selector
+     * @param ClientInterface|null $client
+     * @param Configuration|null $config
+     * @param HeaderSelector|null $selector
      * @param int $hostIndex (Optional) host index to select the list of hosts if defined in the OpenAPI spec
      */
     public function __construct(
         ClientInterface $client = null,
         Configuration   $config = null,
         HeaderSelector  $selector = null,
-        $hostIndex = 0
-    ) {
+        int             $hostIndex = 0
+    )
+    {
         $this->client = $client ?: new Client();
         $this->config = $config ?: new Configuration();
         $this->headerSelector = $selector ?: new HeaderSelector();
-        $this->hostIndex = $hostIndex;
-    }
-
-    /**
-     * Set the host index
-     *
-     * @param int $hostIndex Host index (required)
-     */
-    public function setHostIndex($hostIndex): void
-    {
         $this->hostIndex = $hostIndex;
     }
 
@@ -93,15 +91,25 @@ class PhoneApi
      *
      * @return int Host index
      */
-    public function getHostIndex()
+    public function getHostIndex(): int
     {
         return $this->hostIndex;
     }
 
     /**
+     * Set the host index
+     *
+     * @param int $hostIndex Host index (required)
+     */
+    public function setHostIndex(int $hostIndex): void
+    {
+        $this->hostIndex = $hostIndex;
+    }
+
+    /**
      * @return Configuration
      */
-    public function getConfig()
+    public function getConfig(): Configuration
     {
         return $this->config;
     }
@@ -111,11 +119,11 @@ class PhoneApi
      *
      * @param string $phone phone - phone number to validate (required)
      *
-     * @return \Devme\Sdk\Model\GetPhoneDetailsOut|\Devme\Sdk\Model\HttpErrorOut|\Devme\Sdk\Model\HttpErrorOut
-     * @throws \InvalidArgumentException
-     * @throws \Devme\Sdk\ApiException on non-2xx response
+     * @return GetPhoneDetailsOut|HttpErrorOut
+     * @throws InvalidArgumentException
+     * @throws ApiException on non-2xx response
      */
-    public function v1GetPhoneDetails($phone)
+    public function v1GetPhoneDetails(string $phone)
     {
         list($response) = $this->v1GetPhoneDetailsWithHttpInfo($phone);
         return $response;
@@ -126,11 +134,11 @@ class PhoneApi
      *
      * @param string $phone phone - phone number to validate (required)
      *
-     * @return array of \Devme\Sdk\Model\GetPhoneDetailsOut|\Devme\Sdk\Model\HttpErrorOut|\Devme\Sdk\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
-     * @throws \InvalidArgumentException
-     * @throws \Devme\Sdk\ApiException on non-2xx response
+     * @return array of \DevmeSdk\Model\GetPhoneDetailsOut|\DevmeSdk\Model\HttpErrorOut|\DevmeSdk\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
+     * @throws InvalidArgumentException
+     * @throws ApiException|GuzzleException on non-2xx response
      */
-    public function v1GetPhoneDetailsWithHttpInfo($phone)
+    public function v1GetPhoneDetailsWithHttpInfo(string $phone): array
     {
         $request = $this->v1GetPhoneDetailsRequest($phone);
 
@@ -171,44 +179,33 @@ class PhoneApi
 
             switch ($statusCode) {
                 case 200:
-                    if ('\Devme\Sdk\Model\GetPhoneDetailsOut' === '\SplFileObject') {
+                    if ('\DevmeSdk\Model\GetPhoneDetailsOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Devme\Sdk\Model\GetPhoneDetailsOut', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 400:
-                    if ('\Devme\Sdk\Model\HttpErrorOut' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string)$response->getBody();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\Devme\Sdk\Model\HttpErrorOut', []),
+                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\GetPhoneDetailsOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 case 401:
-                    if ('\Devme\Sdk\Model\HttpErrorOut' === '\SplFileObject') {
+                case 400:
+                    if ('\DevmeSdk\Model\HttpErrorOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Devme\Sdk\Model\HttpErrorOut', []),
+                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\HttpErrorOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\Devme\Sdk\Model\GetPhoneDetailsOut';
+            $returnType = '\DevmeSdk\Model\GetPhoneDetailsOut';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -225,23 +222,16 @@ class PhoneApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Devme\Sdk\Model\GetPhoneDetailsOut',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Devme\Sdk\Model\HttpErrorOut',
+                        '\DevmeSdk\Model\GetPhoneDetailsOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
                     break;
                 case 401:
+                case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Devme\Sdk\Model\HttpErrorOut',
+                        '\DevmeSdk\Model\HttpErrorOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -252,82 +242,18 @@ class PhoneApi
     }
 
     /**
-     * Operation v1GetPhoneDetailsAsync
-     *
-     * @param string $phone phone - phone number to validate (required)
-     *
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     * @throws \InvalidArgumentException
-     */
-    public function v1GetPhoneDetailsAsync($phone)
-    {
-        return $this->v1GetPhoneDetailsAsyncWithHttpInfo($phone)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation v1GetPhoneDetailsAsyncWithHttpInfo
-     *
-     * @param string $phone phone - phone number to validate (required)
-     *
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     * @throws \InvalidArgumentException
-     */
-    public function v1GetPhoneDetailsAsyncWithHttpInfo($phone)
-    {
-        $returnType = '\Devme\Sdk\Model\GetPhoneDetailsOut';
-        $request = $this->v1GetPhoneDetailsRequest($phone);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    if ($returnType === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string)$response->getBody();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string)$response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
      * Create request for operation 'v1GetPhoneDetails'
      *
      * @param string $phone phone - phone number to validate (required)
      *
-     * @return \GuzzleHttp\Psr7\Request
-     * @throws \InvalidArgumentException
+     * @return Request
+     * @throws InvalidArgumentException
      */
-    public function v1GetPhoneDetailsRequest($phone)
+    public function v1GetPhoneDetailsRequest(string $phone): Request
     {
         // verify the required parameter 'phone' is set
         if ($phone === null || (is_array($phone) && count($phone) === 0)) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Missing the required parameter $phone when calling v1GetPhoneDetails'
             );
         }
@@ -381,7 +307,7 @@ class PhoneApi
                 $httpBody = \GuzzleHttp\json_encode($formParams);
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
+                $httpBody = Query::build($formParams);
             }
         }
 
@@ -407,7 +333,7 @@ class PhoneApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+        $query = Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -420,18 +346,82 @@ class PhoneApi
      * Create http client option
      *
      * @return array of http client options
-     * @throws \RuntimeException on file opening failure
+     * @throws RuntimeException on file opening failure
      */
-    protected function createHttpClientOption()
+    protected function createHttpClientOption(): array
     {
         $options = [];
         if ($this->config->getDebug()) {
             $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
             if (!$options[RequestOptions::DEBUG]) {
-                throw new \RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
+                throw new RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
             }
         }
 
         return $options;
+    }
+
+    /**
+     * Operation v1GetPhoneDetailsAsync
+     *
+     * @param string $phone phone - phone number to validate (required)
+     *
+     * @return PromiseInterface
+     * @throws InvalidArgumentException
+     */
+    public function v1GetPhoneDetailsAsync(string $phone): PromiseInterface
+    {
+        return $this->v1GetPhoneDetailsAsyncWithHttpInfo($phone)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation v1GetPhoneDetailsAsyncWithHttpInfo
+     *
+     * @param string $phone phone - phone number to validate (required)
+     *
+     * @return PromiseInterface
+     * @throws InvalidArgumentException
+     */
+    public function v1GetPhoneDetailsAsyncWithHttpInfo(string $phone): PromiseInterface
+    {
+        $returnType = '\DevmeSdk\Model\GetPhoneDetailsOut';
+        $request = $this->v1GetPhoneDetailsRequest($phone);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string)$response->getBody();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string)$response->getBody()
+                    );
+                }
+            );
     }
 }

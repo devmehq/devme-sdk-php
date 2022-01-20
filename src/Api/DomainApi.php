@@ -3,7 +3,7 @@
  * DomainApi
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
  */
 
@@ -17,25 +17,31 @@
  */
 
 
-namespace Devme\Sdk\Api;
+namespace DevmeSdk\Api;
 
-use Devme\Sdk\ApiException;
-use Devme\Sdk\Configuration;
-use Devme\Sdk\HeaderSelector;
-use Devme\Sdk\ObjectSerializer;
+use DevmeSdk\ApiException;
+use DevmeSdk\Configuration;
+use DevmeSdk\HeaderSelector;
+use DevmeSdk\Model\GetDomainWhoisOut;
+use DevmeSdk\Model\HttpErrorOut;
+use DevmeSdk\ObjectSerializer;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\MultipartStream;
+use GuzzleHttp\Psr7\Query;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
+use InvalidArgumentException;
+use RuntimeException;
 
 /**
  * DomainApi Class Doc Comment
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
  */
 class DomainApi
@@ -70,21 +76,12 @@ class DomainApi
         ClientInterface $client = null,
         Configuration   $config = null,
         HeaderSelector  $selector = null,
-        $hostIndex = 0
-    ) {
+                        $hostIndex = 0
+    )
+    {
         $this->client = $client ?: new Client();
         $this->config = $config ?: new Configuration();
         $this->headerSelector = $selector ?: new HeaderSelector();
-        $this->hostIndex = $hostIndex;
-    }
-
-    /**
-     * Set the host index
-     *
-     * @param int $hostIndex Host index (required)
-     */
-    public function setHostIndex($hostIndex): void
-    {
         $this->hostIndex = $hostIndex;
     }
 
@@ -96,6 +93,16 @@ class DomainApi
     public function getHostIndex()
     {
         return $this->hostIndex;
+    }
+
+    /**
+     * Set the host index
+     *
+     * @param int $hostIndex Host index (required)
+     */
+    public function setHostIndex($hostIndex): void
+    {
+        $this->hostIndex = $hostIndex;
     }
 
     /**
@@ -111,9 +118,9 @@ class DomainApi
      *
      * @param string $domain domain - Domain name to get details for (optional)
      *
-     * @return \Devme\Sdk\Model\GetDomainWhoisOut|\Devme\Sdk\Model\HttpErrorOut|\Devme\Sdk\Model\HttpErrorOut
-     * @throws \InvalidArgumentException
-     * @throws \Devme\Sdk\ApiException on non-2xx response
+     * @return GetDomainWhoisOut|HttpErrorOut|HttpErrorOut
+     * @throws InvalidArgumentException
+     * @throws ApiException on non-2xx response
      */
     public function v1GetDomainWhois($domain = null)
     {
@@ -126,9 +133,9 @@ class DomainApi
      *
      * @param string $domain domain - Domain name to get details for (optional)
      *
-     * @return array of \Devme\Sdk\Model\GetDomainWhoisOut|\Devme\Sdk\Model\HttpErrorOut|\Devme\Sdk\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
-     * @throws \InvalidArgumentException
-     * @throws \Devme\Sdk\ApiException on non-2xx response
+     * @return array of \DevmeSdk\Model\GetDomainWhoisOut|\DevmeSdk\Model\HttpErrorOut|\DevmeSdk\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
+     * @throws InvalidArgumentException
+     * @throws ApiException on non-2xx response
      */
     public function v1GetDomainWhoisWithHttpInfo($domain = null)
     {
@@ -171,44 +178,44 @@ class DomainApi
 
             switch ($statusCode) {
                 case 200:
-                    if ('\Devme\Sdk\Model\GetDomainWhoisOut' === '\SplFileObject') {
+                    if ('\DevmeSdk\Model\GetDomainWhoisOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Devme\Sdk\Model\GetDomainWhoisOut', []),
+                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\GetDomainWhoisOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 case 400:
-                    if ('\Devme\Sdk\Model\HttpErrorOut' === '\SplFileObject') {
+                    if ('\DevmeSdk\Model\HttpErrorOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Devme\Sdk\Model\HttpErrorOut', []),
+                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\HttpErrorOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 case 401:
-                    if ('\Devme\Sdk\Model\HttpErrorOut' === '\SplFileObject') {
+                    if ('\DevmeSdk\Model\HttpErrorOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Devme\Sdk\Model\HttpErrorOut', []),
+                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\HttpErrorOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\Devme\Sdk\Model\GetDomainWhoisOut';
+            $returnType = '\DevmeSdk\Model\GetDomainWhoisOut';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -225,7 +232,7 @@ class DomainApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Devme\Sdk\Model\GetDomainWhoisOut',
+                        '\DevmeSdk\Model\GetDomainWhoisOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -233,7 +240,7 @@ class DomainApi
                 case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Devme\Sdk\Model\HttpErrorOut',
+                        '\DevmeSdk\Model\HttpErrorOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -241,7 +248,7 @@ class DomainApi
                 case 401:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Devme\Sdk\Model\HttpErrorOut',
+                        '\DevmeSdk\Model\HttpErrorOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -252,76 +259,12 @@ class DomainApi
     }
 
     /**
-     * Operation v1GetDomainWhoisAsync
-     *
-     * @param string $domain domain - Domain name to get details for (optional)
-     *
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     * @throws \InvalidArgumentException
-     */
-    public function v1GetDomainWhoisAsync($domain = null)
-    {
-        return $this->v1GetDomainWhoisAsyncWithHttpInfo($domain)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation v1GetDomainWhoisAsyncWithHttpInfo
-     *
-     * @param string $domain domain - Domain name to get details for (optional)
-     *
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     * @throws \InvalidArgumentException
-     */
-    public function v1GetDomainWhoisAsyncWithHttpInfo($domain = null)
-    {
-        $returnType = '\Devme\Sdk\Model\GetDomainWhoisOut';
-        $request = $this->v1GetDomainWhoisRequest($domain);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    if ($returnType === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string)$response->getBody();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string)$response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
      * Create request for operation 'v1GetDomainWhois'
      *
      * @param string $domain domain - Domain name to get details for (optional)
      *
-     * @return \GuzzleHttp\Psr7\Request
-     * @throws \InvalidArgumentException
+     * @return Request
+     * @throws InvalidArgumentException
      */
     public function v1GetDomainWhoisRequest($domain = null)
     {
@@ -375,7 +318,7 @@ class DomainApi
                 $httpBody = \GuzzleHttp\json_encode($formParams);
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
+                $httpBody = Query::build($formParams);
             }
         }
 
@@ -401,7 +344,7 @@ class DomainApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+        $query = Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -414,7 +357,7 @@ class DomainApi
      * Create http client option
      *
      * @return array of http client options
-     * @throws \RuntimeException on file opening failure
+     * @throws RuntimeException on file opening failure
      */
     protected function createHttpClientOption()
     {
@@ -422,10 +365,74 @@ class DomainApi
         if ($this->config->getDebug()) {
             $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
             if (!$options[RequestOptions::DEBUG]) {
-                throw new \RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
+                throw new RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
             }
         }
 
         return $options;
+    }
+
+    /**
+     * Operation v1GetDomainWhoisAsync
+     *
+     * @param string $domain domain - Domain name to get details for (optional)
+     *
+     * @return PromiseInterface
+     * @throws InvalidArgumentException
+     */
+    public function v1GetDomainWhoisAsync($domain = null)
+    {
+        return $this->v1GetDomainWhoisAsyncWithHttpInfo($domain)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation v1GetDomainWhoisAsyncWithHttpInfo
+     *
+     * @param string $domain domain - Domain name to get details for (optional)
+     *
+     * @return PromiseInterface
+     * @throws InvalidArgumentException
+     */
+    public function v1GetDomainWhoisAsyncWithHttpInfo($domain = null)
+    {
+        $returnType = '\DevmeSdk\Model\GetDomainWhoisOut';
+        $request = $this->v1GetDomainWhoisRequest($domain);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string)$response->getBody();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string)$response->getBody()
+                    );
+                }
+            );
     }
 }

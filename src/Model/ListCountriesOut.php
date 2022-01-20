@@ -4,7 +4,7 @@
  *
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
  */
 
@@ -18,22 +18,23 @@
  */
 
 
-namespace Devme\Sdk\Model;
+namespace DevmeSdk\Model;
 
 use ArrayAccess;
-use Devme\Sdk\ObjectSerializer;
+use DevmeSdk\ObjectSerializer;
+use JsonSerializable;
 
 /**
  * ListCountriesOut Class Doc Comment
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
- * @implements \ArrayAccess<TKey, TValue>
+ * @implements ArrayAccess
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class ListCountriesOut implements ModelInterface, ArrayAccess, \JsonSerializable
+class ListCountriesOut implements ModelInterface, ArrayAccess, JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -52,7 +53,7 @@ class ListCountriesOut implements ModelInterface, ArrayAccess, \JsonSerializable
     protected static $openAPITypes = [
         'page' => 'float',
         'total' => 'float',
-        'list' => '\Devme\Sdk\Model\ListCountriesItem[]'
+        'list' => '\DevmeSdk\Model\ListCountriesItem[]'
     ];
 
     /**
@@ -67,6 +68,56 @@ class ListCountriesOut implements ModelInterface, ArrayAccess, \JsonSerializable
         'total' => null,
         'list' => null
     ];
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
+     * @var string[]
+     */
+    protected static $attributeMap = [
+        'page' => 'page',
+        'total' => 'total',
+        'list' => 'list'
+    ];
+    /**
+     * Array of attributes to setter functions (for deserialization of responses)
+     *
+     * @var string[]
+     */
+    protected static $setters = [
+        'page' => 'setPage',
+        'total' => 'setTotal',
+        'list' => 'setList'
+    ];
+    /**
+     * Array of attributes to getter functions (for serialization of requests)
+     *
+     * @var string[]
+     */
+    protected static $getters = [
+        'page' => 'getPage',
+        'total' => 'getTotal',
+        'list' => 'getList'
+    ];
+    /**
+     * Associative array for storing property values
+     *
+     * @var mixed[]
+     */
+    protected $container = [];
+
+    /**
+     * Constructor
+     *
+     * @param mixed[] $data Associated array of property values
+     *                      initializing the model
+     */
+    public function __construct(array $data = null)
+    {
+        $this->container['page'] = $data['page'] ?? null;
+        $this->container['total'] = $data['total'] ?? null;
+        $this->container['list'] = $data['list'] ?? null;
+    }
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -87,40 +138,6 @@ class ListCountriesOut implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         return self::$openAPIFormats;
     }
-
-    /**
-     * Array of attributes where the key is the local name,
-     * and the value is the original name
-     *
-     * @var string[]
-     */
-    protected static $attributeMap = [
-        'page' => 'page',
-        'total' => 'total',
-        'list' => 'list'
-    ];
-
-    /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     *
-     * @var string[]
-     */
-    protected static $setters = [
-        'page' => 'setPage',
-        'total' => 'setTotal',
-        'list' => 'setList'
-    ];
-
-    /**
-     * Array of attributes to getter functions (for serialization of requests)
-     *
-     * @var string[]
-     */
-    protected static $getters = [
-        'page' => 'getPage',
-        'total' => 'getTotal',
-        'list' => 'getList'
-    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -163,25 +180,15 @@ class ListCountriesOut implements ModelInterface, ArrayAccess, \JsonSerializable
         return self::$openAPIModelName;
     }
 
-
     /**
-     * Associative array for storing property values
+     * Validate all the properties in the model
+     * return true if all passed
      *
-     * @var mixed[]
+     * @return bool True if all properties are valid
      */
-    protected $container = [];
-
-    /**
-     * Constructor
-     *
-     * @param mixed[] $data Associated array of property values
-     *                      initializing the model
-     */
-    public function __construct(array $data = null)
+    public function valid()
     {
-        $this->container['page'] = $data['page'] ?? null;
-        $this->container['total'] = $data['total'] ?? null;
-        $this->container['list'] = $data['list'] ?? null;
+        return count($this->listInvalidProperties()) === 0;
     }
 
     /**
@@ -195,18 +202,6 @@ class ListCountriesOut implements ModelInterface, ArrayAccess, \JsonSerializable
 
         return $invalidProperties;
     }
-
-    /**
-     * Validate all the properties in the model
-     * return true if all passed
-     *
-     * @return bool True if all properties are valid
-     */
-    public function valid()
-    {
-        return count($this->listInvalidProperties()) === 0;
-    }
-
 
     /**
      * Gets page
@@ -259,7 +254,7 @@ class ListCountriesOut implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Gets list
      *
-     * @return \Devme\Sdk\Model\ListCountriesItem[]|null
+     * @return ListCountriesItem[]|null
      */
     public function getList()
     {
@@ -269,7 +264,7 @@ class ListCountriesOut implements ModelInterface, ArrayAccess, \JsonSerializable
     /**
      * Sets list
      *
-     * @param \Devme\Sdk\Model\ListCountriesItem[]|null $list list of countries
+     * @param ListCountriesItem[]|null $list list of countries
      *
      * @return self
      */

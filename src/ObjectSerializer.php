@@ -4,7 +4,7 @@
  *
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
  */
 
@@ -18,21 +18,26 @@
  */
 
 
-namespace Devme\Sdk;
+namespace DevmeSdk;
 
-use Devme\Sdk\Model\ModelInterface;
+use DateTime;
+use DevmeSdk\Model\ModelInterface;
+use Exception;
+use InvalidArgumentException;
+use Psr\Http\Message\StreamInterface;
+use SplFileObject;
 
 /**
  * ObjectSerializer Class Doc Comment
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
  */
 class ObjectSerializer
 {
     /** @var string */
-    private static $dateTimeFormat = \DateTime::ATOM;
+    private static $dateTimeFormat = DateTime::ATOM;
 
     /**
      * Change the date format
@@ -59,7 +64,7 @@ class ObjectSerializer
             return $data;
         }
 
-        if ($data instanceof \DateTime) {
+        if ($data instanceof DateTime) {
             return ($format === 'date') ? $data->format('Y-m-d') : $data->format(self::$dateTimeFormat);
         }
 
@@ -84,7 +89,7 @@ class ObjectSerializer
                             $allowedEnumTypes = $callable();
                             if (!in_array($value, $allowedEnumTypes, true)) {
                                 $imploded = implode("', '", $allowedEnumTypes);
-                                throw new \InvalidArgumentException("Invalid value for enum '$openAPIType', must be one of: '$imploded'");
+                                throw new InvalidArgumentException("Invalid value for enum '$openAPIType', must be one of: '$imploded'");
                             }
                         }
                     }
@@ -104,39 +109,6 @@ class ObjectSerializer
     }
 
     /**
-     * Sanitize filename by removing path.
-     * e.g. ../../sun.gif becomes sun.gif
-     *
-     * @param string $filename filename to be sanitized
-     *
-     * @return string the sanitized filename
-     */
-    public static function sanitizeFilename($filename)
-    {
-        if (preg_match("/.*[\/\\\\](.*)$/", $filename, $match)) {
-            return $match[1];
-        } else {
-            return $filename;
-        }
-    }
-
-    /**
-     * Shorter timestamp microseconds to 6 digits length.
-     *
-     * @param string $timestamp Original timestamp
-     *
-     * @return string the shorten timestamp
-     */
-    public static function sanitizeTimestamp($timestamp)
-    {
-        if (!is_string($timestamp)) {
-            return $timestamp;
-        }
-
-        return preg_replace('/(:\d{2}.\d{6})\d*/', '$1', $timestamp);
-    }
-
-    /**
      * Take value and turn it into a string suitable for inclusion in
      * the path, by url-encoding.
      *
@@ -151,11 +123,32 @@ class ObjectSerializer
 
     /**
      * Take value and turn it into a string suitable for inclusion in
+     * the parameter. If it's a string, pass through unchanged
+     * If it's a datetime object, format it in ISO8601
+     * If it's a boolean, convert it to "true" or "false".
+     *
+     * @param string|bool|DateTime $value the value of the parameter
+     *
+     * @return string the header string
+     */
+    public static function toString($value)
+    {
+        if ($value instanceof DateTime) { // datetime in ISO8601 format
+            return $value->format(self::$dateTimeFormat);
+        } elseif (is_bool($value)) {
+            return $value ? 'true' : 'false';
+        } else {
+            return $value;
+        }
+    }
+
+    /**
+     * Take value and turn it into a string suitable for inclusion in
      * the query, by imploding comma-separated if it's an object.
      * If it's a string, pass through unchanged. It will be url-encoded
      * later.
      *
-     * @param string[]|string|\DateTime $object an object to be serialized to a string
+     * @param string[]|string|DateTime $object an object to be serialized to a string
      *
      * @return string the serialized object
      */
@@ -192,37 +185,16 @@ class ObjectSerializer
      * the http body (form parameter). If it's a string, pass through unchanged
      * If it's a datetime object, format it in ISO8601
      *
-     * @param string|\SplFileObject $value the value of the form parameter
+     * @param string|SplFileObject $value the value of the form parameter
      *
      * @return string the form string
      */
     public static function toFormValue($value)
     {
-        if ($value instanceof \SplFileObject) {
+        if ($value instanceof SplFileObject) {
             return $value->getRealPath();
         } else {
             return self::toString($value);
-        }
-    }
-
-    /**
-     * Take value and turn it into a string suitable for inclusion in
-     * the parameter. If it's a string, pass through unchanged
-     * If it's a datetime object, format it in ISO8601
-     * If it's a boolean, convert it to "true" or "false".
-     *
-     * @param string|bool|\DateTime $value the value of the parameter
-     *
-     * @return string the header string
-     */
-    public static function toString($value)
-    {
-        if ($value instanceof \DateTime) { // datetime in ISO8601 format
-            return $value->format(self::$dateTimeFormat);
-        } elseif (is_bool($value)) {
-            return $value ? 'true' : 'false';
-        } else {
-            return $value;
         }
     }
 
@@ -268,12 +240,11 @@ class ObjectSerializer
      *
      * @param mixed $data object or primitive to be deserialized
      * @param string $class class name is passed as a string
-     * @param string[] $httpHeaders HTTP headers
-     * @param string $discriminator discriminator if polymorphism is used
-     *
+     * @param null $httpHeaders HTTP headers
      * @return object|array|null a single or an array of $class instances
+     * @throws Exception
      */
-    public static function deserialize($data, $class, $httpHeaders = null)
+    public static function deserialize($data, string $class, $httpHeaders = null)
     {
         if (null === $data) {
             return null;
@@ -283,7 +254,7 @@ class ObjectSerializer
             $data = is_string($data) ? json_decode($data) : $data;
 
             if (!is_array($data)) {
-                throw new \InvalidArgumentException("Invalid array '$class'");
+                throw new InvalidArgumentException("Invalid array '$class'");
             }
 
             $subClass = substr($class, 0, -2);
@@ -326,12 +297,12 @@ class ObjectSerializer
             // this graceful.
             if (!empty($data)) {
                 try {
-                    return new \DateTime($data);
-                } catch (\Exception $exception) {
+                    return new DateTime($data);
+                } catch (Exception $exception) {
                     // Some API's return a date-time with too high nanosecond
                     // precision for php's DateTime to handle.
                     // With provided regexp 6 digits of microseconds saved
-                    return new \DateTime(self::sanitizeTimestamp($data));
+                    return new DateTime(self::sanitizeTimestamp($data));
                 }
             } else {
                 return null;
@@ -339,7 +310,7 @@ class ObjectSerializer
         }
 
         if ($class === '\SplFileObject') {
-            /** @var \Psr\Http\Message\StreamInterface $data */
+            /** @var StreamInterface $data */
 
             // determine file name
             if (is_array($httpHeaders)
@@ -357,7 +328,7 @@ class ObjectSerializer
             }
             fclose($file);
 
-            return new \SplFileObject($filename, 'r');
+            return new SplFileObject($filename, 'r');
         }
 
         /** @psalm-suppress ParadoxicalCondition */
@@ -370,7 +341,7 @@ class ObjectSerializer
         if (method_exists($class, 'getAllowableEnumValues')) {
             if (!in_array($data, $class::getAllowableEnumValues(), true)) {
                 $imploded = implode("', '", $class::getAllowableEnumValues());
-                throw new \InvalidArgumentException("Invalid value for enum '$class', must be one of: '$imploded'");
+                throw new InvalidArgumentException("Invalid value for enum '$class', must be one of: '$imploded'");
             }
             return $data;
         } else {
@@ -378,7 +349,7 @@ class ObjectSerializer
             // If a discriminator is defined and points to a valid subclass, use it.
             $discriminator = $class::DISCRIMINATOR;
             if (!empty($discriminator) && isset($data->{$discriminator}) && is_string($data->{$discriminator})) {
-                $subclass = '\Devme\Sdk\Model\\' . $data->{$discriminator};
+                $subclass = '\DevmeSdk\Model\\' . $data->{$discriminator};
                 if (is_subclass_of($subclass, $class)) {
                     $class = $subclass;
                 }
@@ -395,10 +366,45 @@ class ObjectSerializer
 
                 if (isset($data->{$instance::attributeMap()[$property]})) {
                     $propertyValue = $data->{$instance::attributeMap()[$property]};
+                    var_dump($propertyValue);
+                    var_dump($type);
                     $instance->$propertySetter(self::deserialize($propertyValue, $type, null));
                 }
             }
             return $instance;
+        }
+    }
+
+    /**
+     * Shorter timestamp microseconds to 6 digits length.
+     *
+     * @param string $timestamp Original timestamp
+     *
+     * @return string the shorten timestamp
+     */
+    public static function sanitizeTimestamp($timestamp)
+    {
+        if (!is_string($timestamp)) {
+            return $timestamp;
+        }
+
+        return preg_replace('/(:\d{2}.\d{6})\d*/', '$1', $timestamp);
+    }
+
+    /**
+     * Sanitize filename by removing path.
+     * e.g. ../../sun.gif becomes sun.gif
+     *
+     * @param string $filename filename to be sanitized
+     *
+     * @return string the sanitized filename
+     */
+    public static function sanitizeFilename($filename)
+    {
+        if (preg_match("/.*[\/\\\\](.*)$/", $filename, $match)) {
+            return $match[1];
+        } else {
+            return $filename;
         }
     }
 }

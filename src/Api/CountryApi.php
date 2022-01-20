@@ -3,7 +3,7 @@
  * CountryApi
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
  */
 
@@ -17,25 +17,33 @@
  */
 
 
-namespace Devme\Sdk\Api;
+namespace DevmeSdk\Api;
 
-use Devme\Sdk\ApiException;
-use Devme\Sdk\Configuration;
-use Devme\Sdk\HeaderSelector;
-use Devme\Sdk\ObjectSerializer;
+use DevmeSdk\ApiException;
+use DevmeSdk\Configuration;
+use DevmeSdk\HeaderSelector;
+use DevmeSdk\Model\GetCountryDetailsOut;
+use DevmeSdk\Model\HttpErrorOut;
+use DevmeSdk\Model\ListCountriesOut;
+use DevmeSdk\ObjectSerializer;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\MultipartStream;
+use GuzzleHttp\Psr7\Query;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
+use InvalidArgumentException;
+use RuntimeException;
 
 /**
  * CountryApi Class Doc Comment
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
  */
 class CountryApi
@@ -61,30 +69,21 @@ class CountryApi
     protected $hostIndex;
 
     /**
-     * @param ClientInterface $client
-     * @param Configuration $config
-     * @param HeaderSelector $selector
+     * @param ClientInterface|null $client
+     * @param Configuration|null $config
+     * @param HeaderSelector|null $selector
      * @param int $hostIndex (Optional) host index to select the list of hosts if defined in the OpenAPI spec
      */
     public function __construct(
         ClientInterface $client = null,
         Configuration   $config = null,
         HeaderSelector  $selector = null,
-        $hostIndex = 0
-    ) {
+        int             $hostIndex = 0
+    )
+    {
         $this->client = $client ?: new Client();
         $this->config = $config ?: new Configuration();
         $this->headerSelector = $selector ?: new HeaderSelector();
-        $this->hostIndex = $hostIndex;
-    }
-
-    /**
-     * Set the host index
-     *
-     * @param int $hostIndex Host index (required)
-     */
-    public function setHostIndex($hostIndex): void
-    {
         $this->hostIndex = $hostIndex;
     }
 
@@ -93,15 +92,25 @@ class CountryApi
      *
      * @return int Host index
      */
-    public function getHostIndex()
+    public function getHostIndex(): int
     {
         return $this->hostIndex;
     }
 
     /**
+     * Set the host index
+     *
+     * @param int $hostIndex Host index (required)
+     */
+    public function setHostIndex(int $hostIndex): void
+    {
+        $this->hostIndex = $hostIndex;
+    }
+
+    /**
      * @return Configuration
      */
-    public function getConfig()
+    public function getConfig(): Configuration
     {
         return $this->config;
     }
@@ -110,15 +119,15 @@ class CountryApi
      * Operation v1GetCountryDetails
      *
      * @param string $code code - country code ISO 4217 (required)
-     * @param string[] $expand expand - expand properties (optional)
-     * @param string[] $exclude exclude - exclude properties (optional)
-     * @param string $language language - localisation language (optional)
+     * @param string[]|null $expand expand - expand properties (optional)
+     * @param string[]|null $exclude exclude - exclude properties (optional)
+     * @param string|null $language language - localisation language (optional)
      *
-     * @return \Devme\Sdk\Model\GetCountryDetailsOut|\Devme\Sdk\Model\HttpErrorOut|\Devme\Sdk\Model\HttpErrorOut
-     * @throws \InvalidArgumentException
-     * @throws \Devme\Sdk\ApiException on non-2xx response
+     * @return GetCountryDetailsOut|HttpErrorOut
+     * @throws InvalidArgumentException
+     * @throws ApiException on non-2xx response
      */
-    public function v1GetCountryDetails($code, $expand = null, $exclude = null, $language = null)
+    public function v1GetCountryDetails(string $code, array $expand = null, array $exclude = null, string $language = null)
     {
         list($response) = $this->v1GetCountryDetailsWithHttpInfo($code, $expand, $exclude, $language);
         return $response;
@@ -128,15 +137,15 @@ class CountryApi
      * Operation v1GetCountryDetailsWithHttpInfo
      *
      * @param string $code code - country code ISO 4217 (required)
-     * @param string[] $expand expand - expand properties (optional)
-     * @param string[] $exclude exclude - exclude properties (optional)
-     * @param string $language language - localisation language (optional)
+     * @param string[]|null $expand expand - expand properties (optional)
+     * @param string[]|null $exclude exclude - exclude properties (optional)
+     * @param string|null $language language - localisation language (optional)
      *
-     * @return array of \Devme\Sdk\Model\GetCountryDetailsOut|\Devme\Sdk\Model\HttpErrorOut|\Devme\Sdk\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
-     * @throws \InvalidArgumentException
-     * @throws \Devme\Sdk\ApiException on non-2xx response
+     * @return array of \DevmeSdk\Model\GetCountryDetailsOut|\DevmeSdk\Model\HttpErrorOut|\DevmeSdk\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
+     * @throws InvalidArgumentException
+     * @throws ApiException|GuzzleException on non-2xx response
      */
-    public function v1GetCountryDetailsWithHttpInfo($code, $expand = null, $exclude = null, $language = null)
+    public function v1GetCountryDetailsWithHttpInfo(string $code, array $expand = null, array $exclude = null, string $language = null): array
     {
         $request = $this->v1GetCountryDetailsRequest($code, $expand, $exclude, $language);
 
@@ -177,44 +186,33 @@ class CountryApi
 
             switch ($statusCode) {
                 case 200:
-                    if ('\Devme\Sdk\Model\GetCountryDetailsOut' === '\SplFileObject') {
+                    if ('\DevmeSdk\Model\GetCountryDetailsOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Devme\Sdk\Model\GetCountryDetailsOut', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 400:
-                    if ('\Devme\Sdk\Model\HttpErrorOut' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string)$response->getBody();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\Devme\Sdk\Model\HttpErrorOut', []),
+                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\GetCountryDetailsOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 case 401:
-                    if ('\Devme\Sdk\Model\HttpErrorOut' === '\SplFileObject') {
+                case 400:
+                    if ('\DevmeSdk\Model\HttpErrorOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Devme\Sdk\Model\HttpErrorOut', []),
+                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\HttpErrorOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\Devme\Sdk\Model\GetCountryDetailsOut';
+            $returnType = '\DevmeSdk\Model\GetCountryDetailsOut';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -231,23 +229,16 @@ class CountryApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Devme\Sdk\Model\GetCountryDetailsOut',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Devme\Sdk\Model\HttpErrorOut',
+                        '\DevmeSdk\Model\GetCountryDetailsOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
                     break;
                 case 401:
+                case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Devme\Sdk\Model\HttpErrorOut',
+                        '\DevmeSdk\Model\HttpErrorOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -258,91 +249,21 @@ class CountryApi
     }
 
     /**
-     * Operation v1GetCountryDetailsAsync
-     *
-     * @param string $code code - country code ISO 4217 (required)
-     * @param string[] $expand expand - expand properties (optional)
-     * @param string[] $exclude exclude - exclude properties (optional)
-     * @param string $language language - localisation language (optional)
-     *
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     * @throws \InvalidArgumentException
-     */
-    public function v1GetCountryDetailsAsync($code, $expand = null, $exclude = null, $language = null)
-    {
-        return $this->v1GetCountryDetailsAsyncWithHttpInfo($code, $expand, $exclude, $language)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation v1GetCountryDetailsAsyncWithHttpInfo
-     *
-     * @param string $code code - country code ISO 4217 (required)
-     * @param string[] $expand expand - expand properties (optional)
-     * @param string[] $exclude exclude - exclude properties (optional)
-     * @param string $language language - localisation language (optional)
-     *
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     * @throws \InvalidArgumentException
-     */
-    public function v1GetCountryDetailsAsyncWithHttpInfo($code, $expand = null, $exclude = null, $language = null)
-    {
-        $returnType = '\Devme\Sdk\Model\GetCountryDetailsOut';
-        $request = $this->v1GetCountryDetailsRequest($code, $expand, $exclude, $language);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    if ($returnType === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string)$response->getBody();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string)$response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
      * Create request for operation 'v1GetCountryDetails'
      *
      * @param string $code code - country code ISO 4217 (required)
-     * @param string[] $expand expand - expand properties (optional)
-     * @param string[] $exclude exclude - exclude properties (optional)
-     * @param string $language language - localisation language (optional)
+     * @param string[]|null $expand expand - expand properties (optional)
+     * @param string[]|null $exclude exclude - exclude properties (optional)
+     * @param string|null $language language - localisation language (optional)
      *
-     * @return \GuzzleHttp\Psr7\Request
-     * @throws \InvalidArgumentException
+     * @return Request
+     * @throws InvalidArgumentException
      */
-    public function v1GetCountryDetailsRequest($code, $expand = null, $exclude = null, $language = null)
+    public function v1GetCountryDetailsRequest(string $code, array $expand = null, array $exclude = null, string $language = null): Request
     {
         // verify the required parameter 'code' is set
         if ($code === null || (is_array($code) && count($code) === 0)) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Missing the required parameter $code when calling v1GetCountryDetails'
             );
         }
@@ -426,7 +347,7 @@ class CountryApi
                 $httpBody = \GuzzleHttp\json_encode($formParams);
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
+                $httpBody = Query::build($formParams);
             }
         }
 
@@ -452,7 +373,7 @@ class CountryApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+        $query = Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -462,21 +383,110 @@ class CountryApi
     }
 
     /**
+     * Create http client option
+     *
+     * @return array of http client options
+     * @throws RuntimeException on file opening failure
+     */
+    protected function createHttpClientOption(): array
+    {
+        $options = [];
+        if ($this->config->getDebug()) {
+            $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
+            if (!$options[RequestOptions::DEBUG]) {
+                throw new RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
+            }
+        }
+
+        return $options;
+    }
+
+    /**
+     * Operation v1GetCountryDetailsAsync
+     *
+     * @param string $code code - country code ISO 4217 (required)
+     * @param string[]|null $expand expand - expand properties (optional)
+     * @param string[]|null $exclude exclude - exclude properties (optional)
+     * @param string|null $language language - localisation language (optional)
+     *
+     * @return PromiseInterface
+     * @throws InvalidArgumentException
+     */
+    public function v1GetCountryDetailsAsync(string $code, array $expand = null, array $exclude = null, string $language = null): PromiseInterface
+    {
+        return $this->v1GetCountryDetailsAsyncWithHttpInfo($code, $expand, $exclude, $language)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation v1GetCountryDetailsAsyncWithHttpInfo
+     *
+     * @param string $code code - country code ISO 4217 (required)
+     * @param string[]|null $expand expand - expand properties (optional)
+     * @param string[]|null $exclude exclude - exclude properties (optional)
+     * @param string|null $language language - localisation language (optional)
+     *
+     * @return PromiseInterface
+     * @throws InvalidArgumentException
+     */
+    public function v1GetCountryDetailsAsyncWithHttpInfo(string $code, array $expand = null, array $exclude = null, string $language = null): PromiseInterface
+    {
+        $returnType = '\DevmeSdk\Model\GetCountryDetailsOut';
+        $request = $this->v1GetCountryDetailsRequest($code, $expand, $exclude, $language);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string)$response->getBody();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string)$response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
      * Operation v1ListCountries
      *
-     * @param string[] $code code - country code ISO 4217 (optional)
-     * @param string[] $expand expand - expand properties (optional)
-     * @param string[] $exclude exclude - exclude properties (optional)
-     * @param string $language language - localisation language (optional)
-     * @param string[] $sort sort - sort properties (optional)
-     * @param string $page page - page number (optional)
-     * @param string $page_size pageSize - page size (optional)
+     * @param string[]|null $code code - country code ISO 4217 (optional)
+     * @param string[]|null $expand expand - expand properties (optional)
+     * @param string[]|null $exclude exclude - exclude properties (optional)
+     * @param string|null $language language - localisation language (optional)
+     * @param string[]|null $sort sort - sort properties (optional)
+     * @param string|null $page page - page number (optional)
+     * @param string|null $page_size pageSize - page size (optional)
      *
-     * @return \Devme\Sdk\Model\ListCountriesOut|\Devme\Sdk\Model\HttpErrorOut|\Devme\Sdk\Model\HttpErrorOut
-     * @throws \Devme\Sdk\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
+     * @return ListCountriesOut|HttpErrorOut
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException
      */
-    public function v1ListCountries($code = null, $expand = null, $exclude = null, $language = null, $sort = null, $page = null, $page_size = null)
+    public function v1ListCountries(array $code = null, array $expand = null, array $exclude = null, string $language = null, array $sort = null, string $page = null, string $page_size = null)
     {
         list($response) = $this->v1ListCountriesWithHttpInfo($code, $expand, $exclude, $language, $sort, $page, $page_size);
         return $response;
@@ -485,19 +495,19 @@ class CountryApi
     /**
      * Operation v1ListCountriesWithHttpInfo
      *
-     * @param string[] $code code - country code ISO 4217 (optional)
-     * @param string[] $expand expand - expand properties (optional)
-     * @param string[] $exclude exclude - exclude properties (optional)
-     * @param string $language language - localisation language (optional)
-     * @param string[] $sort sort - sort properties (optional)
-     * @param string $page page - page number (optional)
-     * @param string $page_size pageSize - page size (optional)
+     * @param string[]|null $code code - country code ISO 4217 (optional)
+     * @param string[]|null $expand expand - expand properties (optional)
+     * @param string[]|null $exclude exclude - exclude properties (optional)
+     * @param string|null $language language - localisation language (optional)
+     * @param string[]|null $sort sort - sort properties (optional)
+     * @param string|null $page page - page number (optional)
+     * @param string|null $page_size pageSize - page size (optional)
      *
-     * @return array of \Devme\Sdk\Model\ListCountriesOut|\Devme\Sdk\Model\HttpErrorOut|\Devme\Sdk\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
-     * @throws \Devme\Sdk\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
+     * @return array of \DevmeSdk\Model\ListCountriesOut|\DevmeSdk\Model\HttpErrorOut|\DevmeSdk\Model\HttpErrorOut, HTTP status code, HTTP response headers (array of strings)
+     * @throws ApiException on non-2xx response
+     * @throws InvalidArgumentException|GuzzleException
      */
-    public function v1ListCountriesWithHttpInfo($code = null, $expand = null, $exclude = null, $language = null, $sort = null, $page = null, $page_size = null)
+    public function v1ListCountriesWithHttpInfo(array $code = null, array $expand = null, array $exclude = null, string $language = null, array $sort = null, string $page = null, string $page_size = null): array
     {
         $request = $this->v1ListCountriesRequest($code, $expand, $exclude, $language, $sort, $page, $page_size);
 
@@ -538,44 +548,33 @@ class CountryApi
 
             switch ($statusCode) {
                 case 200:
-                    if ('\Devme\Sdk\Model\ListCountriesOut' === '\SplFileObject') {
+                    if ('\DevmeSdk\Model\ListCountriesOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Devme\Sdk\Model\ListCountriesOut', []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                case 400:
-                    if ('\Devme\Sdk\Model\HttpErrorOut' === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string)$response->getBody();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, '\Devme\Sdk\Model\HttpErrorOut', []),
+                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\ListCountriesOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
                 case 401:
-                    if ('\Devme\Sdk\Model\HttpErrorOut' === '\SplFileObject') {
+                case 400:
+                    if ('\DevmeSdk\Model\HttpErrorOut' === '\SplFileObject') {
                         $content = $response->getBody(); //stream goes to serializer
                     } else {
                         $content = (string)$response->getBody();
                     }
 
                     return [
-                        ObjectSerializer::deserialize($content, '\Devme\Sdk\Model\HttpErrorOut', []),
+                        ObjectSerializer::deserialize($content, '\DevmeSdk\Model\HttpErrorOut', []),
                         $response->getStatusCode(),
                         $response->getHeaders()
                     ];
             }
 
-            $returnType = '\Devme\Sdk\Model\ListCountriesOut';
+            $returnType = '\DevmeSdk\Model\ListCountriesOut';
             if ($returnType === '\SplFileObject') {
                 $content = $response->getBody(); //stream goes to serializer
             } else {
@@ -592,23 +591,16 @@ class CountryApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Devme\Sdk\Model\ListCountriesOut',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Devme\Sdk\Model\HttpErrorOut',
+                        '\DevmeSdk\Model\ListCountriesOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
                     break;
                 case 401:
+                case 400:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Devme\Sdk\Model\HttpErrorOut',
+                        '\DevmeSdk\Model\HttpErrorOut',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -616,82 +608,6 @@ class CountryApi
             }
             throw $e;
         }
-    }
-
-    /**
-     * Operation v1ListCountriesAsync
-     *
-     * @param string[] $code code - country code ISO 4217 (optional)
-     * @param string[] $expand expand - expand properties (optional)
-     * @param string[] $exclude exclude - exclude properties (optional)
-     * @param string $language language - localisation language (optional)
-     * @param string[] $sort sort - sort properties (optional)
-     * @param string $page page - page number (optional)
-     * @param string $page_size pageSize - page size (optional)
-     *
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     * @throws \InvalidArgumentException
-     */
-    public function v1ListCountriesAsync($code = null, $expand = null, $exclude = null, $language = null, $sort = null, $page = null, $page_size = null)
-    {
-        return $this->v1ListCountriesAsyncWithHttpInfo($code, $expand, $exclude, $language, $sort, $page, $page_size)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation v1ListCountriesAsyncWithHttpInfo
-     *
-     * @param string[] $code code - country code ISO 4217 (optional)
-     * @param string[] $expand expand - expand properties (optional)
-     * @param string[] $exclude exclude - exclude properties (optional)
-     * @param string $language language - localisation language (optional)
-     * @param string[] $sort sort - sort properties (optional)
-     * @param string $page page - page number (optional)
-     * @param string $page_size pageSize - page size (optional)
-     *
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     * @throws \InvalidArgumentException
-     */
-    public function v1ListCountriesAsyncWithHttpInfo($code = null, $expand = null, $exclude = null, $language = null, $sort = null, $page = null, $page_size = null)
-    {
-        $returnType = '\Devme\Sdk\Model\ListCountriesOut';
-        $request = $this->v1ListCountriesRequest($code, $expand, $exclude, $language, $sort, $page, $page_size);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    if ($returnType === '\SplFileObject') {
-                        $content = $response->getBody(); //stream goes to serializer
-                    } else {
-                        $content = (string)$response->getBody();
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string)$response->getBody()
-                    );
-                }
-            );
     }
 
     /**
@@ -705,8 +621,8 @@ class CountryApi
      * @param string $page page - page number (optional)
      * @param string $page_size pageSize - page size (optional)
      *
-     * @return \GuzzleHttp\Psr7\Request
-     * @throws \InvalidArgumentException
+     * @return Request
+     * @throws InvalidArgumentException
      */
     public function v1ListCountriesRequest($code = null, $expand = null, $exclude = null, $language = null, $sort = null, $page = null, $page_size = null)
     {
@@ -820,7 +736,7 @@ class CountryApi
                 $httpBody = \GuzzleHttp\json_encode($formParams);
             } else {
                 // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
+                $httpBody = Query::build($formParams);
             }
         }
 
@@ -846,7 +762,7 @@ class CountryApi
             $headers
         );
 
-        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+        $query = Query::build($queryParams);
         return new Request(
             'GET',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
@@ -856,21 +772,78 @@ class CountryApi
     }
 
     /**
-     * Create http client option
+     * Operation v1ListCountriesAsync
      *
-     * @return array of http client options
-     * @throws \RuntimeException on file opening failure
+     * @param string[] $code code - country code ISO 4217 (optional)
+     * @param string[] $expand expand - expand properties (optional)
+     * @param string[] $exclude exclude - exclude properties (optional)
+     * @param string $language language - localisation language (optional)
+     * @param string[] $sort sort - sort properties (optional)
+     * @param string $page page - page number (optional)
+     * @param string $page_size pageSize - page size (optional)
+     *
+     * @return PromiseInterface
+     * @throws InvalidArgumentException
      */
-    protected function createHttpClientOption()
+    public function v1ListCountriesAsync($code = null, $expand = null, $exclude = null, $language = null, $sort = null, $page = null, $page_size = null)
     {
-        $options = [];
-        if ($this->config->getDebug()) {
-            $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
-            if (!$options[RequestOptions::DEBUG]) {
-                throw new \RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
-            }
-        }
+        return $this->v1ListCountriesAsyncWithHttpInfo($code, $expand, $exclude, $language, $sort, $page, $page_size)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
 
-        return $options;
+    /**
+     * Operation v1ListCountriesAsyncWithHttpInfo
+     *
+     * @param string[] $code code - country code ISO 4217 (optional)
+     * @param string[] $expand expand - expand properties (optional)
+     * @param string[] $exclude exclude - exclude properties (optional)
+     * @param string $language language - localisation language (optional)
+     * @param string[] $sort sort - sort properties (optional)
+     * @param string $page page - page number (optional)
+     * @param string $page_size pageSize - page size (optional)
+     *
+     * @return PromiseInterface
+     * @throws InvalidArgumentException
+     */
+    public function v1ListCountriesAsyncWithHttpInfo($code = null, $expand = null, $exclude = null, $language = null, $sort = null, $page = null, $page_size = null)
+    {
+        $returnType = '\DevmeSdk\Model\ListCountriesOut';
+        $request = $this->v1ListCountriesRequest($code, $expand, $exclude, $language, $sort, $page, $page_size);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string)$response->getBody();
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string)$response->getBody()
+                    );
+                }
+            );
     }
 }

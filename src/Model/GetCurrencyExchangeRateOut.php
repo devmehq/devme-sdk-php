@@ -4,7 +4,7 @@
  *
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
  */
 
@@ -18,22 +18,23 @@
  */
 
 
-namespace Devme\Sdk\Model;
+namespace DevmeSdk\Model;
 
 use ArrayAccess;
-use Devme\Sdk\ObjectSerializer;
+use DevmeSdk\ObjectSerializer;
+use JsonSerializable;
 
 /**
  * GetCurrencyExchangeRateOut Class Doc Comment
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
- * @implements \ArrayAccess<TKey, TValue>
+ * @implements ArrayAccess
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class GetCurrencyExchangeRateOut implements ModelInterface, ArrayAccess, \JsonSerializable
+class GetCurrencyExchangeRateOut implements ModelInterface, ArrayAccess, JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -69,6 +70,60 @@ class GetCurrencyExchangeRateOut implements ModelInterface, ArrayAccess, \JsonSe
         'exchange_rate' => null,
         'rate_time' => null
     ];
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
+     * @var string[]
+     */
+    protected static $attributeMap = [
+        'from' => 'from',
+        'to' => 'to',
+        'exchange_rate' => 'exchangeRate',
+        'rate_time' => 'rateTime'
+    ];
+    /**
+     * Array of attributes to setter functions (for deserialization of responses)
+     *
+     * @var string[]
+     */
+    protected static $setters = [
+        'from' => 'setFrom',
+        'to' => 'setTo',
+        'exchange_rate' => 'setExchangeRate',
+        'rate_time' => 'setRateTime'
+    ];
+    /**
+     * Array of attributes to getter functions (for serialization of requests)
+     *
+     * @var string[]
+     */
+    protected static $getters = [
+        'from' => 'getFrom',
+        'to' => 'getTo',
+        'exchange_rate' => 'getExchangeRate',
+        'rate_time' => 'getRateTime'
+    ];
+    /**
+     * Associative array for storing property values
+     *
+     * @var mixed[]
+     */
+    protected $container = [];
+
+    /**
+     * Constructor
+     *
+     * @param mixed[] $data Associated array of property values
+     *                      initializing the model
+     */
+    public function __construct(array $data = null)
+    {
+        $this->container['from'] = $data['from'] ?? null;
+        $this->container['to'] = $data['to'] ?? null;
+        $this->container['exchange_rate'] = $data['exchange_rate'] ?? null;
+        $this->container['rate_time'] = $data['rate_time'] ?? null;
+    }
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -89,43 +144,6 @@ class GetCurrencyExchangeRateOut implements ModelInterface, ArrayAccess, \JsonSe
     {
         return self::$openAPIFormats;
     }
-
-    /**
-     * Array of attributes where the key is the local name,
-     * and the value is the original name
-     *
-     * @var string[]
-     */
-    protected static $attributeMap = [
-        'from' => 'from',
-        'to' => 'to',
-        'exchange_rate' => 'exchangeRate',
-        'rate_time' => 'rateTime'
-    ];
-
-    /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     *
-     * @var string[]
-     */
-    protected static $setters = [
-        'from' => 'setFrom',
-        'to' => 'setTo',
-        'exchange_rate' => 'setExchangeRate',
-        'rate_time' => 'setRateTime'
-    ];
-
-    /**
-     * Array of attributes to getter functions (for serialization of requests)
-     *
-     * @var string[]
-     */
-    protected static $getters = [
-        'from' => 'getFrom',
-        'to' => 'getTo',
-        'exchange_rate' => 'getExchangeRate',
-        'rate_time' => 'getRateTime'
-    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -168,26 +186,15 @@ class GetCurrencyExchangeRateOut implements ModelInterface, ArrayAccess, \JsonSe
         return self::$openAPIModelName;
     }
 
-
     /**
-     * Associative array for storing property values
+     * Validate all the properties in the model
+     * return true if all passed
      *
-     * @var mixed[]
+     * @return bool True if all properties are valid
      */
-    protected $container = [];
-
-    /**
-     * Constructor
-     *
-     * @param mixed[] $data Associated array of property values
-     *                      initializing the model
-     */
-    public function __construct(array $data = null)
+    public function valid()
     {
-        $this->container['from'] = $data['from'] ?? null;
-        $this->container['to'] = $data['to'] ?? null;
-        $this->container['exchange_rate'] = $data['exchange_rate'] ?? null;
-        $this->container['rate_time'] = $data['rate_time'] ?? null;
+        return count($this->listInvalidProperties()) === 0;
     }
 
     /**
@@ -201,18 +208,6 @@ class GetCurrencyExchangeRateOut implements ModelInterface, ArrayAccess, \JsonSe
 
         return $invalidProperties;
     }
-
-    /**
-     * Validate all the properties in the model
-     * return true if all passed
-     *
-     * @return bool True if all properties are valid
-     */
-    public function valid()
-    {
-        return count($this->listInvalidProperties()) === 0;
-    }
-
 
     /**
      * Gets from

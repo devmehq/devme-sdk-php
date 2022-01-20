@@ -4,7 +4,7 @@
  *
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
  */
 
@@ -18,22 +18,23 @@
  */
 
 
-namespace Devme\Sdk\Model;
+namespace DevmeSdk\Model;
 
 use ArrayAccess;
-use Devme\Sdk\ObjectSerializer;
+use DevmeSdk\ObjectSerializer;
+use JsonSerializable;
 
 /**
  * GetPhoneDetailsOut Class Doc Comment
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
- * @implements \ArrayAccess<TKey, TValue>
+ * @implements ArrayAccess
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class GetPhoneDetailsOut implements ModelInterface, ArrayAccess, \JsonSerializable
+class GetPhoneDetailsOut implements ModelInterface, ArrayAccess, JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -73,6 +74,68 @@ class GetPhoneDetailsOut implements ModelInterface, ArrayAccess, \JsonSerializab
         'national_number' => null,
         'type' => null
     ];
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
+     * @var string[]
+     */
+    protected static $attributeMap = [
+        'number' => 'number',
+        'valid' => 'valid',
+        'country' => 'country',
+        'calling_code' => 'callingCode',
+        'national_number' => 'nationalNumber',
+        'type' => 'type'
+    ];
+    /**
+     * Array of attributes to setter functions (for deserialization of responses)
+     *
+     * @var string[]
+     */
+    protected static $setters = [
+        'number' => 'setNumber',
+        'valid' => 'setValid',
+        'country' => 'setCountry',
+        'calling_code' => 'setCallingCode',
+        'national_number' => 'setNationalNumber',
+        'type' => 'setType'
+    ];
+    /**
+     * Array of attributes to getter functions (for serialization of requests)
+     *
+     * @var string[]
+     */
+    protected static $getters = [
+        'number' => 'getNumber',
+        'valid' => 'getValid',
+        'country' => 'getCountry',
+        'calling_code' => 'getCallingCode',
+        'national_number' => 'getNationalNumber',
+        'type' => 'getType'
+    ];
+    /**
+     * Associative array for storing property values
+     *
+     * @var mixed[]
+     */
+    protected $container = [];
+
+    /**
+     * Constructor
+     *
+     * @param mixed[] $data Associated array of property values
+     *                      initializing the model
+     */
+    public function __construct(array $data = null)
+    {
+        $this->container['number'] = $data['number'] ?? null;
+        $this->container['valid'] = $data['valid'] ?? null;
+        $this->container['country'] = $data['country'] ?? null;
+        $this->container['calling_code'] = $data['calling_code'] ?? null;
+        $this->container['national_number'] = $data['national_number'] ?? null;
+        $this->container['type'] = $data['type'] ?? null;
+    }
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -93,49 +156,6 @@ class GetPhoneDetailsOut implements ModelInterface, ArrayAccess, \JsonSerializab
     {
         return self::$openAPIFormats;
     }
-
-    /**
-     * Array of attributes where the key is the local name,
-     * and the value is the original name
-     *
-     * @var string[]
-     */
-    protected static $attributeMap = [
-        'number' => 'number',
-        'valid' => 'valid',
-        'country' => 'country',
-        'calling_code' => 'callingCode',
-        'national_number' => 'nationalNumber',
-        'type' => 'type'
-    ];
-
-    /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     *
-     * @var string[]
-     */
-    protected static $setters = [
-        'number' => 'setNumber',
-        'valid' => 'setValid',
-        'country' => 'setCountry',
-        'calling_code' => 'setCallingCode',
-        'national_number' => 'setNationalNumber',
-        'type' => 'setType'
-    ];
-
-    /**
-     * Array of attributes to getter functions (for serialization of requests)
-     *
-     * @var string[]
-     */
-    protected static $getters = [
-        'number' => 'getNumber',
-        'valid' => 'getValid',
-        'country' => 'getCountry',
-        'calling_code' => 'getCallingCode',
-        'national_number' => 'getNationalNumber',
-        'type' => 'getType'
-    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -178,28 +198,15 @@ class GetPhoneDetailsOut implements ModelInterface, ArrayAccess, \JsonSerializab
         return self::$openAPIModelName;
     }
 
-
     /**
-     * Associative array for storing property values
+     * Validate all the properties in the model
+     * return true if all passed
      *
-     * @var mixed[]
+     * @return bool True if all properties are valid
      */
-    protected $container = [];
-
-    /**
-     * Constructor
-     *
-     * @param mixed[] $data Associated array of property values
-     *                      initializing the model
-     */
-    public function __construct(array $data = null)
+    public function valid()
     {
-        $this->container['number'] = $data['number'] ?? null;
-        $this->container['valid'] = $data['valid'] ?? null;
-        $this->container['country'] = $data['country'] ?? null;
-        $this->container['calling_code'] = $data['calling_code'] ?? null;
-        $this->container['national_number'] = $data['national_number'] ?? null;
-        $this->container['type'] = $data['type'] ?? null;
+        return count($this->listInvalidProperties()) === 0;
     }
 
     /**
@@ -213,18 +220,6 @@ class GetPhoneDetailsOut implements ModelInterface, ArrayAccess, \JsonSerializab
 
         return $invalidProperties;
     }
-
-    /**
-     * Validate all the properties in the model
-     * return true if all passed
-     *
-     * @return bool True if all properties are valid
-     */
-    public function valid()
-    {
-        return count($this->listInvalidProperties()) === 0;
-    }
-
 
     /**
      * Gets number

@@ -4,8 +4,8 @@ on:
     paths:
       - 'src/**'
       - 'tests/**'
-      - 'package.json'
-      - 'yarn.lock'
+      - 'composer.json'
+      - 'composer.lock'
     branches:
       - '*'
 
@@ -28,13 +28,9 @@ jobs:
           fetch-depth: 30
           persist-credentials: false
 
-      - uses: bahmutov/npm-install@v1
+      - uses: php-actions/composer@v5
 
-      - name: Yarn install
-        uses: bahmutov/npm-install@v1
+      - name: PHPUnit Tests
+        uses: php-actions/phpunit@v2
         with:
-          install-command: yarn --frozen-lockfile --silent
-
-      - name: Test
-        run: |
-          yarn test
+          bootstrap: vendor/autoload.php

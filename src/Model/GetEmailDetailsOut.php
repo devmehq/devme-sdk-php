@@ -4,7 +4,7 @@
  *
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
  */
 
@@ -18,22 +18,23 @@
  */
 
 
-namespace Devme\Sdk\Model;
+namespace DevmeSdk\Model;
 
 use ArrayAccess;
-use Devme\Sdk\ObjectSerializer;
+use DevmeSdk\ObjectSerializer;
+use JsonSerializable;
 
 /**
  * GetEmailDetailsOut Class Doc Comment
  *
  * @category Class
- * @package  Devme\Sdk
+ * @package  DevmeSdk
  * @author   DEV.ME Team
- * @implements \ArrayAccess<TKey, TValue>
+ * @implements ArrayAccess
  * @template TKey int|null
  * @template TValue mixed|null
  */
-class GetEmailDetailsOut implements ModelInterface, ArrayAccess, \JsonSerializable
+class GetEmailDetailsOut implements ModelInterface, ArrayAccess, JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -77,6 +78,76 @@ class GetEmailDetailsOut implements ModelInterface, ArrayAccess, \JsonSerializab
         'domain_age' => null,
         'score' => null
     ];
+    /**
+     * Array of attributes where the key is the local name,
+     * and the value is the original name
+     *
+     * @var string[]
+     */
+    protected static $attributeMap = [
+        'email' => 'email',
+        'valid_mx' => 'validMx',
+        'valid_smtp' => 'validSmtp',
+        'valid_format' => 'validFormat',
+        'is_disposable' => 'isDisposable',
+        'is_free' => 'isFree',
+        'domain_age' => 'domainAge',
+        'score' => 'score'
+    ];
+    /**
+     * Array of attributes to setter functions (for deserialization of responses)
+     *
+     * @var string[]
+     */
+    protected static $setters = [
+        'email' => 'setEmail',
+        'valid_mx' => 'setValidMx',
+        'valid_smtp' => 'setValidSmtp',
+        'valid_format' => 'setValidFormat',
+        'is_disposable' => 'setIsDisposable',
+        'is_free' => 'setIsFree',
+        'domain_age' => 'setDomainAge',
+        'score' => 'setScore'
+    ];
+    /**
+     * Array of attributes to getter functions (for serialization of requests)
+     *
+     * @var string[]
+     */
+    protected static $getters = [
+        'email' => 'getEmail',
+        'valid_mx' => 'getValidMx',
+        'valid_smtp' => 'getValidSmtp',
+        'valid_format' => 'getValidFormat',
+        'is_disposable' => 'getIsDisposable',
+        'is_free' => 'getIsFree',
+        'domain_age' => 'getDomainAge',
+        'score' => 'getScore'
+    ];
+    /**
+     * Associative array for storing property values
+     *
+     * @var mixed[]
+     */
+    protected $container = [];
+
+    /**
+     * Constructor
+     *
+     * @param mixed[] $data Associated array of property values
+     *                      initializing the model
+     */
+    public function __construct(array $data = null)
+    {
+        $this->container['email'] = $data['email'] ?? null;
+        $this->container['valid_mx'] = $data['valid_mx'] ?? null;
+        $this->container['valid_smtp'] = $data['valid_smtp'] ?? null;
+        $this->container['valid_format'] = $data['valid_format'] ?? null;
+        $this->container['is_disposable'] = $data['is_disposable'] ?? null;
+        $this->container['is_free'] = $data['is_free'] ?? null;
+        $this->container['domain_age'] = $data['domain_age'] ?? null;
+        $this->container['score'] = $data['score'] ?? null;
+    }
 
     /**
      * Array of property to type mappings. Used for (de)serialization
@@ -97,55 +168,6 @@ class GetEmailDetailsOut implements ModelInterface, ArrayAccess, \JsonSerializab
     {
         return self::$openAPIFormats;
     }
-
-    /**
-     * Array of attributes where the key is the local name,
-     * and the value is the original name
-     *
-     * @var string[]
-     */
-    protected static $attributeMap = [
-        'email' => 'email',
-        'valid_mx' => 'validMx',
-        'valid_smtp' => 'validSmtp',
-        'valid_format' => 'validFormat',
-        'is_disposable' => 'isDisposable',
-        'is_free' => 'isFree',
-        'domain_age' => 'domainAge',
-        'score' => 'score'
-    ];
-
-    /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     *
-     * @var string[]
-     */
-    protected static $setters = [
-        'email' => 'setEmail',
-        'valid_mx' => 'setValidMx',
-        'valid_smtp' => 'setValidSmtp',
-        'valid_format' => 'setValidFormat',
-        'is_disposable' => 'setIsDisposable',
-        'is_free' => 'setIsFree',
-        'domain_age' => 'setDomainAge',
-        'score' => 'setScore'
-    ];
-
-    /**
-     * Array of attributes to getter functions (for serialization of requests)
-     *
-     * @var string[]
-     */
-    protected static $getters = [
-        'email' => 'getEmail',
-        'valid_mx' => 'getValidMx',
-        'valid_smtp' => 'getValidSmtp',
-        'valid_format' => 'getValidFormat',
-        'is_disposable' => 'getIsDisposable',
-        'is_free' => 'getIsFree',
-        'domain_age' => 'getDomainAge',
-        'score' => 'getScore'
-    ];
 
     /**
      * Array of attributes where the key is the local name,
@@ -188,30 +210,15 @@ class GetEmailDetailsOut implements ModelInterface, ArrayAccess, \JsonSerializab
         return self::$openAPIModelName;
     }
 
-
     /**
-     * Associative array for storing property values
+     * Validate all the properties in the model
+     * return true if all passed
      *
-     * @var mixed[]
+     * @return bool True if all properties are valid
      */
-    protected $container = [];
-
-    /**
-     * Constructor
-     *
-     * @param mixed[] $data Associated array of property values
-     *                      initializing the model
-     */
-    public function __construct(array $data = null)
+    public function valid()
     {
-        $this->container['email'] = $data['email'] ?? null;
-        $this->container['valid_mx'] = $data['valid_mx'] ?? null;
-        $this->container['valid_smtp'] = $data['valid_smtp'] ?? null;
-        $this->container['valid_format'] = $data['valid_format'] ?? null;
-        $this->container['is_disposable'] = $data['is_disposable'] ?? null;
-        $this->container['is_free'] = $data['is_free'] ?? null;
-        $this->container['domain_age'] = $data['domain_age'] ?? null;
-        $this->container['score'] = $data['score'] ?? null;
+        return count($this->listInvalidProperties()) === 0;
     }
 
     /**
@@ -225,18 +232,6 @@ class GetEmailDetailsOut implements ModelInterface, ArrayAccess, \JsonSerializab
 
         return $invalidProperties;
     }
-
-    /**
-     * Validate all the properties in the model
-     * return true if all passed
-     *
-     * @return bool True if all properties are valid
-     */
-    public function valid()
-    {
-        return count($this->listInvalidProperties()) === 0;
-    }
-
 
     /**
      * Gets email

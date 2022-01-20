@@ -1,5 +1,5 @@
 # DEV.ME SDK for PHP
-[![Build Status](https://github.com/devmehq/devme-sdk-js/actions/workflows/ci.yml/badge.svg)](https://github.com/devmehq/devme-sdk-js/actions/workflows/ci.yml)
+[![Build Status](https://github.com/devmehq/devme-sdk-php/actions/workflows/ci.yml/badge.svg)](https://github.com/devmehq/devme-sdk-php/actions/workflows/ci.yml)
 [![Composer Version](https://img.shields.io/packagist/v/devmehq/sdk-php.svg)](https://packagist.org/packages/devmehq/sdk-php)
 [![Downloads](https://img.shields.io/packagist/dm/devmehq/sdk-php.svg)](https://packagist.org/packages/devmehq/sdk-php)
 

@@ -1,6 +1,6 @@
 {
-  "name": "devme/sdk-php",
-  "version": "1.0.0",
+  "name": "devmehq/sdk-php",
+  "version": "0.0.1",
   "description": "DEV.ME SDK for PHP",
   "keywords": [
     "Email SMTP Verification",

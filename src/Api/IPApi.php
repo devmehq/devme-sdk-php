@@ -116,13 +116,13 @@ class IPApi
     /**
      * Operation v1GetIpDetails
      *
-     * @param string $ip ip - IP Address (optional)
+     * @param string|null $ip ip - IP Address (optional)
      *
-     * @return GetIpDetailsOut|HttpErrorOut|HttpErrorOut
+     * @return GetIpDetailsOut|HttpErrorOut
      * @throws InvalidArgumentException
      * @throws ApiException on non-2xx response
      */
-    public function v1GetIpDetails($ip = null)
+    public function v1GetIpDetails(string $ip = null)
     {
         list($response) = $this->v1GetIpDetailsWithHttpInfo($ip);
         return $response;

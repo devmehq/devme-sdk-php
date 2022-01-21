@@ -1,395 +1,115 @@
 <?php
-/**
- * HttpErrorOut
- *
- *
- * @category Class
- * @package  Devme
- * @author   DEV.ME Team
- */
-
-/**
- * DEV.ME API Documentation
- *
- * DEV.ME API Documentation [Currency Conversion and Exchange Rates API](https://dev.me/products/currency) - [IP2Location, IP Country, IP Information API](https://dev.me/products/ip) -  [Email Validation, Mailbox Verification](https://dev.me/products/email) - [Phone Number Validation](https://dev.me/products/phone). You can learn more at [dev.me](https://dev.me). For this example you can use api key `demo-key` to tests the APIs
- *
- * The version of the OpenAPI document: 1.0.0
- * Contact: support@dev.me
- */
-
 
 namespace Devme\Model;
 
-use ArrayAccess;
-use Devme\ObjectSerializer;
-use JsonSerializable;
-
-/**
- * HttpErrorOut Class Doc Comment
- *
- * @category Class
- * @package  Devme
- * @author   DEV.ME Team
- * @implements ArrayAccess
- * @template TKey int|null
- * @template TValue mixed|null
- */
-class HttpErrorOut implements ModelInterface, ArrayAccess, JsonSerializable
+class HttpErrorOut
 {
-    public const DISCRIMINATOR = null;
-
     /**
-     * The original name of the model.
+     * http status code
+     *
+     * @var float
+     */
+    protected $status;
+    /**
+     * error name
      *
      * @var string
      */
-    protected static $openAPIModelName = 'HttpErrorOut';
-
+    protected $name;
     /**
-     * Array of property to type mappings. Used for (de)serialization
+     * error message
      *
-     * @var string[]
+     * @var string
      */
-    protected static $openAPITypes = [
-        'status' => 'float',
-        'name' => 'string',
-        'message' => 'string',
-        'errors' => '\Devme\Model\Error[]'
-    ];
-
+    protected $message;
     /**
-     * Array of property to format mappings. Used for (de)serialization
+     * array of errors
      *
-     * @var string[]
-     * @phpstan-var array<string, string|null>
-     * @psalm-var array<string, string|null>
+     * @var Error[]
      */
-    protected static $openAPIFormats = [
-        'status' => null,
-        'name' => null,
-        'message' => null,
-        'errors' => null
-    ];
+    protected $errors;
     /**
-     * Array of attributes where the key is the local name,
-     * and the value is the original name
+     * http status code
      *
-     * @var string[]
+     * @return float
      */
-    protected static $attributeMap = [
-        'status' => 'status',
-        'name' => 'name',
-        'message' => 'message',
-        'errors' => 'errors'
-    ];
-    /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     *
-     * @var string[]
-     */
-    protected static $setters = [
-        'status' => 'setStatus',
-        'name' => 'setName',
-        'message' => 'setMessage',
-        'errors' => 'setErrors'
-    ];
-    /**
-     * Array of attributes to getter functions (for serialization of requests)
-     *
-     * @var string[]
-     */
-    protected static $getters = [
-        'status' => 'getStatus',
-        'name' => 'getName',
-        'message' => 'getMessage',
-        'errors' => 'getErrors'
-    ];
-    /**
-     * Associative array for storing property values
-     *
-     * @var mixed[]
-     */
-    protected $container = [];
-
-    /**
-     * Constructor
-     *
-     * @param mixed[] $data Associated array of property values
-     *                      initializing the model
-     */
-    public function __construct(array $data = null)
+    public function getStatus() : float
     {
-        $this->container['status'] = $data['status'] ?? null;
-        $this->container['name'] = $data['name'] ?? null;
-        $this->container['message'] = $data['message'] ?? null;
-        $this->container['errors'] = $data['errors'] ?? null;
+        return $this->status;
     }
-
     /**
-     * Array of property to type mappings. Used for (de)serialization
+     * http status code
      *
-     * @return array
-     */
-    public static function openAPITypes()
-    {
-        return self::$openAPITypes;
-    }
-
-    /**
-     * Array of property to format mappings. Used for (de)serialization
+     * @param float $status
      *
-     * @return array
+     * @return self
      */
-    public static function openAPIFormats()
+    public function setStatus(float $status) : self
     {
-        return self::$openAPIFormats;
+        $this->status = $status;
+        return $this;
     }
-
     /**
-     * Array of attributes where the key is the local name,
-     * and the value is the original name
-     *
-     * @return array
-     */
-    public static function attributeMap()
-    {
-        return self::$attributeMap;
-    }
-
-    /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     *
-     * @return array
-     */
-    public static function setters()
-    {
-        return self::$setters;
-    }
-
-    /**
-     * Array of attributes to getter functions (for serialization of requests)
-     *
-     * @return array
-     */
-    public static function getters()
-    {
-        return self::$getters;
-    }
-
-    /**
-     * The original name of the model.
+     * error name
      *
      * @return string
      */
-    public function getModelName()
+    public function getName() : string
     {
-        return self::$openAPIModelName;
+        return $this->name;
     }
-
     /**
-     * Validate all the properties in the model
-     * return true if all passed
+     * error name
      *
-     * @return bool True if all properties are valid
-     */
-    public function valid()
-    {
-        return count($this->listInvalidProperties()) === 0;
-    }
-
-    /**
-     * Show all the invalid properties with reasons.
-     *
-     * @return array invalid properties with reasons
-     */
-    public function listInvalidProperties()
-    {
-        $invalidProperties = [];
-
-        return $invalidProperties;
-    }
-
-    /**
-     * Gets status
-     *
-     * @return float|null
-     */
-    public function getStatus()
-    {
-        return $this->container['status'];
-    }
-
-    /**
-     * Sets status
-     *
-     * @param float|null $status http status code
+     * @param string $name
      *
      * @return self
      */
-    public function setStatus($status)
+    public function setName(string $name) : self
     {
-        $this->container['status'] = $status;
-
+        $this->name = $name;
         return $this;
     }
-
     /**
-     * Gets name
-     *
-     * @return string|null
-     */
-    public function getName()
-    {
-        return $this->container['name'];
-    }
-
-    /**
-     * Sets name
-     *
-     * @param string|null $name error name
-     *
-     * @return self
-     */
-    public function setName($name)
-    {
-        $this->container['name'] = $name;
-
-        return $this;
-    }
-
-    /**
-     * Gets message
-     *
-     * @return string|null
-     */
-    public function getMessage()
-    {
-        return $this->container['message'];
-    }
-
-    /**
-     * Sets message
-     *
-     * @param string|null $message error message
-     *
-     * @return self
-     */
-    public function setMessage($message)
-    {
-        $this->container['message'] = $message;
-
-        return $this;
-    }
-
-    /**
-     * Gets errors
-     *
-     * @return Error[]|null
-     */
-    public function getErrors()
-    {
-        return $this->container['errors'];
-    }
-
-    /**
-     * Sets errors
-     *
-     * @param Error[]|null $errors array of errors
-     *
-     * @return self
-     */
-    public function setErrors($errors)
-    {
-        $this->container['errors'] = $errors;
-
-        return $this;
-    }
-
-    /**
-     * Returns true if offset exists. False otherwise.
-     *
-     * @param integer $offset Offset
-     *
-     * @return boolean
-     */
-    public function offsetExists($offset)
-    {
-        return isset($this->container[$offset]);
-    }
-
-    /**
-     * Gets offset.
-     *
-     * @param integer $offset Offset
-     *
-     * @return mixed|null
-     */
-    public function offsetGet($offset)
-    {
-        return $this->container[$offset] ?? null;
-    }
-
-    /**
-     * Sets value based on offset.
-     *
-     * @param int|null $offset Offset
-     * @param mixed $value Value to be set
-     *
-     * @return void
-     */
-    public function offsetSet($offset, $value)
-    {
-        if (is_null($offset)) {
-            $this->container[] = $value;
-        } else {
-            $this->container[$offset] = $value;
-        }
-    }
-
-    /**
-     * Unsets offset.
-     *
-     * @param integer $offset Offset
-     *
-     * @return void
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->container[$offset]);
-    }
-
-    /**
-     * Serializes the object to a value that can be serialized natively by json_encode().
-     * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
-     *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
-     */
-    public function jsonSerialize()
-    {
-        return ObjectSerializer::sanitizeForSerialization($this);
-    }
-
-    /**
-     * Gets the string presentation of the object
+     * error message
      *
      * @return string
      */
-    public function __toString()
+    public function getMessage() : string
     {
-        return json_encode(
-            ObjectSerializer::sanitizeForSerialization($this),
-            JSON_PRETTY_PRINT
-        );
+        return $this->message;
     }
-
     /**
-     * Gets a header-safe presentation of the object
+     * error message
      *
-     * @return string
+     * @param string $message
+     *
+     * @return self
      */
-    public function toHeaderValue()
+    public function setMessage(string $message) : self
     {
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        $this->message = $message;
+        return $this;
+    }
+    /**
+     * array of errors
+     *
+     * @return Error[]
+     */
+    public function getErrors() : array
+    {
+        return $this->errors;
+    }
+    /**
+     * array of errors
+     *
+     * @param Error[] $errors
+     *
+     * @return self
+     */
+    public function setErrors(array $errors) : self
+    {
+        $this->errors = $errors;
+        return $this;
     }
 }

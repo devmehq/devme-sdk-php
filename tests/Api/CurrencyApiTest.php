@@ -19,9 +19,8 @@
 
 namespace Api;
 
-use Devme\Api\CurrencyApi;
-use Devme\ApiException;
-use Devme\Configuration;
+use Devme\Authentication\APIKeyHeaderAuthentication;
+use Jane\Component\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -54,11 +53,8 @@ class CurrencyApiTest extends TestCase
     public function setUp(): void
     {
         if (!$this->currencyApi) {
-            $config = Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'demo-key');
-            $this->currencyApi = new CurrencyApi(
-                new \GuzzleHttp\Client(),
-                $config
-            );
+            $authenticationRegistry = new AuthenticationRegistry([new APIKeyHeaderAuthentication('demo-key')]);
+            $this->currencyApi = \Devme\Client::create(null, [$authenticationRegistry]);
         }
     }
 
@@ -72,11 +68,10 @@ class CurrencyApiTest extends TestCase
     /**
      * Test case for v1ConvertCurrency
      *
-     * @throws ApiException
      */
     public function testsV1ConvertCurrency(): void
     {
-        $result = $this->currencyApi->v1ConvertCurrency('USD', 'EUR', 10);
+        $result = $this->currencyApi->v1ConvertCurrency(['from' => 'USD', 'to' => 'EUR', 'amount' => 10]);
         $this->assertEquals('USD', $result->getFrom());
         $this->assertEquals('EUR', $result->getTo());
     }
@@ -85,11 +80,10 @@ class CurrencyApiTest extends TestCase
      * Test case for v1GetCurrencyDetails
      *
      *
-     * @throws ApiException
      */
     public function testsV1GetCurrencyDetails(): void
     {
-        $result = $this->currencyApi->v1GetCurrencyDetails('USD');
+        $result = $this->currencyApi->v1GetCurrencyDetails(['code' => 'USD']);
         $this->assertEquals('USD', $result->getCode());
     }
 

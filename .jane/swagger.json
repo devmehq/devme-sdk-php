@@ -129,8 +129,8 @@
             "type": "string"
           },
           "name": {
-            "description": "currency name",
-            "type": "string"
+            "description": "currency name object",
+            "type": "object"
           }
         }
       },

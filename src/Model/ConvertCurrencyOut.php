@@ -1,485 +1,196 @@
 <?php
-/**
- * ConvertCurrencyOut
- *
- *
- * @category Class
- * @package  Devme
- * @author   DEV.ME Team
- */
-
-/**
- * DEV.ME API Documentation
- *
- * DEV.ME API Documentation [Currency Conversion and Exchange Rates API](https://dev.me/products/currency) - [IP2Location, IP Country, IP Information API](https://dev.me/products/ip) -  [Email Validation, Mailbox Verification](https://dev.me/products/email) - [Phone Number Validation](https://dev.me/products/phone). You can learn more at [dev.me](https://dev.me). For this example you can use api key `demo-key` to tests the APIs
- *
- * The version of the OpenAPI document: 1.0.0
- * Contact: support@dev.me
- */
-
 
 namespace Devme\Model;
 
-use ArrayAccess;
-use Devme\ObjectSerializer;
-use JsonSerializable;
-
-/**
- * ConvertCurrencyOut Class Doc Comment
- *
- * @category Class
- * @package  Devme
- * @author   DEV.ME Team
- * @implements ArrayAccess
- * @template TKey int|null
- * @template TValue mixed|null
- */
-class ConvertCurrencyOut implements ModelInterface, ArrayAccess, JsonSerializable
+class ConvertCurrencyOut
 {
-    public const DISCRIMINATOR = null;
-
     /**
-     * The original name of the model.
+     * currency to convert from
      *
      * @var string
      */
-    protected static $openAPIModelName = 'ConvertCurrencyOut';
-
+    protected $from;
     /**
-     * Array of property to type mappings. Used for (de)serialization
+     * currency to convert to
      *
-     * @var string[]
+     * @var string
      */
-    protected static $openAPITypes = [
-        'from' => 'string',
-        'to' => 'string',
-        'exchange_rate' => 'float',
-        'rate_time' => 'string',
-        'original_amount' => 'float',
-        'converted_amount' => 'float',
-        'converted_text' => 'string'
-    ];
-
+    protected $to;
     /**
-     * Array of property to format mappings. Used for (de)serialization
+     * exchange rate
      *
-     * @var string[]
-     * @phpstan-var array<string, string|null>
-     * @psalm-var array<string, string|null>
+     * @var float
      */
-    protected static $openAPIFormats = [
-        'from' => null,
-        'to' => null,
-        'exchange_rate' => null,
-        'rate_time' => null,
-        'original_amount' => null,
-        'converted_amount' => null,
-        'converted_text' => null
-    ];
+    protected $exchangeRate;
     /**
-     * Array of attributes where the key is the local name,
-     * and the value is the original name
+     * time of the exchange rate
      *
-     * @var string[]
+     * @var string
      */
-    protected static $attributeMap = [
-        'from' => 'from',
-        'to' => 'to',
-        'exchange_rate' => 'exchangeRate',
-        'rate_time' => 'rateTime',
-        'original_amount' => 'originalAmount',
-        'converted_amount' => 'convertedAmount',
-        'converted_text' => 'convertedText'
-    ];
+    protected $rateTime;
     /**
-     * Array of attributes to setter functions (for deserialization of responses)
+     * original amount input
      *
-     * @var string[]
+     * @var float
      */
-    protected static $setters = [
-        'from' => 'setFrom',
-        'to' => 'setTo',
-        'exchange_rate' => 'setExchangeRate',
-        'rate_time' => 'setRateTime',
-        'original_amount' => 'setOriginalAmount',
-        'converted_amount' => 'setConvertedAmount',
-        'converted_text' => 'setConvertedText'
-    ];
+    protected $originalAmount;
     /**
-     * Array of attributes to getter functions (for serialization of requests)
+     * converted amount
      *
-     * @var string[]
+     * @var float
      */
-    protected static $getters = [
-        'from' => 'getFrom',
-        'to' => 'getTo',
-        'exchange_rate' => 'getExchangeRate',
-        'rate_time' => 'getRateTime',
-        'original_amount' => 'getOriginalAmount',
-        'converted_amount' => 'getConvertedAmount',
-        'converted_text' => 'getConvertedText'
-    ];
+    protected $convertedAmount;
     /**
-     * Associative array for storing property values
+     * converted amount in text
      *
-     * @var mixed[]
+     * @var string
      */
-    protected $container = [];
-
+    protected $convertedText;
     /**
-     * Constructor
-     *
-     * @param mixed[] $data Associated array of property values
-     *                      initializing the model
-     */
-    public function __construct(array $data = null)
-    {
-        $this->container['from'] = $data['from'] ?? null;
-        $this->container['to'] = $data['to'] ?? null;
-        $this->container['exchange_rate'] = $data['exchange_rate'] ?? null;
-        $this->container['rate_time'] = $data['rate_time'] ?? null;
-        $this->container['original_amount'] = $data['original_amount'] ?? null;
-        $this->container['converted_amount'] = $data['converted_amount'] ?? null;
-        $this->container['converted_text'] = $data['converted_text'] ?? null;
-    }
-
-    /**
-     * Array of property to type mappings. Used for (de)serialization
-     *
-     * @return array
-     */
-    public static function openAPITypes()
-    {
-        return self::$openAPITypes;
-    }
-
-    /**
-     * Array of property to format mappings. Used for (de)serialization
-     *
-     * @return array
-     */
-    public static function openAPIFormats()
-    {
-        return self::$openAPIFormats;
-    }
-
-    /**
-     * Array of attributes where the key is the local name,
-     * and the value is the original name
-     *
-     * @return array
-     */
-    public static function attributeMap()
-    {
-        return self::$attributeMap;
-    }
-
-    /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     *
-     * @return array
-     */
-    public static function setters()
-    {
-        return self::$setters;
-    }
-
-    /**
-     * Array of attributes to getter functions (for serialization of requests)
-     *
-     * @return array
-     */
-    public static function getters()
-    {
-        return self::$getters;
-    }
-
-    /**
-     * The original name of the model.
+     * currency to convert from
      *
      * @return string
      */
-    public function getModelName()
+    public function getFrom() : string
     {
-        return self::$openAPIModelName;
+        return $this->from;
     }
-
     /**
-     * Validate all the properties in the model
-     * return true if all passed
+     * currency to convert from
      *
-     * @return bool True if all properties are valid
-     */
-    public function valid()
-    {
-        return count($this->listInvalidProperties()) === 0;
-    }
-
-    /**
-     * Show all the invalid properties with reasons.
-     *
-     * @return array invalid properties with reasons
-     */
-    public function listInvalidProperties()
-    {
-        $invalidProperties = [];
-
-        return $invalidProperties;
-    }
-
-    /**
-     * Gets from
-     *
-     * @return string|null
-     */
-    public function getFrom()
-    {
-        return $this->container['from'];
-    }
-
-    /**
-     * Sets from
-     *
-     * @param string|null $from currency to convert from
+     * @param string $from
      *
      * @return self
      */
-    public function setFrom($from)
+    public function setFrom(string $from) : self
     {
-        $this->container['from'] = $from;
-
+        $this->from = $from;
         return $this;
     }
-
     /**
-     * Gets to
-     *
-     * @return string|null
-     */
-    public function getTo()
-    {
-        return $this->container['to'];
-    }
-
-    /**
-     * Sets to
-     *
-     * @param string|null $to currency to convert to
-     *
-     * @return self
-     */
-    public function setTo($to)
-    {
-        $this->container['to'] = $to;
-
-        return $this;
-    }
-
-    /**
-     * Gets exchange_rate
-     *
-     * @return float|null
-     */
-    public function getExchangeRate()
-    {
-        return $this->container['exchange_rate'];
-    }
-
-    /**
-     * Sets exchange_rate
-     *
-     * @param float|null $exchange_rate exchange rate
-     *
-     * @return self
-     */
-    public function setExchangeRate($exchange_rate)
-    {
-        $this->container['exchange_rate'] = $exchange_rate;
-
-        return $this;
-    }
-
-    /**
-     * Gets rate_time
-     *
-     * @return string|null
-     */
-    public function getRateTime()
-    {
-        return $this->container['rate_time'];
-    }
-
-    /**
-     * Sets rate_time
-     *
-     * @param string|null $rate_time time of the exchange rate
-     *
-     * @return self
-     */
-    public function setRateTime($rate_time)
-    {
-        $this->container['rate_time'] = $rate_time;
-
-        return $this;
-    }
-
-    /**
-     * Gets original_amount
-     *
-     * @return float|null
-     */
-    public function getOriginalAmount()
-    {
-        return $this->container['original_amount'];
-    }
-
-    /**
-     * Sets original_amount
-     *
-     * @param float|null $original_amount original amount input
-     *
-     * @return self
-     */
-    public function setOriginalAmount($original_amount)
-    {
-        $this->container['original_amount'] = $original_amount;
-
-        return $this;
-    }
-
-    /**
-     * Gets converted_amount
-     *
-     * @return float|null
-     */
-    public function getConvertedAmount()
-    {
-        return $this->container['converted_amount'];
-    }
-
-    /**
-     * Sets converted_amount
-     *
-     * @param float|null $converted_amount converted amount
-     *
-     * @return self
-     */
-    public function setConvertedAmount($converted_amount)
-    {
-        $this->container['converted_amount'] = $converted_amount;
-
-        return $this;
-    }
-
-    /**
-     * Gets converted_text
-     *
-     * @return string|null
-     */
-    public function getConvertedText()
-    {
-        return $this->container['converted_text'];
-    }
-
-    /**
-     * Sets converted_text
-     *
-     * @param string|null $converted_text converted amount in text
-     *
-     * @return self
-     */
-    public function setConvertedText($converted_text)
-    {
-        $this->container['converted_text'] = $converted_text;
-
-        return $this;
-    }
-
-    /**
-     * Returns true if offset exists. False otherwise.
-     *
-     * @param integer $offset Offset
-     *
-     * @return boolean
-     */
-    public function offsetExists($offset): bool
-    {
-        return isset($this->container[$offset]);
-    }
-
-    /**
-     * Gets offset.
-     *
-     * @param integer $offset Offset
-     *
-     * @return mixed|null
-     */
-    public function offsetGet($offset): mixed
-    {
-        return $this->container[$offset] ?? null;
-    }
-
-    /**
-     * Sets value based on offset.
-     *
-     * @param int|null $offset Offset
-     * @param mixed $value Value to be set
-     *
-     * @return void
-     */
-    public function offsetSet($offset, $value): void
-    {
-        if (is_null($offset)) {
-            $this->container[] = $value;
-        } else {
-            $this->container[$offset] = $value;
-        }
-    }
-
-    /**
-     * Unsets offset.
-     *
-     * @param integer $offset Offset
-     *
-     * @return void
-     */
-    public function offsetUnset($offset): void
-    {
-        unset($this->container[$offset]);
-    }
-
-    /**
-     * Serializes the object to a value that can be serialized natively by json_encode().
-     * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
-     *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
-     */
-    public function jsonSerialize(): mixed
-    {
-        return ObjectSerializer::sanitizeForSerialization($this);
-    }
-
-    /**
-     * Gets the string presentation of the object
+     * currency to convert to
      *
      * @return string
      */
-    public function __toString()
+    public function getTo() : string
     {
-        return json_encode(
-            ObjectSerializer::sanitizeForSerialization($this),
-            JSON_PRETTY_PRINT
-        );
+        return $this->to;
     }
-
     /**
-     * Gets a header-safe presentation of the object
+     * currency to convert to
+     *
+     * @param string $to
+     *
+     * @return self
+     */
+    public function setTo(string $to) : self
+    {
+        $this->to = $to;
+        return $this;
+    }
+    /**
+     * exchange rate
+     *
+     * @return float
+     */
+    public function getExchangeRate() : float
+    {
+        return $this->exchangeRate;
+    }
+    /**
+     * exchange rate
+     *
+     * @param float $exchangeRate
+     *
+     * @return self
+     */
+    public function setExchangeRate(float $exchangeRate) : self
+    {
+        $this->exchangeRate = $exchangeRate;
+        return $this;
+    }
+    /**
+     * time of the exchange rate
      *
      * @return string
      */
-    public function toHeaderValue()
+    public function getRateTime() : string
     {
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return $this->rateTime;
+    }
+    /**
+     * time of the exchange rate
+     *
+     * @param string $rateTime
+     *
+     * @return self
+     */
+    public function setRateTime(string $rateTime) : self
+    {
+        $this->rateTime = $rateTime;
+        return $this;
+    }
+    /**
+     * original amount input
+     *
+     * @return float
+     */
+    public function getOriginalAmount() : float
+    {
+        return $this->originalAmount;
+    }
+    /**
+     * original amount input
+     *
+     * @param float $originalAmount
+     *
+     * @return self
+     */
+    public function setOriginalAmount(float $originalAmount) : self
+    {
+        $this->originalAmount = $originalAmount;
+        return $this;
+    }
+    /**
+     * converted amount
+     *
+     * @return float
+     */
+    public function getConvertedAmount() : float
+    {
+        return $this->convertedAmount;
+    }
+    /**
+     * converted amount
+     *
+     * @param float $convertedAmount
+     *
+     * @return self
+     */
+    public function setConvertedAmount(float $convertedAmount) : self
+    {
+        $this->convertedAmount = $convertedAmount;
+        return $this;
+    }
+    /**
+     * converted amount in text
+     *
+     * @return string
+     */
+    public function getConvertedText() : string
+    {
+        return $this->convertedText;
+    }
+    /**
+     * converted amount in text
+     *
+     * @param string $convertedText
+     *
+     * @return self
+     */
+    public function setConvertedText(string $convertedText) : self
+    {
+        $this->convertedText = $convertedText;
+        return $this;
     }
 }

@@ -1,515 +1,223 @@
 <?php
-/**
- * GetEmailDetailsOut
- *
- *
- * @category Class
- * @package  Devme
- * @author   DEV.ME Team
- */
-
-/**
- * DEV.ME API Documentation
- *
- * DEV.ME API Documentation [Currency Conversion and Exchange Rates API](https://dev.me/products/currency) - [IP2Location, IP Country, IP Information API](https://dev.me/products/ip) -  [Email Validation, Mailbox Verification](https://dev.me/products/email) - [Phone Number Validation](https://dev.me/products/phone). You can learn more at [dev.me](https://dev.me). For this example you can use api key `demo-key` to tests the APIs
- *
- * The version of the OpenAPI document: 1.0.0
- * Contact: support@dev.me
- */
-
 
 namespace Devme\Model;
 
-use ArrayAccess;
-use Devme\ObjectSerializer;
-use JsonSerializable;
-
-/**
- * GetEmailDetailsOut Class Doc Comment
- *
- * @category Class
- * @package  Devme
- * @author   DEV.ME Team
- * @implements ArrayAccess
- * @template TKey int|null
- * @template TValue mixed|null
- */
-class GetEmailDetailsOut implements ModelInterface, ArrayAccess, JsonSerializable
+class GetEmailDetailsOut
 {
-    public const DISCRIMINATOR = null;
-
     /**
-     * The original name of the model.
+     * email address
      *
      * @var string
      */
-    protected static $openAPIModelName = 'GetEmailDetailsOut';
-
+    protected $email;
     /**
-     * Array of property to type mappings. Used for (de)serialization
+     * is the domain is valid with dns MX record
      *
-     * @var string[]
+     * @var bool
      */
-    protected static $openAPITypes = [
-        'email' => 'string',
-        'valid_mx' => 'bool',
-        'valid_smtp' => 'bool',
-        'valid_format' => 'bool',
-        'is_disposable' => 'bool',
-        'is_free' => 'bool',
-        'domain_age' => 'float',
-        'score' => 'float'
-    ];
-
+    protected $validMx;
     /**
-     * Array of property to format mappings. Used for (de)serialization
+     * is email address valid with SMTP Connect and Reply
      *
-     * @var string[]
-     * @phpstan-var array<string, string|null>
-     * @psalm-var array<string, string|null>
+     * @var bool
      */
-    protected static $openAPIFormats = [
-        'email' => null,
-        'valid_mx' => null,
-        'valid_smtp' => null,
-        'valid_format' => null,
-        'is_disposable' => null,
-        'is_free' => null,
-        'domain_age' => null,
-        'score' => null
-    ];
+    protected $validSmtp;
     /**
-     * Array of attributes where the key is the local name,
-     * and the value is the original name
+     * is email valid format
      *
-     * @var string[]
+     * @var bool
      */
-    protected static $attributeMap = [
-        'email' => 'email',
-        'valid_mx' => 'validMx',
-        'valid_smtp' => 'validSmtp',
-        'valid_format' => 'validFormat',
-        'is_disposable' => 'isDisposable',
-        'is_free' => 'isFree',
-        'domain_age' => 'domainAge',
-        'score' => 'score'
-    ];
+    protected $validFormat;
     /**
-     * Array of attributes to setter functions (for deserialization of responses)
+     * is disposable email
      *
-     * @var string[]
+     * @var bool
      */
-    protected static $setters = [
-        'email' => 'setEmail',
-        'valid_mx' => 'setValidMx',
-        'valid_smtp' => 'setValidSmtp',
-        'valid_format' => 'setValidFormat',
-        'is_disposable' => 'setIsDisposable',
-        'is_free' => 'setIsFree',
-        'domain_age' => 'setDomainAge',
-        'score' => 'setScore'
-    ];
+    protected $isDisposable;
     /**
-     * Array of attributes to getter functions (for serialization of requests)
+     * is free email
      *
-     * @var string[]
+     * @var bool
      */
-    protected static $getters = [
-        'email' => 'getEmail',
-        'valid_mx' => 'getValidMx',
-        'valid_smtp' => 'getValidSmtp',
-        'valid_format' => 'getValidFormat',
-        'is_disposable' => 'getIsDisposable',
-        'is_free' => 'getIsFree',
-        'domain_age' => 'getDomainAge',
-        'score' => 'getScore'
-    ];
+    protected $isFree;
     /**
-     * Associative array for storing property values
+     * domain age
      *
-     * @var mixed[]
+     * @var float
      */
-    protected $container = [];
-
+    protected $domainAge;
     /**
-     * Constructor
+     * quality score
      *
-     * @param mixed[] $data Associated array of property values
-     *                      initializing the model
+     * @var float
      */
-    public function __construct(array $data = null)
-    {
-        $this->container['email'] = $data['email'] ?? null;
-        $this->container['valid_mx'] = $data['valid_mx'] ?? null;
-        $this->container['valid_smtp'] = $data['valid_smtp'] ?? null;
-        $this->container['valid_format'] = $data['valid_format'] ?? null;
-        $this->container['is_disposable'] = $data['is_disposable'] ?? null;
-        $this->container['is_free'] = $data['is_free'] ?? null;
-        $this->container['domain_age'] = $data['domain_age'] ?? null;
-        $this->container['score'] = $data['score'] ?? null;
-    }
-
+    protected $score;
     /**
-     * Array of property to type mappings. Used for (de)serialization
-     *
-     * @return array
-     */
-    public static function openAPITypes()
-    {
-        return self::$openAPITypes;
-    }
-
-    /**
-     * Array of property to format mappings. Used for (de)serialization
-     *
-     * @return array
-     */
-    public static function openAPIFormats()
-    {
-        return self::$openAPIFormats;
-    }
-
-    /**
-     * Array of attributes where the key is the local name,
-     * and the value is the original name
-     *
-     * @return array
-     */
-    public static function attributeMap()
-    {
-        return self::$attributeMap;
-    }
-
-    /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     *
-     * @return array
-     */
-    public static function setters()
-    {
-        return self::$setters;
-    }
-
-    /**
-     * Array of attributes to getter functions (for serialization of requests)
-     *
-     * @return array
-     */
-    public static function getters()
-    {
-        return self::$getters;
-    }
-
-    /**
-     * The original name of the model.
+     * email address
      *
      * @return string
      */
-    public function getModelName()
+    public function getEmail() : string
     {
-        return self::$openAPIModelName;
+        return $this->email;
     }
-
     /**
-     * Validate all the properties in the model
-     * return true if all passed
+     * email address
      *
-     * @return bool True if all properties are valid
-     */
-    public function valid()
-    {
-        return count($this->listInvalidProperties()) === 0;
-    }
-
-    /**
-     * Show all the invalid properties with reasons.
-     *
-     * @return array invalid properties with reasons
-     */
-    public function listInvalidProperties()
-    {
-        $invalidProperties = [];
-
-        return $invalidProperties;
-    }
-
-    /**
-     * Gets email
-     *
-     * @return string|null
-     */
-    public function getEmail()
-    {
-        return $this->container['email'];
-    }
-
-    /**
-     * Sets email
-     *
-     * @param string|null $email email address
+     * @param string $email
      *
      * @return self
      */
-    public function setEmail($email)
+    public function setEmail(string $email) : self
     {
-        $this->container['email'] = $email;
-
+        $this->email = $email;
         return $this;
     }
-
     /**
-     * Gets valid_mx
+     * is the domain is valid with dns MX record
      *
-     * @return bool|null
+     * @return bool
      */
-    public function getValidMx()
+    public function getValidMx() : bool
     {
-        return $this->container['valid_mx'];
+        return $this->validMx;
     }
-
     /**
-     * Sets valid_mx
+     * is the domain is valid with dns MX record
      *
-     * @param bool|null $valid_mx is the domain is valid with dns MX record
+     * @param bool $validMx
      *
      * @return self
      */
-    public function setValidMx($valid_mx)
+    public function setValidMx(bool $validMx) : self
     {
-        $this->container['valid_mx'] = $valid_mx;
-
+        $this->validMx = $validMx;
         return $this;
     }
-
     /**
-     * Gets valid_smtp
+     * is email address valid with SMTP Connect and Reply
      *
-     * @return bool|null
+     * @return bool
      */
-    public function getValidSmtp()
+    public function getValidSmtp() : bool
     {
-        return $this->container['valid_smtp'];
+        return $this->validSmtp;
     }
-
     /**
-     * Sets valid_smtp
+     * is email address valid with SMTP Connect and Reply
      *
-     * @param bool|null $valid_smtp is email address valid with SMTP Connect and Reply
+     * @param bool $validSmtp
      *
      * @return self
      */
-    public function setValidSmtp($valid_smtp)
+    public function setValidSmtp(bool $validSmtp) : self
     {
-        $this->container['valid_smtp'] = $valid_smtp;
-
+        $this->validSmtp = $validSmtp;
         return $this;
     }
-
     /**
-     * Gets valid_format
+     * is email valid format
      *
-     * @return bool|null
+     * @return bool
      */
-    public function getValidFormat()
+    public function getValidFormat() : bool
     {
-        return $this->container['valid_format'];
+        return $this->validFormat;
     }
-
     /**
-     * Sets valid_format
+     * is email valid format
      *
-     * @param bool|null $valid_format is email valid format
+     * @param bool $validFormat
      *
      * @return self
      */
-    public function setValidFormat($valid_format)
+    public function setValidFormat(bool $validFormat) : self
     {
-        $this->container['valid_format'] = $valid_format;
-
+        $this->validFormat = $validFormat;
         return $this;
     }
-
     /**
-     * Gets is_disposable
+     * is disposable email
      *
-     * @return bool|null
+     * @return bool
      */
-    public function getIsDisposable()
+    public function getIsDisposable() : bool
     {
-        return $this->container['is_disposable'];
+        return $this->isDisposable;
     }
-
     /**
-     * Sets is_disposable
+     * is disposable email
      *
-     * @param bool|null $is_disposable is disposable email
+     * @param bool $isDisposable
      *
      * @return self
      */
-    public function setIsDisposable($is_disposable)
+    public function setIsDisposable(bool $isDisposable) : self
     {
-        $this->container['is_disposable'] = $is_disposable;
-
+        $this->isDisposable = $isDisposable;
         return $this;
     }
-
     /**
-     * Gets is_free
+     * is free email
      *
-     * @return bool|null
+     * @return bool
      */
-    public function getIsFree()
+    public function getIsFree() : bool
     {
-        return $this->container['is_free'];
+        return $this->isFree;
     }
-
     /**
-     * Sets is_free
+     * is free email
      *
-     * @param bool|null $is_free is free email
+     * @param bool $isFree
      *
      * @return self
      */
-    public function setIsFree($is_free)
+    public function setIsFree(bool $isFree) : self
     {
-        $this->container['is_free'] = $is_free;
-
+        $this->isFree = $isFree;
         return $this;
     }
-
     /**
-     * Gets domain_age
+     * domain age
      *
-     * @return float|null
+     * @return float
      */
-    public function getDomainAge()
+    public function getDomainAge() : float
     {
-        return $this->container['domain_age'];
+        return $this->domainAge;
     }
-
     /**
-     * Sets domain_age
+     * domain age
      *
-     * @param float|null $domain_age domain age
+     * @param float $domainAge
      *
      * @return self
      */
-    public function setDomainAge($domain_age)
+    public function setDomainAge(float $domainAge) : self
     {
-        $this->container['domain_age'] = $domain_age;
-
+        $this->domainAge = $domainAge;
         return $this;
     }
-
     /**
-     * Gets score
+     * quality score
      *
-     * @return float|null
+     * @return float
      */
-    public function getScore()
+    public function getScore() : float
     {
-        return $this->container['score'];
+        return $this->score;
     }
-
     /**
-     * Sets score
+     * quality score
      *
-     * @param float|null $score quality score
+     * @param float $score
      *
      * @return self
      */
-    public function setScore($score)
+    public function setScore(float $score) : self
     {
-        $this->container['score'] = $score;
-
+        $this->score = $score;
         return $this;
-    }
-
-    /**
-     * Returns true if offset exists. False otherwise.
-     *
-     * @param integer $offset Offset
-     *
-     * @return boolean
-     */
-    public function offsetExists($offset)
-    {
-        return isset($this->container[$offset]);
-    }
-
-    /**
-     * Gets offset.
-     *
-     * @param integer $offset Offset
-     *
-     * @return mixed|null
-     */
-    public function offsetGet($offset)
-    {
-        return $this->container[$offset] ?? null;
-    }
-
-    /**
-     * Sets value based on offset.
-     *
-     * @param int|null $offset Offset
-     * @param mixed $value Value to be set
-     *
-     * @return void
-     */
-    public function offsetSet($offset, $value)
-    {
-        if (is_null($offset)) {
-            $this->container[] = $value;
-        } else {
-            $this->container[$offset] = $value;
-        }
-    }
-
-    /**
-     * Unsets offset.
-     *
-     * @param integer $offset Offset
-     *
-     * @return void
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->container[$offset]);
-    }
-
-    /**
-     * Serializes the object to a value that can be serialized natively by json_encode().
-     * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
-     *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
-     */
-    public function jsonSerialize()
-    {
-        return ObjectSerializer::sanitizeForSerialization($this);
-    }
-
-    /**
-     * Gets the string presentation of the object
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return json_encode(
-            ObjectSerializer::sanitizeForSerialization($this),
-            JSON_PRETTY_PRINT
-        );
-    }
-
-    /**
-     * Gets a header-safe presentation of the object
-     *
-     * @return string
-     */
-    public function toHeaderValue()
-    {
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
     }
 }

@@ -1,425 +1,142 @@
 <?php
-/**
- * GetIpDetailsCityOut
- *
- *
- * @category Class
- * @package  Devme
- * @author   DEV.ME Team
- */
-
-/**
- * DEV.ME API Documentation
- *
- * DEV.ME API Documentation [Currency Conversion and Exchange Rates API](https://dev.me/products/currency) - [IP2Location, IP Country, IP Information API](https://dev.me/products/ip) -  [Email Validation, Mailbox Verification](https://dev.me/products/email) - [Phone Number Validation](https://dev.me/products/phone). You can learn more at [dev.me](https://dev.me). For this example you can use api key `demo-key` to tests the APIs
- *
- * The version of the OpenAPI document: 1.0.0
- * Contact: support@dev.me
- */
-
 
 namespace Devme\Model;
 
-use ArrayAccess;
-use Devme\ObjectSerializer;
-use JsonSerializable;
-
-/**
- * GetIpDetailsCityOut Class Doc Comment
- *
- * @category Class
- * @package  Devme
- * @author   DEV.ME Team
- * @implements ArrayAccess
- * @template TKey int|null
- * @template TValue mixed|null
- */
-class GetIpDetailsCityOut implements ModelInterface, ArrayAccess, JsonSerializable
+class GetIpDetailsCityOut
 {
-    public const DISCRIMINATOR = null;
-
     /**
-     * The original name of the model.
+     * Accuracy Radius
+     *
+     * @var float
+     */
+    protected $accuracyRadius;
+    /**
+     * Latitude
+     *
+     * @var float
+     */
+    protected $latitude;
+    /**
+     * Longitude
      *
      * @var string
      */
-    protected static $openAPIModelName = 'GetIpDetailsCityOut';
-
+    protected $longitude;
     /**
-     * Array of property to type mappings. Used for (de)serialization
+     * Time Zone
      *
-     * @var string[]
+     * @var string
      */
-    protected static $openAPITypes = [
-        'accuracy_radius' => 'float',
-        'latitude' => 'float',
-        'longitude' => 'string',
-        'time_zone' => 'string',
-        'name' => 'string'
-    ];
-
+    protected $timeZone;
     /**
-     * Array of property to format mappings. Used for (de)serialization
+     * City Name
      *
-     * @var string[]
-     * @phpstan-var array<string, string|null>
-     * @psalm-var array<string, string|null>
+     * @var string
      */
-    protected static $openAPIFormats = [
-        'accuracy_radius' => null,
-        'latitude' => null,
-        'longitude' => null,
-        'time_zone' => null,
-        'name' => null
-    ];
+    protected $name;
     /**
-     * Array of attributes where the key is the local name,
-     * and the value is the original name
+     * Accuracy Radius
      *
-     * @var string[]
+     * @return float
      */
-    protected static $attributeMap = [
-        'accuracy_radius' => 'accuracyRadius',
-        'latitude' => 'latitude',
-        'longitude' => 'longitude',
-        'time_zone' => 'timeZone',
-        'name' => 'name'
-    ];
-    /**
-     * Array of attributes to setter functions (for deserialization of responses)
-     *
-     * @var string[]
-     */
-    protected static $setters = [
-        'accuracy_radius' => 'setAccuracyRadius',
-        'latitude' => 'setLatitude',
-        'longitude' => 'setLongitude',
-        'time_zone' => 'setTimeZone',
-        'name' => 'setName'
-    ];
-    /**
-     * Array of attributes to getter functions (for serialization of requests)
-     *
-     * @var string[]
-     */
-    protected static $getters = [
-        'accuracy_radius' => 'getAccuracyRadius',
-        'latitude' => 'getLatitude',
-        'longitude' => 'getLongitude',
-        'time_zone' => 'getTimeZone',
-        'name' => 'getName'
-    ];
-    /**
-     * Associative array for storing property values
-     *
-     * @var mixed[]
-     */
-    protected $container = [];
-
-    /**
-     * Constructor
-     *
-     * @param mixed[] $data Associated array of property values
-     *                      initializing the model
-     */
-    public function __construct(array $data = null)
+    public function getAccuracyRadius() : float
     {
-        $this->container['accuracy_radius'] = $data['accuracy_radius'] ?? null;
-        $this->container['latitude'] = $data['latitude'] ?? null;
-        $this->container['longitude'] = $data['longitude'] ?? null;
-        $this->container['time_zone'] = $data['time_zone'] ?? null;
-        $this->container['name'] = $data['name'] ?? null;
+        return $this->accuracyRadius;
     }
-
     /**
-     * Array of property to type mappings. Used for (de)serialization
+     * Accuracy Radius
      *
-     * @return array
-     */
-    public static function openAPITypes()
-    {
-        return self::$openAPITypes;
-    }
-
-    /**
-     * Array of property to format mappings. Used for (de)serialization
+     * @param float $accuracyRadius
      *
-     * @return array
+     * @return self
      */
-    public static function openAPIFormats()
+    public function setAccuracyRadius(float $accuracyRadius) : self
     {
-        return self::$openAPIFormats;
+        $this->accuracyRadius = $accuracyRadius;
+        return $this;
     }
-
     /**
-     * Array of attributes where the key is the local name,
-     * and the value is the original name
+     * Latitude
      *
-     * @return array
+     * @return float
      */
-    public static function attributeMap()
+    public function getLatitude() : float
     {
-        return self::$attributeMap;
+        return $this->latitude;
     }
-
     /**
-     * Array of attributes to setter functions (for deserialization of responses)
+     * Latitude
      *
-     * @return array
-     */
-    public static function setters()
-    {
-        return self::$setters;
-    }
-
-    /**
-     * Array of attributes to getter functions (for serialization of requests)
+     * @param float $latitude
      *
-     * @return array
+     * @return self
      */
-    public static function getters()
+    public function setLatitude(float $latitude) : self
     {
-        return self::$getters;
+        $this->latitude = $latitude;
+        return $this;
     }
-
     /**
-     * The original name of the model.
+     * Longitude
      *
      * @return string
      */
-    public function getModelName()
+    public function getLongitude() : string
     {
-        return self::$openAPIModelName;
+        return $this->longitude;
     }
-
     /**
-     * Validate all the properties in the model
-     * return true if all passed
+     * Longitude
      *
-     * @return bool True if all properties are valid
-     */
-    public function valid()
-    {
-        return count($this->listInvalidProperties()) === 0;
-    }
-
-    /**
-     * Show all the invalid properties with reasons.
-     *
-     * @return array invalid properties with reasons
-     */
-    public function listInvalidProperties()
-    {
-        $invalidProperties = [];
-
-        return $invalidProperties;
-    }
-
-    /**
-     * Gets accuracy_radius
-     *
-     * @return float|null
-     */
-    public function getAccuracyRadius()
-    {
-        return $this->container['accuracy_radius'];
-    }
-
-    /**
-     * Sets accuracy_radius
-     *
-     * @param float|null $accuracy_radius Accuracy Radius
+     * @param string $longitude
      *
      * @return self
      */
-    public function setAccuracyRadius($accuracy_radius)
+    public function setLongitude(string $longitude) : self
     {
-        $this->container['accuracy_radius'] = $accuracy_radius;
-
+        $this->longitude = $longitude;
         return $this;
     }
-
     /**
-     * Gets latitude
-     *
-     * @return float|null
-     */
-    public function getLatitude()
-    {
-        return $this->container['latitude'];
-    }
-
-    /**
-     * Sets latitude
-     *
-     * @param float|null $latitude Latitude
-     *
-     * @return self
-     */
-    public function setLatitude($latitude)
-    {
-        $this->container['latitude'] = $latitude;
-
-        return $this;
-    }
-
-    /**
-     * Gets longitude
-     *
-     * @return string|null
-     */
-    public function getLongitude()
-    {
-        return $this->container['longitude'];
-    }
-
-    /**
-     * Sets longitude
-     *
-     * @param string|null $longitude Longitude
-     *
-     * @return self
-     */
-    public function setLongitude($longitude)
-    {
-        $this->container['longitude'] = $longitude;
-
-        return $this;
-    }
-
-    /**
-     * Gets time_zone
-     *
-     * @return string|null
-     */
-    public function getTimeZone()
-    {
-        return $this->container['time_zone'];
-    }
-
-    /**
-     * Sets time_zone
-     *
-     * @param string|null $time_zone Time Zone
-     *
-     * @return self
-     */
-    public function setTimeZone($time_zone)
-    {
-        $this->container['time_zone'] = $time_zone;
-
-        return $this;
-    }
-
-    /**
-     * Gets name
-     *
-     * @return string|null
-     */
-    public function getName()
-    {
-        return $this->container['name'];
-    }
-
-    /**
-     * Sets name
-     *
-     * @param string|null $name City Name
-     *
-     * @return self
-     */
-    public function setName($name)
-    {
-        $this->container['name'] = $name;
-
-        return $this;
-    }
-
-    /**
-     * Returns true if offset exists. False otherwise.
-     *
-     * @param integer $offset Offset
-     *
-     * @return boolean
-     */
-    public function offsetExists($offset)
-    {
-        return isset($this->container[$offset]);
-    }
-
-    /**
-     * Gets offset.
-     *
-     * @param integer $offset Offset
-     *
-     * @return mixed|null
-     */
-    public function offsetGet($offset)
-    {
-        return $this->container[$offset] ?? null;
-    }
-
-    /**
-     * Sets value based on offset.
-     *
-     * @param int|null $offset Offset
-     * @param mixed $value Value to be set
-     *
-     * @return void
-     */
-    public function offsetSet($offset, $value)
-    {
-        if (is_null($offset)) {
-            $this->container[] = $value;
-        } else {
-            $this->container[$offset] = $value;
-        }
-    }
-
-    /**
-     * Unsets offset.
-     *
-     * @param integer $offset Offset
-     *
-     * @return void
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->container[$offset]);
-    }
-
-    /**
-     * Serializes the object to a value that can be serialized natively by json_encode().
-     * @link https://www.php.net/manual/en/jsonserializable.jsonserialize.php
-     *
-     * @return mixed Returns data which can be serialized by json_encode(), which is a value
-     * of any type other than a resource.
-     */
-    public function jsonSerialize()
-    {
-        return ObjectSerializer::sanitizeForSerialization($this);
-    }
-
-    /**
-     * Gets the string presentation of the object
+     * Time Zone
      *
      * @return string
      */
-    public function __toString()
+    public function getTimeZone() : string
     {
-        return json_encode(
-            ObjectSerializer::sanitizeForSerialization($this),
-            JSON_PRETTY_PRINT
-        );
+        return $this->timeZone;
     }
-
     /**
-     * Gets a header-safe presentation of the object
+     * Time Zone
+     *
+     * @param string $timeZone
+     *
+     * @return self
+     */
+    public function setTimeZone(string $timeZone) : self
+    {
+        $this->timeZone = $timeZone;
+        return $this;
+    }
+    /**
+     * City Name
      *
      * @return string
      */
-    public function toHeaderValue()
+    public function getName() : string
     {
-        return json_encode(ObjectSerializer::sanitizeForSerialization($this));
+        return $this->name;
+    }
+    /**
+     * City Name
+     *
+     * @param string $name
+     *
+     * @return self
+     */
+    public function setName(string $name) : self
+    {
+        $this->name = $name;
+        return $this;
     }
 }

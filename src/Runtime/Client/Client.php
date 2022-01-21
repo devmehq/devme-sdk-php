@@ -1,6 +1,6 @@
 <?php
 
-namespace Devme\Runtime\Client;
+namespace DevmeSdk\Runtime\Client;
 
 use Jane\Component\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
 use Psr\Http\Client\ClientInterface;
@@ -8,7 +8,6 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 use Symfony\Component\Serializer\SerializerInterface;
-
 abstract class Client
 {
     public const FETCH_RESPONSE = 'response';

@@ -1,8 +1,8 @@
 <?php
 
-namespace Devme\Endpoint;
+namespace DevmeSdk\Endpoint;
 
-class V1GetIpDetails extends \Devme\Runtime\Client\BaseEndpoint implements \Devme\Runtime\Client\Endpoint
+class V1GetIpDetails extends \DevmeSdk\Runtime\Client\BaseEndpoint implements \DevmeSdk\Runtime\Client\Endpoint
 {
     /**
      * Get IP GEO Location and ISP details
@@ -15,7 +15,7 @@ class V1GetIpDetails extends \Devme\Runtime\Client\BaseEndpoint implements \Devm
     {
         $this->queryParameters = $queryParameters;
     }
-    use \Devme\Runtime\Client\EndpointTrait;
+    use \DevmeSdk\Runtime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'GET';
@@ -44,21 +44,21 @@ class V1GetIpDetails extends \Devme\Runtime\Client\BaseEndpoint implements \Devm
     /**
      * {@inheritdoc}
      *
-     * @throws \Devme\Exception\V1GetIpDetailsBadRequestException
-     * @throws \Devme\Exception\V1GetIpDetailsUnauthorizedException
+     * @throws \DevmeSdk\Exception\V1GetIpDetailsBadRequestException
+     * @throws \DevmeSdk\Exception\V1GetIpDetailsUnauthorizedException
      *
-     * @return null|\Devme\Model\GetIpDetailsOut
+     * @return null|\DevmeSdk\Model\GetIpDetailsOut
      */
     protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (is_null($contentType) === false && (200 === $status && mb_strpos($contentType, 'application/json') !== false)) {
-            return $serializer->deserialize($body, 'Devme\\Model\\GetIpDetailsOut', 'json');
+            return $serializer->deserialize($body, 'DevmeSdk\\Model\\GetIpDetailsOut', 'json');
         }
         if (is_null($contentType) === false && (400 === $status && mb_strpos($contentType, 'application/json') !== false)) {
-            throw new \Devme\Exception\V1GetIpDetailsBadRequestException($serializer->deserialize($body, 'Devme\\Model\\HttpErrorOut', 'json'));
+            throw new \DevmeSdk\Exception\V1GetIpDetailsBadRequestException($serializer->deserialize($body, 'DevmeSdk\\Model\\HttpErrorOut', 'json'));
         }
         if (is_null($contentType) === false && (401 === $status && mb_strpos($contentType, 'application/json') !== false)) {
-            throw new \Devme\Exception\V1GetIpDetailsUnauthorizedException($serializer->deserialize($body, 'Devme\\Model\\HttpErrorOut', 'json'));
+            throw new \DevmeSdk\Exception\V1GetIpDetailsUnauthorizedException($serializer->deserialize($body, 'DevmeSdk\\Model\\HttpErrorOut', 'json'));
         }
     }
     public function getAuthenticationScopes() : array

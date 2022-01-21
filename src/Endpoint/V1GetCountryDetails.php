@@ -1,8 +1,8 @@
 <?php
 
-namespace Devme\Endpoint;
+namespace DevmeSdk\Endpoint;
 
-class V1GetCountryDetails extends \Devme\Runtime\Client\BaseEndpoint implements \Devme\Runtime\Client\Endpoint
+class V1GetCountryDetails extends \DevmeSdk\Runtime\Client\BaseEndpoint implements \DevmeSdk\Runtime\Client\Endpoint
 {
     /**
      * Get country facts and information
@@ -18,7 +18,7 @@ class V1GetCountryDetails extends \Devme\Runtime\Client\BaseEndpoint implements 
     {
         $this->queryParameters = $queryParameters;
     }
-    use \Devme\Runtime\Client\EndpointTrait;
+    use \DevmeSdk\Runtime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'GET';
@@ -50,21 +50,21 @@ class V1GetCountryDetails extends \Devme\Runtime\Client\BaseEndpoint implements 
     /**
      * {@inheritdoc}
      *
-     * @throws \Devme\Exception\V1GetCountryDetailsBadRequestException
-     * @throws \Devme\Exception\V1GetCountryDetailsUnauthorizedException
+     * @throws \DevmeSdk\Exception\V1GetCountryDetailsBadRequestException
+     * @throws \DevmeSdk\Exception\V1GetCountryDetailsUnauthorizedException
      *
-     * @return null|\Devme\Model\GetCountryDetailsOut
+     * @return null|\DevmeSdk\Model\GetCountryDetailsOut
      */
     protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (is_null($contentType) === false && (200 === $status && mb_strpos($contentType, 'application/json') !== false)) {
-            return $serializer->deserialize($body, 'Devme\\Model\\GetCountryDetailsOut', 'json');
+            return $serializer->deserialize($body, 'DevmeSdk\\Model\\GetCountryDetailsOut', 'json');
         }
         if (is_null($contentType) === false && (400 === $status && mb_strpos($contentType, 'application/json') !== false)) {
-            throw new \Devme\Exception\V1GetCountryDetailsBadRequestException($serializer->deserialize($body, 'Devme\\Model\\HttpErrorOut', 'json'));
+            throw new \DevmeSdk\Exception\V1GetCountryDetailsBadRequestException($serializer->deserialize($body, 'DevmeSdk\\Model\\HttpErrorOut', 'json'));
         }
         if (is_null($contentType) === false && (401 === $status && mb_strpos($contentType, 'application/json') !== false)) {
-            throw new \Devme\Exception\V1GetCountryDetailsUnauthorizedException($serializer->deserialize($body, 'Devme\\Model\\HttpErrorOut', 'json'));
+            throw new \DevmeSdk\Exception\V1GetCountryDetailsUnauthorizedException($serializer->deserialize($body, 'DevmeSdk\\Model\\HttpErrorOut', 'json'));
         }
     }
     public function getAuthenticationScopes() : array

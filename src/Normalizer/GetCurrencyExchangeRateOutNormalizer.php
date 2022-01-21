@@ -1,9 +1,9 @@
 <?php
 
-namespace Devme\Normalizer;
+namespace DevmeSdk\Normalizer;
 
 use Jane\Component\JsonSchemaRuntime\Reference;
-use Devme\Runtime\Normalizer\CheckArray;
+use DevmeSdk\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -11,7 +11,6 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-
 class GetCurrencyExchangeRateOutNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
     use DenormalizerAwareTrait;
@@ -22,11 +21,11 @@ class GetCurrencyExchangeRateOutNormalizer implements DenormalizerInterface, Nor
      */
     public function supportsDenormalization($data, $type, $format = null)
     {
-        return $type === 'Devme\\Model\\GetCurrencyExchangeRateOut';
+        return $type === 'DevmeSdk\\Model\\GetCurrencyExchangeRateOut';
     }
     public function supportsNormalization($data, $format = null)
     {
-        return is_object($data) && get_class($data) === 'Devme\\Model\\GetCurrencyExchangeRateOut';
+        return is_object($data) && get_class($data) === 'DevmeSdk\\Model\\GetCurrencyExchangeRateOut';
     }
     /**
      * @return mixed
@@ -39,7 +38,7 @@ class GetCurrencyExchangeRateOutNormalizer implements DenormalizerInterface, Nor
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \Devme\Model\GetCurrencyExchangeRateOut();
+        $object = new \DevmeSdk\Model\GetCurrencyExchangeRateOut();
         if (null === $data || false === \is_array($data)) {
             return $object;
         }

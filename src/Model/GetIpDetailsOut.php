@@ -1,6 +1,6 @@
 <?php
 
-namespace Devme\Model;
+namespace DevmeSdk\Model;
 
 class GetIpDetailsOut
 {
@@ -35,7 +35,7 @@ class GetIpDetailsOut
      */
     protected $aso;
     /**
-     *
+     * 
      *
      * @var GetIpDetailsCityOut
      */
@@ -146,7 +146,7 @@ class GetIpDetailsOut
         return $this;
     }
     /**
-     *
+     * 
      *
      * @return GetIpDetailsCityOut
      */
@@ -155,7 +155,7 @@ class GetIpDetailsOut
         return $this->city;
     }
     /**
-     *
+     * 
      *
      * @param GetIpDetailsCityOut $city
      *

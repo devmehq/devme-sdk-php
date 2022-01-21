@@ -1,6 +1,6 @@
 <?php
 
-namespace Devme\Exception;
+namespace DevmeSdk\Exception;
 
 class BadRequestException extends \RuntimeException implements ClientException
 {

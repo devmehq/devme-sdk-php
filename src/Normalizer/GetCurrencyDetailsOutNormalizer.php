@@ -1,9 +1,9 @@
 <?php
 
-namespace Devme\Normalizer;
+namespace DevmeSdk\Normalizer;
 
 use Jane\Component\JsonSchemaRuntime\Reference;
-use Devme\Runtime\Normalizer\CheckArray;
+use DevmeSdk\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -11,7 +11,6 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-
 class GetCurrencyDetailsOutNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
     use DenormalizerAwareTrait;
@@ -22,11 +21,11 @@ class GetCurrencyDetailsOutNormalizer implements DenormalizerInterface, Normaliz
      */
     public function supportsDenormalization($data, $type, $format = null)
     {
-        return $type === 'Devme\\Model\\GetCurrencyDetailsOut';
+        return $type === 'DevmeSdk\\Model\\GetCurrencyDetailsOut';
     }
     public function supportsNormalization($data, $format = null)
     {
-        return is_object($data) && get_class($data) === 'Devme\\Model\\GetCurrencyDetailsOut';
+        return is_object($data) && get_class($data) === 'DevmeSdk\\Model\\GetCurrencyDetailsOut';
     }
     /**
      * @return mixed
@@ -39,7 +38,7 @@ class GetCurrencyDetailsOutNormalizer implements DenormalizerInterface, Normaliz
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \Devme\Model\GetCurrencyDetailsOut();
+        $object = new \DevmeSdk\Model\GetCurrencyDetailsOut();
         if (null === $data || false === \is_array($data)) {
             return $object;
         }

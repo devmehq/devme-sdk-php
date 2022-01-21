@@ -22,11 +22,11 @@ composer require devmehq/sdk-php
 
 ### Currency API Conversion
 ```php
-use Devme\Authentication\APIKeyHeaderAuthentication;
+use DevmeSdk\Authentication\APIKeyHeaderAuthentication;
 use Jane\Component\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
 
 $authenticationRegistry = new AuthenticationRegistry([new APIKeyHeaderAuthentication('demo-key')]);
-$apiClient = \Devme\Client::create(null, [$authenticationRegistry]);
+$apiClient = \DevmeSdk\Client::create(null, [$authenticationRegistry]);
 
 $apiClient->v1ConvertCurrency(['from' => 'USD', 'to' => 'EUR', 'amount' => 10]);
 
@@ -43,11 +43,11 @@ $apiClient->v1ConvertCurrency(['from' => 'USD', 'to' => 'EUR', 'amount' => 10]);
 
 ### IP API Geolocation, IP2Location, IP Data
 ```php
-use Devme\Authentication\APIKeyHeaderAuthentication;
+use DevmeSdk\Authentication\APIKeyHeaderAuthentication;
 use Jane\Component\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
 
 $authenticationRegistry = new AuthenticationRegistry([new APIKeyHeaderAuthentication('demo-key')]);
-$apiClient = \Devme\Client::create(null, [$authenticationRegistry]);
+$apiClient = \DevmeSdk\Client::create(null, [$authenticationRegistry]);
 
 $apiClient->v1GetIpDetails([ 'ip' => '52.45.23.11']);
 

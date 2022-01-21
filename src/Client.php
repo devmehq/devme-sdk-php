@@ -1,8 +1,8 @@
 <?php
 
-namespace Devme;
+namespace DevmeSdk;
 
-class Client extends \Devme\Runtime\Client\Client
+class Client extends \DevmeSdk\Runtime\Client\Client
 {
     /**
      * Convert currency to another currency
@@ -13,14 +13,14 @@ class Client extends \Devme\Runtime\Client\Client
      *     @var string $to to - currency to convert to
      * }
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
-     * @throws \Devme\Exception\V1ConvertCurrencyBadRequestException
-     * @throws \Devme\Exception\V1ConvertCurrencyUnauthorizedException
+     * @throws \DevmeSdk\Exception\V1ConvertCurrencyBadRequestException
+     * @throws \DevmeSdk\Exception\V1ConvertCurrencyUnauthorizedException
      *
-     * @return null|\Devme\Model\ConvertCurrencyOut|\Psr\Http\Message\ResponseInterface
+     * @return null|\DevmeSdk\Model\ConvertCurrencyOut|\Psr\Http\Message\ResponseInterface
      */
     public function v1ConvertCurrency(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executeEndpoint(new \Devme\Endpoint\V1ConvertCurrency($queryParameters), $fetch);
+        return $this->executeEndpoint(new \DevmeSdk\Endpoint\V1ConvertCurrency($queryParameters), $fetch);
     }
     /**
      * Get country facts and information
@@ -32,14 +32,14 @@ class Client extends \Devme\Runtime\Client\Client
      *     @var string $language language - localisation language
      * }
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
-     * @throws \Devme\Exception\V1GetCountryDetailsBadRequestException
-     * @throws \Devme\Exception\V1GetCountryDetailsUnauthorizedException
+     * @throws \DevmeSdk\Exception\V1GetCountryDetailsBadRequestException
+     * @throws \DevmeSdk\Exception\V1GetCountryDetailsUnauthorizedException
      *
-     * @return null|\Devme\Model\GetCountryDetailsOut|\Psr\Http\Message\ResponseInterface
+     * @return null|\DevmeSdk\Model\GetCountryDetailsOut|\Psr\Http\Message\ResponseInterface
      */
     public function v1GetCountryDetails(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executeEndpoint(new \Devme\Endpoint\V1GetCountryDetails($queryParameters), $fetch);
+        return $this->executeEndpoint(new \DevmeSdk\Endpoint\V1GetCountryDetails($queryParameters), $fetch);
     }
     /**
      * Get currency facts and information
@@ -52,14 +52,14 @@ class Client extends \Devme\Runtime\Client\Client
      *     @var string $type type - type of currency
      * }
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
-     * @throws \Devme\Exception\V1GetCurrencyDetailsBadRequestException
-     * @throws \Devme\Exception\V1GetCurrencyDetailsUnauthorizedException
+     * @throws \DevmeSdk\Exception\V1GetCurrencyDetailsBadRequestException
+     * @throws \DevmeSdk\Exception\V1GetCurrencyDetailsUnauthorizedException
      *
-     * @return null|\Devme\Model\GetCurrencyDetailsOut|\Psr\Http\Message\ResponseInterface
+     * @return null|\DevmeSdk\Model\GetCurrencyDetailsOut|\Psr\Http\Message\ResponseInterface
      */
     public function v1GetCurrencyDetails(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executeEndpoint(new \Devme\Endpoint\V1GetCurrencyDetails($queryParameters), $fetch);
+        return $this->executeEndpoint(new \DevmeSdk\Endpoint\V1GetCurrencyDetails($queryParameters), $fetch);
     }
     /**
      * Get exchange rate for a currency
@@ -69,14 +69,14 @@ class Client extends \Devme\Runtime\Client\Client
      *     @var string $to to - currency to get exchange rate to
      * }
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
-     * @throws \Devme\Exception\V1GetCurrencyExchangeRateBadRequestException
-     * @throws \Devme\Exception\V1GetCurrencyExchangeRateUnauthorizedException
+     * @throws \DevmeSdk\Exception\V1GetCurrencyExchangeRateBadRequestException
+     * @throws \DevmeSdk\Exception\V1GetCurrencyExchangeRateUnauthorizedException
      *
-     * @return null|\Devme\Model\GetCurrencyExchangeRateOut|\Psr\Http\Message\ResponseInterface
+     * @return null|\DevmeSdk\Model\GetCurrencyExchangeRateOut|\Psr\Http\Message\ResponseInterface
      */
     public function v1GetCurrencyExchangeRate(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executeEndpoint(new \Devme\Endpoint\V1GetCurrencyExchangeRate($queryParameters), $fetch);
+        return $this->executeEndpoint(new \DevmeSdk\Endpoint\V1GetCurrencyExchangeRate($queryParameters), $fetch);
     }
     /**
      * Get domain WHOIS details and registration information
@@ -85,14 +85,14 @@ class Client extends \Devme\Runtime\Client\Client
      *     @var string $domain domain - Domain name to get details for
      * }
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
-     * @throws \Devme\Exception\V1GetDomainWhoisBadRequestException
-     * @throws \Devme\Exception\V1GetDomainWhoisUnauthorizedException
+     * @throws \DevmeSdk\Exception\V1GetDomainWhoisBadRequestException
+     * @throws \DevmeSdk\Exception\V1GetDomainWhoisUnauthorizedException
      *
-     * @return null|\Devme\Model\GetDomainWhoisOut|\Psr\Http\Message\ResponseInterface
+     * @return null|\DevmeSdk\Model\GetDomainWhoisOut|\Psr\Http\Message\ResponseInterface
      */
     public function v1GetDomainWhois(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executeEndpoint(new \Devme\Endpoint\V1GetDomainWhois($queryParameters), $fetch);
+        return $this->executeEndpoint(new \DevmeSdk\Endpoint\V1GetDomainWhois($queryParameters), $fetch);
     }
     /**
      * Get email validation details
@@ -103,14 +103,14 @@ class Client extends \Devme\Runtime\Client\Client
      *     @var bool $verifySmtp verifySmtp - verify mailbox with SMTP Connect and Reply
      * }
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
-     * @throws \Devme\Exception\V1GetEmailDetailsBadRequestException
-     * @throws \Devme\Exception\V1GetEmailDetailsUnauthorizedException
+     * @throws \DevmeSdk\Exception\V1GetEmailDetailsBadRequestException
+     * @throws \DevmeSdk\Exception\V1GetEmailDetailsUnauthorizedException
      *
-     * @return null|\Devme\Model\GetEmailDetailsOut|\Psr\Http\Message\ResponseInterface
+     * @return null|\DevmeSdk\Model\GetEmailDetailsOut|\Psr\Http\Message\ResponseInterface
      */
     public function v1GetEmailDetails(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executeEndpoint(new \Devme\Endpoint\V1GetEmailDetails($queryParameters), $fetch);
+        return $this->executeEndpoint(new \DevmeSdk\Endpoint\V1GetEmailDetails($queryParameters), $fetch);
     }
     /**
      * Get IP GEO Location and ISP details
@@ -119,14 +119,14 @@ class Client extends \Devme\Runtime\Client\Client
      *     @var string $ip ip - IP Address
      * }
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
-     * @throws \Devme\Exception\V1GetIpDetailsBadRequestException
-     * @throws \Devme\Exception\V1GetIpDetailsUnauthorizedException
+     * @throws \DevmeSdk\Exception\V1GetIpDetailsBadRequestException
+     * @throws \DevmeSdk\Exception\V1GetIpDetailsUnauthorizedException
      *
-     * @return null|\Devme\Model\GetIpDetailsOut|\Psr\Http\Message\ResponseInterface
+     * @return null|\DevmeSdk\Model\GetIpDetailsOut|\Psr\Http\Message\ResponseInterface
      */
     public function v1GetIpDetails(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executeEndpoint(new \Devme\Endpoint\V1GetIpDetails($queryParameters), $fetch);
+        return $this->executeEndpoint(new \DevmeSdk\Endpoint\V1GetIpDetails($queryParameters), $fetch);
     }
     /**
      * Get phone validation details
@@ -135,14 +135,14 @@ class Client extends \Devme\Runtime\Client\Client
      *     @var string $phone phone - phone number to validate
      * }
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
-     * @throws \Devme\Exception\V1GetPhoneDetailsBadRequestException
-     * @throws \Devme\Exception\V1GetPhoneDetailsUnauthorizedException
+     * @throws \DevmeSdk\Exception\V1GetPhoneDetailsBadRequestException
+     * @throws \DevmeSdk\Exception\V1GetPhoneDetailsUnauthorizedException
      *
-     * @return null|\Devme\Model\GetPhoneDetailsOut|\Psr\Http\Message\ResponseInterface
+     * @return null|\DevmeSdk\Model\GetPhoneDetailsOut|\Psr\Http\Message\ResponseInterface
      */
     public function v1GetPhoneDetails(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executeEndpoint(new \Devme\Endpoint\V1GetPhoneDetails($queryParameters), $fetch);
+        return $this->executeEndpoint(new \DevmeSdk\Endpoint\V1GetPhoneDetails($queryParameters), $fetch);
     }
     /**
      * Get list of all countries
@@ -157,14 +157,14 @@ class Client extends \Devme\Runtime\Client\Client
      *     @var string $pageSize pageSize - page size
      * }
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
-     * @throws \Devme\Exception\V1ListCountriesBadRequestException
-     * @throws \Devme\Exception\V1ListCountriesUnauthorizedException
+     * @throws \DevmeSdk\Exception\V1ListCountriesBadRequestException
+     * @throws \DevmeSdk\Exception\V1ListCountriesUnauthorizedException
      *
-     * @return null|\Devme\Model\ListCountriesOut|\Psr\Http\Message\ResponseInterface
+     * @return null|\DevmeSdk\Model\ListCountriesOut|\Psr\Http\Message\ResponseInterface
      */
     public function v1ListCountries(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executeEndpoint(new \Devme\Endpoint\V1ListCountries($queryParameters), $fetch);
+        return $this->executeEndpoint(new \DevmeSdk\Endpoint\V1ListCountries($queryParameters), $fetch);
     }
     /**
      * Get list of all currencies
@@ -180,23 +180,23 @@ class Client extends \Devme\Runtime\Client\Client
      *     @var string $pageSize pageSize - page size
      * }
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
-     * @throws \Devme\Exception\V1ListCurrenciesBadRequestException
-     * @throws \Devme\Exception\V1ListCurrenciesUnauthorizedException
+     * @throws \DevmeSdk\Exception\V1ListCurrenciesBadRequestException
+     * @throws \DevmeSdk\Exception\V1ListCurrenciesUnauthorizedException
      *
-     * @return null|\Devme\Model\ListCurrenciesOut|\Psr\Http\Message\ResponseInterface
+     * @return null|\DevmeSdk\Model\ListCurrenciesOut|\Psr\Http\Message\ResponseInterface
      */
     public function v1ListCurrencies(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executeEndpoint(new \Devme\Endpoint\V1ListCurrencies($queryParameters), $fetch);
+        return $this->executeEndpoint(new \DevmeSdk\Endpoint\V1ListCurrencies($queryParameters), $fetch);
     }
     /**
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      *
-     * @return null|\Devme\Model\WhoAmIOut|\Psr\Http\Message\ResponseInterface
+     * @return null|\DevmeSdk\Model\WhoAmIOut|\Psr\Http\Message\ResponseInterface
      */
     public function v1WhoAmI(string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executeEndpoint(new \Devme\Endpoint\V1WhoAmI(), $fetch);
+        return $this->executeEndpoint(new \DevmeSdk\Endpoint\V1WhoAmI(), $fetch);
     }
     public static function create($httpClient = null, array $additionalPlugins = array())
     {
@@ -212,7 +212,7 @@ class Client extends \Devme\Runtime\Client\Client
         }
         $requestFactory = \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();
         $streamFactory = \Http\Discovery\Psr17FactoryDiscovery::findStreamFactory();
-        $serializer = new \Symfony\Component\Serializer\Serializer(array(new \Symfony\Component\Serializer\Normalizer\ArrayDenormalizer(), new \Devme\Normalizer\JaneObjectNormalizer()), array(new \Symfony\Component\Serializer\Encoder\JsonEncoder(new \Symfony\Component\Serializer\Encoder\JsonEncode(), new \Symfony\Component\Serializer\Encoder\JsonDecode(array('json_decode_associative' => true)))));
+        $serializer = new \Symfony\Component\Serializer\Serializer(array(new \Symfony\Component\Serializer\Normalizer\ArrayDenormalizer(), new \DevmeSdk\Normalizer\JaneObjectNormalizer()), array(new \Symfony\Component\Serializer\Encoder\JsonEncoder(new \Symfony\Component\Serializer\Encoder\JsonEncode(), new \Symfony\Component\Serializer\Encoder\JsonDecode(array('json_decode_associative' => true)))));
         return new static($httpClient, $requestFactory, $serializer, $streamFactory);
     }
 }

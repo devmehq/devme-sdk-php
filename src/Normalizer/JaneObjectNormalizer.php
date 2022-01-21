@@ -1,21 +1,20 @@
 <?php
 
-namespace Devme\Normalizer;
+namespace DevmeSdk\Normalizer;
 
-use Devme\Runtime\Normalizer\CheckArray;
+use DevmeSdk\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-
 class JaneObjectNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
     use CheckArray;
-    protected $normalizers = array('Devme\\Model\\ConvertCurrencyOut' => 'Devme\\Normalizer\\ConvertCurrencyOutNormalizer', 'Devme\\Model\\Error' => 'Devme\\Normalizer\\ErrorNormalizer', 'Devme\\Model\\GetCountryDetailsOut' => 'Devme\\Normalizer\\GetCountryDetailsOutNormalizer', 'Devme\\Model\\GetCurrencyDetailsOut' => 'Devme\\Normalizer\\GetCurrencyDetailsOutNormalizer', 'Devme\\Model\\GetCurrencyExchangeRateOut' => 'Devme\\Normalizer\\GetCurrencyExchangeRateOutNormalizer', 'Devme\\Model\\GetDomainWhoisOut' => 'Devme\\Normalizer\\GetDomainWhoisOutNormalizer', 'Devme\\Model\\GetEmailDetailsOut' => 'Devme\\Normalizer\\GetEmailDetailsOutNormalizer', 'Devme\\Model\\GetIpDetailsCityOut' => 'Devme\\Normalizer\\GetIpDetailsCityOutNormalizer', 'Devme\\Model\\GetIpDetailsOut' => 'Devme\\Normalizer\\GetIpDetailsOutNormalizer', 'Devme\\Model\\GetPhoneDetailsOut' => 'Devme\\Normalizer\\GetPhoneDetailsOutNormalizer', 'Devme\\Model\\HttpErrorOut' => 'Devme\\Normalizer\\HttpErrorOutNormalizer', 'Devme\\Model\\ListCountriesItem' => 'Devme\\Normalizer\\ListCountriesItemNormalizer', 'Devme\\Model\\ListCountriesOut' => 'Devme\\Normalizer\\ListCountriesOutNormalizer', 'Devme\\Model\\ListCurrenciesItem' => 'Devme\\Normalizer\\ListCurrenciesItemNormalizer', 'Devme\\Model\\ListCurrenciesOut' => 'Devme\\Normalizer\\ListCurrenciesOutNormalizer', 'Devme\\Model\\WhoAmIOut' => 'Devme\\Normalizer\\WhoAmIOutNormalizer', '\\Jane\\Component\\JsonSchemaRuntime\\Reference' => '\\Devme\\Runtime\\Normalizer\\ReferenceNormalizer'), $normalizersCache = array();
+    protected $normalizers = array('DevmeSdk\\Model\\ConvertCurrencyOut' => 'DevmeSdk\\Normalizer\\ConvertCurrencyOutNormalizer', 'DevmeSdk\\Model\\Error' => 'DevmeSdk\\Normalizer\\ErrorNormalizer', 'DevmeSdk\\Model\\GetCountryDetailsOut' => 'DevmeSdk\\Normalizer\\GetCountryDetailsOutNormalizer', 'DevmeSdk\\Model\\GetCurrencyDetailsOut' => 'DevmeSdk\\Normalizer\\GetCurrencyDetailsOutNormalizer', 'DevmeSdk\\Model\\GetCurrencyExchangeRateOut' => 'DevmeSdk\\Normalizer\\GetCurrencyExchangeRateOutNormalizer', 'DevmeSdk\\Model\\GetDomainWhoisOut' => 'DevmeSdk\\Normalizer\\GetDomainWhoisOutNormalizer', 'DevmeSdk\\Model\\GetEmailDetailsOut' => 'DevmeSdk\\Normalizer\\GetEmailDetailsOutNormalizer', 'DevmeSdk\\Model\\GetIpDetailsCityOut' => 'DevmeSdk\\Normalizer\\GetIpDetailsCityOutNormalizer', 'DevmeSdk\\Model\\GetIpDetailsOut' => 'DevmeSdk\\Normalizer\\GetIpDetailsOutNormalizer', 'DevmeSdk\\Model\\GetPhoneDetailsOut' => 'DevmeSdk\\Normalizer\\GetPhoneDetailsOutNormalizer', 'DevmeSdk\\Model\\HttpErrorOut' => 'DevmeSdk\\Normalizer\\HttpErrorOutNormalizer', 'DevmeSdk\\Model\\ListCountriesItem' => 'DevmeSdk\\Normalizer\\ListCountriesItemNormalizer', 'DevmeSdk\\Model\\ListCountriesOut' => 'DevmeSdk\\Normalizer\\ListCountriesOutNormalizer', 'DevmeSdk\\Model\\ListCurrenciesItem' => 'DevmeSdk\\Normalizer\\ListCurrenciesItemNormalizer', 'DevmeSdk\\Model\\ListCurrenciesOut' => 'DevmeSdk\\Normalizer\\ListCurrenciesOutNormalizer', 'DevmeSdk\\Model\\WhoAmIOut' => 'DevmeSdk\\Normalizer\\WhoAmIOutNormalizer', '\\Jane\\Component\\JsonSchemaRuntime\\Reference' => '\\DevmeSdk\\Runtime\\Normalizer\\ReferenceNormalizer'), $normalizersCache = array();
     /**
      * @return bool
      */

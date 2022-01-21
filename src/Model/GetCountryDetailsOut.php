@@ -1,6 +1,6 @@
 <?php
 
-namespace Devme\Model;
+namespace DevmeSdk\Model;
 
 class GetCountryDetailsOut
 {

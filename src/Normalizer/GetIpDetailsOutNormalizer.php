@@ -1,9 +1,9 @@
 <?php
 
-namespace Devme\Normalizer;
+namespace DevmeSdk\Normalizer;
 
 use Jane\Component\JsonSchemaRuntime\Reference;
-use Devme\Runtime\Normalizer\CheckArray;
+use DevmeSdk\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -11,7 +11,6 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-
 class GetIpDetailsOutNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
     use DenormalizerAwareTrait;
@@ -22,11 +21,11 @@ class GetIpDetailsOutNormalizer implements DenormalizerInterface, NormalizerInte
      */
     public function supportsDenormalization($data, $type, $format = null)
     {
-        return $type === 'Devme\\Model\\GetIpDetailsOut';
+        return $type === 'DevmeSdk\\Model\\GetIpDetailsOut';
     }
     public function supportsNormalization($data, $format = null)
     {
-        return is_object($data) && get_class($data) === 'Devme\\Model\\GetIpDetailsOut';
+        return is_object($data) && get_class($data) === 'DevmeSdk\\Model\\GetIpDetailsOut';
     }
     /**
      * @return mixed
@@ -39,7 +38,7 @@ class GetIpDetailsOutNormalizer implements DenormalizerInterface, NormalizerInte
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \Devme\Model\GetIpDetailsOut();
+        $object = new \DevmeSdk\Model\GetIpDetailsOut();
         if (null === $data || false === \is_array($data)) {
             return $object;
         }
@@ -59,7 +58,7 @@ class GetIpDetailsOutNormalizer implements DenormalizerInterface, NormalizerInte
             $object->setAso($data['aso']);
         }
         if (\array_key_exists('city', $data)) {
-            $object->setCity($this->denormalizer->denormalize($data['city'], 'Devme\\Model\\GetIpDetailsCityOut', 'json', $context));
+            $object->setCity($this->denormalizer->denormalize($data['city'], 'DevmeSdk\\Model\\GetIpDetailsCityOut', 'json', $context));
         }
         return $object;
     }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Devme\Normalizer;
+namespace DevmeSdk\Normalizer;
 
 use Jane\Component\JsonSchemaRuntime\Reference;
-use Devme\Runtime\Normalizer\CheckArray;
+use DevmeSdk\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -11,7 +11,6 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-
 class ListCountriesOutNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
     use DenormalizerAwareTrait;
@@ -22,11 +21,11 @@ class ListCountriesOutNormalizer implements DenormalizerInterface, NormalizerInt
      */
     public function supportsDenormalization($data, $type, $format = null)
     {
-        return $type === 'Devme\\Model\\ListCountriesOut';
+        return $type === 'DevmeSdk\\Model\\ListCountriesOut';
     }
     public function supportsNormalization($data, $format = null)
     {
-        return is_object($data) && get_class($data) === 'Devme\\Model\\ListCountriesOut';
+        return is_object($data) && get_class($data) === 'DevmeSdk\\Model\\ListCountriesOut';
     }
     /**
      * @return mixed
@@ -39,7 +38,7 @@ class ListCountriesOutNormalizer implements DenormalizerInterface, NormalizerInt
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \Devme\Model\ListCountriesOut();
+        $object = new \DevmeSdk\Model\ListCountriesOut();
         if (null === $data || false === \is_array($data)) {
             return $object;
         }
@@ -52,7 +51,7 @@ class ListCountriesOutNormalizer implements DenormalizerInterface, NormalizerInt
         if (\array_key_exists('list', $data)) {
             $values = array();
             foreach ($data['list'] as $value) {
-                $values[] = $this->denormalizer->denormalize($value, 'Devme\\Model\\ListCountriesItem', 'json', $context);
+                $values[] = $this->denormalizer->denormalize($value, 'DevmeSdk\\Model\\ListCountriesItem', 'json', $context);
             }
             $object->setList($values);
         }

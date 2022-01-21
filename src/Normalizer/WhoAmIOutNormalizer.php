@@ -1,9 +1,9 @@
 <?php
 
-namespace Devme\Normalizer;
+namespace DevmeSdk\Normalizer;
 
 use Jane\Component\JsonSchemaRuntime\Reference;
-use Devme\Runtime\Normalizer\CheckArray;
+use DevmeSdk\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -11,7 +11,6 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-
 class WhoAmIOutNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
     use DenormalizerAwareTrait;
@@ -22,11 +21,11 @@ class WhoAmIOutNormalizer implements DenormalizerInterface, NormalizerInterface,
      */
     public function supportsDenormalization($data, $type, $format = null)
     {
-        return $type === 'Devme\\Model\\WhoAmIOut';
+        return $type === 'DevmeSdk\\Model\\WhoAmIOut';
     }
     public function supportsNormalization($data, $format = null)
     {
-        return is_object($data) && get_class($data) === 'Devme\\Model\\WhoAmIOut';
+        return is_object($data) && get_class($data) === 'DevmeSdk\\Model\\WhoAmIOut';
     }
     /**
      * @return mixed
@@ -39,7 +38,7 @@ class WhoAmIOutNormalizer implements DenormalizerInterface, NormalizerInterface,
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \Devme\Model\WhoAmIOut();
+        $object = new \DevmeSdk\Model\WhoAmIOut();
         if (null === $data || false === \is_array($data)) {
             return $object;
         }

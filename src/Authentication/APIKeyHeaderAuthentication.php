@@ -1,6 +1,6 @@
 <?php
 
-namespace Devme\Authentication;
+namespace DevmeSdk\Authentication;
 
 class APIKeyHeaderAuthentication implements \Jane\Component\OpenApiRuntime\Client\AuthenticationPlugin
 {

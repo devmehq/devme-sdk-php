@@ -1,6 +1,6 @@
 <?php
 
-namespace Devme\Exception;
+namespace DevmeSdk\Exception;
 
 class UnauthorizedException extends \RuntimeException implements ClientException
 {

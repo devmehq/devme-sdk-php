@@ -1,8 +1,8 @@
 <?php
 
-namespace Devme\Endpoint;
+namespace DevmeSdk\Endpoint;
 
-class V1ConvertCurrency extends \Devme\Runtime\Client\BaseEndpoint implements \Devme\Runtime\Client\Endpoint
+class V1ConvertCurrency extends \DevmeSdk\Runtime\Client\BaseEndpoint implements \DevmeSdk\Runtime\Client\Endpoint
 {
     /**
      * Convert currency to another currency
@@ -17,7 +17,7 @@ class V1ConvertCurrency extends \Devme\Runtime\Client\BaseEndpoint implements \D
     {
         $this->queryParameters = $queryParameters;
     }
-    use \Devme\Runtime\Client\EndpointTrait;
+    use \DevmeSdk\Runtime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'GET';
@@ -48,21 +48,21 @@ class V1ConvertCurrency extends \Devme\Runtime\Client\BaseEndpoint implements \D
     /**
      * {@inheritdoc}
      *
-     * @throws \Devme\Exception\V1ConvertCurrencyBadRequestException
-     * @throws \Devme\Exception\V1ConvertCurrencyUnauthorizedException
+     * @throws \DevmeSdk\Exception\V1ConvertCurrencyBadRequestException
+     * @throws \DevmeSdk\Exception\V1ConvertCurrencyUnauthorizedException
      *
-     * @return null|\Devme\Model\ConvertCurrencyOut
+     * @return null|\DevmeSdk\Model\ConvertCurrencyOut
      */
     protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (is_null($contentType) === false && (200 === $status && mb_strpos($contentType, 'application/json') !== false)) {
-            return $serializer->deserialize($body, 'Devme\\Model\\ConvertCurrencyOut', 'json');
+            return $serializer->deserialize($body, 'DevmeSdk\\Model\\ConvertCurrencyOut', 'json');
         }
         if (is_null($contentType) === false && (400 === $status && mb_strpos($contentType, 'application/json') !== false)) {
-            throw new \Devme\Exception\V1ConvertCurrencyBadRequestException($serializer->deserialize($body, 'Devme\\Model\\HttpErrorOut', 'json'));
+            throw new \DevmeSdk\Exception\V1ConvertCurrencyBadRequestException($serializer->deserialize($body, 'DevmeSdk\\Model\\HttpErrorOut', 'json'));
         }
         if (is_null($contentType) === false && (401 === $status && mb_strpos($contentType, 'application/json') !== false)) {
-            throw new \Devme\Exception\V1ConvertCurrencyUnauthorizedException($serializer->deserialize($body, 'Devme\\Model\\HttpErrorOut', 'json'));
+            throw new \DevmeSdk\Exception\V1ConvertCurrencyUnauthorizedException($serializer->deserialize($body, 'DevmeSdk\\Model\\HttpErrorOut', 'json'));
         }
     }
     public function getAuthenticationScopes() : array

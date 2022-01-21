@@ -1,6 +1,6 @@
 <?php
 
-namespace Devme\Runtime\Normalizer;
+namespace DevmeSdk\Runtime\Normalizer;
 
 trait CheckArray
 {

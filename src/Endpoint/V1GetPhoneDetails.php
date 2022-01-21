@@ -1,8 +1,8 @@
 <?php
 
-namespace Devme\Endpoint;
+namespace DevmeSdk\Endpoint;
 
-class V1GetPhoneDetails extends \Devme\Runtime\Client\BaseEndpoint implements \Devme\Runtime\Client\Endpoint
+class V1GetPhoneDetails extends \DevmeSdk\Runtime\Client\BaseEndpoint implements \DevmeSdk\Runtime\Client\Endpoint
 {
     /**
      * Get phone validation details
@@ -15,7 +15,7 @@ class V1GetPhoneDetails extends \Devme\Runtime\Client\BaseEndpoint implements \D
     {
         $this->queryParameters = $queryParameters;
     }
-    use \Devme\Runtime\Client\EndpointTrait;
+    use \DevmeSdk\Runtime\Client\EndpointTrait;
     public function getMethod() : string
     {
         return 'GET';
@@ -44,21 +44,21 @@ class V1GetPhoneDetails extends \Devme\Runtime\Client\BaseEndpoint implements \D
     /**
      * {@inheritdoc}
      *
-     * @throws \Devme\Exception\V1GetPhoneDetailsBadRequestException
-     * @throws \Devme\Exception\V1GetPhoneDetailsUnauthorizedException
+     * @throws \DevmeSdk\Exception\V1GetPhoneDetailsBadRequestException
+     * @throws \DevmeSdk\Exception\V1GetPhoneDetailsUnauthorizedException
      *
-     * @return null|\Devme\Model\GetPhoneDetailsOut
+     * @return null|\DevmeSdk\Model\GetPhoneDetailsOut
      */
     protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
         if (is_null($contentType) === false && (200 === $status && mb_strpos($contentType, 'application/json') !== false)) {
-            return $serializer->deserialize($body, 'Devme\\Model\\GetPhoneDetailsOut', 'json');
+            return $serializer->deserialize($body, 'DevmeSdk\\Model\\GetPhoneDetailsOut', 'json');
         }
         if (is_null($contentType) === false && (400 === $status && mb_strpos($contentType, 'application/json') !== false)) {
-            throw new \Devme\Exception\V1GetPhoneDetailsBadRequestException($serializer->deserialize($body, 'Devme\\Model\\HttpErrorOut', 'json'));
+            throw new \DevmeSdk\Exception\V1GetPhoneDetailsBadRequestException($serializer->deserialize($body, 'DevmeSdk\\Model\\HttpErrorOut', 'json'));
         }
         if (is_null($contentType) === false && (401 === $status && mb_strpos($contentType, 'application/json') !== false)) {
-            throw new \Devme\Exception\V1GetPhoneDetailsUnauthorizedException($serializer->deserialize($body, 'Devme\\Model\\HttpErrorOut', 'json'));
+            throw new \DevmeSdk\Exception\V1GetPhoneDetailsUnauthorizedException($serializer->deserialize($body, 'DevmeSdk\\Model\\HttpErrorOut', 'json'));
         }
     }
     public function getAuthenticationScopes() : array

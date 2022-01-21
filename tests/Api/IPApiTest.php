@@ -19,7 +19,7 @@
 
 namespace Api;
 
-use Devme\Authentication\APIKeyHeaderAuthentication;
+use DevmeSdk\Authentication\APIKeyHeaderAuthentication;
 use Jane\Component\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
 use PHPUnit\Framework\TestCase;
 
@@ -56,7 +56,7 @@ class IPApiTest extends TestCase
     {
         if (!$this->apiClient) {
             $authenticationRegistry = new AuthenticationRegistry([new APIKeyHeaderAuthentication('demo-key')]);
-            $this->apiClient = \Devme\Client::create(null, [$authenticationRegistry]);
+            $this->apiClient = \DevmeSdk\Client::create(null, [$authenticationRegistry]);
         }
     }
 

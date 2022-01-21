@@ -1,6 +1,6 @@
 <?php
 
-namespace Devme\Exception;
+namespace DevmeSdk\Exception;
 
 interface ApiException extends \Throwable
 {

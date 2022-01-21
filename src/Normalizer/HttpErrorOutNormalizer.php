@@ -1,9 +1,9 @@
 <?php
 
-namespace Devme\Normalizer;
+namespace DevmeSdk\Normalizer;
 
 use Jane\Component\JsonSchemaRuntime\Reference;
-use Devme\Runtime\Normalizer\CheckArray;
+use DevmeSdk\Runtime\Normalizer\CheckArray;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
@@ -11,7 +11,6 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-
 class HttpErrorOutNormalizer implements DenormalizerInterface, NormalizerInterface, DenormalizerAwareInterface, NormalizerAwareInterface
 {
     use DenormalizerAwareTrait;
@@ -22,11 +21,11 @@ class HttpErrorOutNormalizer implements DenormalizerInterface, NormalizerInterfa
      */
     public function supportsDenormalization($data, $type, $format = null)
     {
-        return $type === 'Devme\\Model\\HttpErrorOut';
+        return $type === 'DevmeSdk\\Model\\HttpErrorOut';
     }
     public function supportsNormalization($data, $format = null)
     {
-        return is_object($data) && get_class($data) === 'Devme\\Model\\HttpErrorOut';
+        return is_object($data) && get_class($data) === 'DevmeSdk\\Model\\HttpErrorOut';
     }
     /**
      * @return mixed
@@ -39,7 +38,7 @@ class HttpErrorOutNormalizer implements DenormalizerInterface, NormalizerInterfa
         if (isset($data['$recursiveRef'])) {
             return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
-        $object = new \Devme\Model\HttpErrorOut();
+        $object = new \DevmeSdk\Model\HttpErrorOut();
         if (null === $data || false === \is_array($data)) {
             return $object;
         }
@@ -55,7 +54,7 @@ class HttpErrorOutNormalizer implements DenormalizerInterface, NormalizerInterfa
         if (\array_key_exists('errors', $data)) {
             $values = array();
             foreach ($data['errors'] as $value) {
-                $values[] = $this->denormalizer->denormalize($value, 'Devme\\Model\\Error', 'json', $context);
+                $values[] = $this->denormalizer->denormalize($value, 'DevmeSdk\\Model\\Error', 'json', $context);
             }
             $object->setErrors($values);
         }

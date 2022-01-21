@@ -22,12 +22,13 @@ composer require devmehq/sdk-php
 
 ### Currency API Conversion
 ```php
-$config = \Devme\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'demo-key');
-$currencyApi = new \Devme\Api\CurrencyApi(
-    new \GuzzleHttp\Client(),
-    $config
-);
-$currencyApi->v1ConvertCurrency('USD', 'EUR', 10);
+use Devme\Authentication\APIKeyHeaderAuthentication;
+use Jane\Component\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
+
+$authenticationRegistry = new AuthenticationRegistry([new APIKeyHeaderAuthentication('demo-key')]);
+$apiClient = \Devme\Client::create(null, [$authenticationRegistry]);
+
+$apiClient->v1ConvertCurrency(['from' => 'USD', 'to' => 'EUR', 'amount' => 10]);
 
 // {
 //   convertedAmount: 8.819,
@@ -42,12 +43,13 @@ $currencyApi->v1ConvertCurrency('USD', 'EUR', 10);
 
 ### IP API Geolocation, IP2Location, IP Data
 ```php
-$config = \Devme\Configuration::getDefaultConfiguration()->setApiKey('x-api-key', 'demo-key');
-$ipApi = new \Devme\Api\IPApi(
-    new \GuzzleHttp\Client(),
-    $config
-);
-$ipApi->v1GetIpDetails('52.45.23.11');
+use Devme\Authentication\APIKeyHeaderAuthentication;
+use Jane\Component\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
+
+$authenticationRegistry = new AuthenticationRegistry([new APIKeyHeaderAuthentication('demo-key')]);
+$apiClient = \Devme\Client::create(null, [$authenticationRegistry]);
+
+$apiClient->v1GetIpDetails([ 'ip' => '52.45.23.11']);
 
 // {
 //   asn: 14618,

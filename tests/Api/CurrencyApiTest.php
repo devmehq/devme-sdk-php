@@ -31,7 +31,7 @@ use PHPUnit\Framework\TestCase;
  */
 class CurrencyApiTest extends TestCase
 {
-    public $currencyApi;
+    public $apiClient;
 
     /**
      * Setup before running any test cases
@@ -52,9 +52,9 @@ class CurrencyApiTest extends TestCase
      */
     public function setUp(): void
     {
-        if (!$this->currencyApi) {
+        if (!$this->apiClient) {
             $authenticationRegistry = new AuthenticationRegistry([new APIKeyHeaderAuthentication('demo-key')]);
-            $this->currencyApi = \Devme\Client::create(null, [$authenticationRegistry]);
+            $this->apiClient = \Devme\Client::create(null, [$authenticationRegistry]);
         }
     }
 
@@ -71,7 +71,7 @@ class CurrencyApiTest extends TestCase
      */
     public function testsV1ConvertCurrency(): void
     {
-        $result = $this->currencyApi->v1ConvertCurrency(['from' => 'USD', 'to' => 'EUR', 'amount' => 10]);
+        $result = $this->apiClient->v1ConvertCurrency(['from' => 'USD', 'to' => 'EUR', 'amount' => 10]);
         $this->assertEquals('USD', $result->getFrom());
         $this->assertEquals('EUR', $result->getTo());
     }
@@ -83,7 +83,7 @@ class CurrencyApiTest extends TestCase
      */
     public function testsV1GetCurrencyDetails(): void
     {
-        $result = $this->currencyApi->v1GetCurrencyDetails(['code' => 'USD']);
+        $result = $this->apiClient->v1GetCurrencyDetails(['code' => 'USD']);
         $this->assertEquals('USD', $result->getCode());
     }
 

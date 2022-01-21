@@ -19,6 +19,8 @@
 
 namespace Api;
 
+use Devme\Authentication\APIKeyHeaderAuthentication;
+use Jane\Component\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -30,6 +32,8 @@ use PHPUnit\Framework\TestCase;
  */
 class IPApiTest extends TestCase
 {
+
+    public $apiClient;
 
     /**
      * Setup before running any test cases
@@ -50,6 +54,10 @@ class IPApiTest extends TestCase
      */
     public function setUp(): void
     {
+        if (!$this->apiClient) {
+            $authenticationRegistry = new AuthenticationRegistry([new APIKeyHeaderAuthentication('demo-key')]);
+            $this->apiClient = \Devme\Client::create(null, [$authenticationRegistry]);
+        }
     }
 
     /**
@@ -66,7 +74,10 @@ class IPApiTest extends TestCase
      */
     public function testsV1GetIpDetails(): void
     {
-        // TODO: implement
-        $this->markTestIncomplete('Not implemented');
+        $result = $this->apiClient->v1GetIpDetails([ 'ip' => '52.45.23.11']);
+        $this->assertSame($result->getCountryCode(), 'US');
+        $this->assertSame($result->getIp(), '52.45.23.11');
+        $this->assertSame($result->getAso(), 'AMAZON-AES');
+        $this->assertSame($result->getAsn(), '14618');
     }
 }

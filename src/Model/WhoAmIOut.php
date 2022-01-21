@@ -5,43 +5,43 @@ namespace DevmeSdk\Model;
 class WhoAmIOut
 {
     /**
-     * 
+     *
      *
      * @var string
      */
     protected $userId;
     /**
-     * 
+     *
      *
      * @var string
      */
     protected $email;
     /**
-     * 
+     *
      *
      * @var string
      */
     protected $username;
     /**
-     * 
+     *
      *
      * @var string
      */
     protected $reqIpAddress;
     /**
-     * 
+     *
      *
      * @var string
      */
     protected $reqIpCountry;
     /**
-     * 
+     *
      *
      * @var string
      */
     protected $reqUserAgent;
     /**
-     * 
+     *
      *
      * @return string
      */
@@ -50,7 +50,7 @@ class WhoAmIOut
         return $this->userId;
     }
     /**
-     * 
+     *
      *
      * @param string $userId
      *
@@ -62,7 +62,7 @@ class WhoAmIOut
         return $this;
     }
     /**
-     * 
+     *
      *
      * @return string
      */
@@ -71,7 +71,7 @@ class WhoAmIOut
         return $this->email;
     }
     /**
-     * 
+     *
      *
      * @param string $email
      *
@@ -83,7 +83,7 @@ class WhoAmIOut
         return $this;
     }
     /**
-     * 
+     *
      *
      * @return string
      */
@@ -92,7 +92,7 @@ class WhoAmIOut
         return $this->username;
     }
     /**
-     * 
+     *
      *
      * @param string $username
      *
@@ -104,7 +104,7 @@ class WhoAmIOut
         return $this;
     }
     /**
-     * 
+     *
      *
      * @return string
      */
@@ -113,7 +113,7 @@ class WhoAmIOut
         return $this->reqIpAddress;
     }
     /**
-     * 
+     *
      *
      * @param string $reqIpAddress
      *
@@ -125,7 +125,7 @@ class WhoAmIOut
         return $this;
     }
     /**
-     * 
+     *
      *
      * @return string
      */
@@ -134,7 +134,7 @@ class WhoAmIOut
         return $this->reqIpCountry;
     }
     /**
-     * 
+     *
      *
      * @param string $reqIpCountry
      *
@@ -146,7 +146,7 @@ class WhoAmIOut
         return $this;
     }
     /**
-     * 
+     *
      *
      * @return string
      */
@@ -155,7 +155,7 @@ class WhoAmIOut
         return $this->reqUserAgent;
     }
     /**
-     * 
+     *
      *
      * @param string $reqUserAgent
      *

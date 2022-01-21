@@ -4,6 +4,7 @@ namespace DevmeSdk\Runtime\Normalizer;
 
 use Jane\Component\JsonSchemaRuntime\Reference;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+
 class ReferenceNormalizer implements NormalizerInterface
 {
     /**

@@ -5,6 +5,18 @@ namespace DevmeSdk;
 class Client extends \DevmeSdk\Runtime\Client\Client
 {
     /**
+     * Capture a screenshot of a URL
+     *
+     * @param \DevmeSdk\Model\CaptureUrlScreenshotIn $requestBody
+     * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
+     *
+     * @return null|\DevmeSdk\Model\CaptureUrlScreenshotOut|\Psr\Http\Message\ResponseInterface
+     */
+    public function v1CaptureUrlScreenshot(\DevmeSdk\Model\CaptureUrlScreenshotIn $requestBody, string $fetch = self::FETCH_OBJECT)
+    {
+        return $this->executeEndpoint(new \DevmeSdk\Endpoint\V1CaptureUrlScreenshot($requestBody), $fetch);
+    }
+    /**
      * Convert currency to another currency
      *
      * @param array $queryParameters {
@@ -21,6 +33,32 @@ class Client extends \DevmeSdk\Runtime\Client\Client
     public function v1ConvertCurrency(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
         return $this->executeEndpoint(new \DevmeSdk\Endpoint\V1ConvertCurrency($queryParameters), $fetch);
+    }
+    /**
+     * Create a short URL from a long URL
+     *
+     * @param \DevmeSdk\Model\CreateShortUrlIn $requestBody
+     * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
+     * @throws \DevmeSdk\Exception\V1CreateShortUrlBadRequestException
+     * @throws \DevmeSdk\Exception\V1CreateShortUrlUnauthorizedException
+     *
+     * @return null|\DevmeSdk\Model\CreateShortUrlOut|\Psr\Http\Message\ResponseInterface
+     */
+    public function v1CreateShortUrl(\DevmeSdk\Model\CreateShortUrlIn $requestBody, string $fetch = self::FETCH_OBJECT)
+    {
+        return $this->executeEndpoint(new \DevmeSdk\Endpoint\V1CreateShortUrl($requestBody), $fetch);
+    }
+    /**
+     * Create a short URL from a long URL
+     *
+     * @param \DevmeSdk\Model\DeleteShortUrlIn $requestBody
+     * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
+     *
+     * @return null|\DevmeSdk\Model\DeleteShortUrlOut|\Psr\Http\Message\ResponseInterface
+     */
+    public function v1DeleteShortUrl(\DevmeSdk\Model\DeleteShortUrlIn $requestBody, string $fetch = self::FETCH_OBJECT)
+    {
+        return $this->executeEndpoint(new \DevmeSdk\Endpoint\V1DeleteShortUrl($requestBody), $fetch);
     }
     /**
      * Get country facts and information
@@ -83,6 +121,7 @@ class Client extends \DevmeSdk\Runtime\Client\Client
      *
      * @param array $queryParameters {
      *     @var string $domain domain - Domain name to get details for
+     *     @var string $parseWhoisToJson parseWhoisToJson - Parse WHOIS to JSON
      * }
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      * @throws \DevmeSdk\Exception\V1GetDomainWhoisBadRequestException
@@ -101,6 +140,7 @@ class Client extends \DevmeSdk\Runtime\Client\Client
      *     @var string $email email - email address
      *     @var bool $verifyMx verifyMx - verify domain dns for MX record
      *     @var bool $verifySmtp verifySmtp - verify mailbox with SMTP Connect and Reply
+     *     @var string $timeout timeout - timeout in milliseconds max 10000 (10 seconds)
      * }
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
      * @throws \DevmeSdk\Exception\V1GetEmailDetailsBadRequestException
@@ -143,6 +183,35 @@ class Client extends \DevmeSdk\Runtime\Client\Client
     public function v1GetPhoneDetails(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
         return $this->executeEndpoint(new \DevmeSdk\Endpoint\V1GetPhoneDetails($queryParameters), $fetch);
+    }
+    /**
+     * Create a short URL from a long URL
+     *
+     * @param array $queryParameters {
+     *     @var string $sid sid - short url sid
+     *     @var string $_id _id - short url id
+     * }
+     * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
+     *
+     * @return null|\Psr\Http\Message\ResponseInterface
+     */
+    public function v1GetShortUrlDetails(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
+    {
+        return $this->executeEndpoint(new \DevmeSdk\Endpoint\V1GetShortUrlDetails($queryParameters), $fetch);
+    }
+    /**
+     * Get Text From Image with OCR
+     *
+     * @param \DevmeSdk\Model\GetTextFromImageIn $requestBody
+     * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
+     * @throws \DevmeSdk\Exception\V1GetTextFromImageBadRequestException
+     * @throws \DevmeSdk\Exception\V1GetTextFromImageUnauthorizedException
+     *
+     * @return null|\DevmeSdk\Model\GetTextFromImageOut|\Psr\Http\Message\ResponseInterface
+     */
+    public function v1GetTextFromImage(\DevmeSdk\Model\GetTextFromImageIn $requestBody, string $fetch = self::FETCH_OBJECT)
+    {
+        return $this->executeEndpoint(new \DevmeSdk\Endpoint\V1GetTextFromImage($requestBody), $fetch);
     }
     /**
      * Get list of all countries
@@ -188,6 +257,30 @@ class Client extends \DevmeSdk\Runtime\Client\Client
     public function v1ListCurrencies(array $queryParameters = array(), string $fetch = self::FETCH_OBJECT)
     {
         return $this->executeEndpoint(new \DevmeSdk\Endpoint\V1ListCurrencies($queryParameters), $fetch);
+    }
+    /**
+     * Scrape metadata, OpenGraph and Html from a URL
+     *
+     * @param \DevmeSdk\Model\ScrapeUrlDataIn $requestBody
+     * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
+     *
+     * @return null|\DevmeSdk\Model\ScrapeUrlDataOut|\Psr\Http\Message\ResponseInterface
+     */
+    public function v1ScrapeUrlData(\DevmeSdk\Model\ScrapeUrlDataIn $requestBody, string $fetch = self::FETCH_OBJECT)
+    {
+        return $this->executeEndpoint(new \DevmeSdk\Endpoint\V1ScrapeUrlData($requestBody), $fetch);
+    }
+    /**
+     * Create a short URL from a long URL
+     *
+     * @param \DevmeSdk\Model\UpdateShortUrlIn $requestBody
+     * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)
+     *
+     * @return null|\DevmeSdk\Model\UpdateShortUrlOut|\Psr\Http\Message\ResponseInterface
+     */
+    public function v1UpdateShortUrl(\DevmeSdk\Model\UpdateShortUrlIn $requestBody, string $fetch = self::FETCH_OBJECT)
+    {
+        return $this->executeEndpoint(new \DevmeSdk\Endpoint\V1UpdateShortUrl($requestBody), $fetch);
     }
     /**
      * @param string $fetch Fetch mode to use (can be OBJECT or RESPONSE)

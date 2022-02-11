@@ -11,11 +11,17 @@ class GetDomainWhoisOut
      */
     protected $domain;
     /**
-     * Domain details
+     * WHOIS text
      *
      * @var string
      */
-    protected $details;
+    protected $whoisText;
+    /**
+     * WHOIS JSON
+     *
+     * @var mixed
+     */
+    protected $whoisJson;
     /**
      * Domain name
      *
@@ -38,24 +44,45 @@ class GetDomainWhoisOut
         return $this;
     }
     /**
-     * Domain details
+     * WHOIS text
      *
      * @return string
      */
-    public function getDetails() : string
+    public function getWhoisText() : string
     {
-        return $this->details;
+        return $this->whoisText;
     }
     /**
-     * Domain details
+     * WHOIS text
      *
-     * @param string $details
+     * @param string $whoisText
      *
      * @return self
      */
-    public function setDetails(string $details) : self
+    public function setWhoisText(string $whoisText) : self
     {
-        $this->details = $details;
+        $this->whoisText = $whoisText;
+        return $this;
+    }
+    /**
+     * WHOIS JSON
+     *
+     * @return mixed
+     */
+    public function getWhoisJson()
+    {
+        return $this->whoisJson;
+    }
+    /**
+     * WHOIS JSON
+     *
+     * @param mixed $whoisJson
+     *
+     * @return self
+     */
+    public function setWhoisJson($whoisJson) : self
+    {
+        $this->whoisJson = $whoisJson;
         return $this;
     }
 }

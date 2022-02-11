@@ -11,6 +11,7 @@ class V1GetEmailDetails extends \DevmeSdk\Runtime\Client\BaseEndpoint implements
      *     @var string $email email - email address
      *     @var bool $verifyMx verifyMx - verify domain dns for MX record
      *     @var bool $verifySmtp verifySmtp - verify mailbox with SMTP Connect and Reply
+     *     @var numeric $timeout timeout - timeout in milliseconds max 10000 (10 seconds)
      * }
      */
     public function __construct(array $queryParameters = array())
@@ -37,12 +38,13 @@ class V1GetEmailDetails extends \DevmeSdk\Runtime\Client\BaseEndpoint implements
     protected function getQueryOptionsResolver() : \Symfony\Component\OptionsResolver\OptionsResolver
     {
         $optionsResolver = parent::getQueryOptionsResolver();
-        $optionsResolver->setDefined(array('email', 'verifyMx', 'verifySmtp'));
+        $optionsResolver->setDefined(array('email', 'verifyMx', 'verifySmtp', 'timeout'));
         $optionsResolver->setRequired(array('email'));
         $optionsResolver->setDefaults(array());
         $optionsResolver->setAllowedTypes('email', array('string'));
         $optionsResolver->setAllowedTypes('verifyMx', array('bool'));
         $optionsResolver->setAllowedTypes('verifySmtp', array('bool'));
+        $optionsResolver->setAllowedTypes('timeout', array('numeric'));
         return $optionsResolver;
     }
     /**

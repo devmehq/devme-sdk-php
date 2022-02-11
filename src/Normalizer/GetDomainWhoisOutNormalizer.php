@@ -46,8 +46,11 @@ class GetDomainWhoisOutNormalizer implements DenormalizerInterface, NormalizerIn
         if (\array_key_exists('domain', $data)) {
             $object->setDomain($data['domain']);
         }
-        if (\array_key_exists('details', $data)) {
-            $object->setDetails($data['details']);
+        if (\array_key_exists('whoisText', $data)) {
+            $object->setWhoisText($data['whoisText']);
+        }
+        if (\array_key_exists('whoisJson', $data)) {
+            $object->setWhoisJson($data['whoisJson']);
         }
         return $object;
     }
@@ -60,8 +63,11 @@ class GetDomainWhoisOutNormalizer implements DenormalizerInterface, NormalizerIn
         if (null !== $object->getDomain()) {
             $data['domain'] = $object->getDomain();
         }
-        if (null !== $object->getDetails()) {
-            $data['details'] = $object->getDetails();
+        if (null !== $object->getWhoisText()) {
+            $data['whoisText'] = $object->getWhoisText();
+        }
+        if (null !== $object->getWhoisJson()) {
+            $data['whoisJson'] = $object->getWhoisJson();
         }
         return $data;
     }

@@ -69,6 +69,34 @@ $apiClient->v1GetIpDetails([ 'ip' => '52.45.23.11']);
 
 ```
 
+### Avanced Email Validation API
+```php
+use DevmeSdk\Authentication\APIKeyHeaderAuthentication;
+use Jane\Component\OpenApiRuntime\Client\Plugin\AuthenticationRegistry;
+
+$authenticationRegistry = new AuthenticationRegistry([new APIKeyHeaderAuthentication('demo-key')]);
+$apiClient = \DevmeSdk\Client::create(null, [$authenticationRegistry]);
+
+$apiClient->v1GetEmailDetails([ 'ip' => '52.45.23.11']);
+
+// {
+//   asn: 14618,
+//   aso: 'AMAZON-AES',
+//   city: {
+//   accuracyRadius: 1000,
+//     latitude: 39.0469,
+//     longitude: -77.4903,
+//     metroCode: 511,
+//     name: 'Ashburn',
+//     timeZone: 'America/New_York',
+//   },
+//   countryCode: 'US',
+//   ip: '52.45.23.11',
+//   registeredCountryCode: 'US',
+// }
+
+```
+
 
 ## Testing
 ```shell

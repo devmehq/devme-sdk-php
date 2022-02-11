@@ -9,6 +9,7 @@ class V1GetDomainWhois extends \DevmeSdk\Runtime\Client\BaseEndpoint implements 
      *
      * @param array $queryParameters {
      *     @var string $domain domain - Domain name to get details for
+     *     @var string $parseWhoisToJson parseWhoisToJson - Parse WHOIS to JSON
      * }
      */
     public function __construct(array $queryParameters = array())
@@ -35,10 +36,11 @@ class V1GetDomainWhois extends \DevmeSdk\Runtime\Client\BaseEndpoint implements 
     protected function getQueryOptionsResolver() : \Symfony\Component\OptionsResolver\OptionsResolver
     {
         $optionsResolver = parent::getQueryOptionsResolver();
-        $optionsResolver->setDefined(array('domain'));
+        $optionsResolver->setDefined(array('domain', 'parseWhoisToJson'));
         $optionsResolver->setRequired(array());
         $optionsResolver->setDefaults(array());
         $optionsResolver->setAllowedTypes('domain', array('string'));
+        $optionsResolver->setAllowedTypes('parseWhoisToJson', array('string'));
         return $optionsResolver;
     }
     /**

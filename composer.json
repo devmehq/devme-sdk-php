@@ -84,9 +84,9 @@
     "jane-php/open-api-runtime": "^7.1"
   },
   "require-dev": {
-    "friendsofphp/php-cs-fixer": "3.18.0",
+    "friendsofphp/php-cs-fixer": "3.19.0",
     "overtrue/phplint": "9.0.4",
-    "phpstan/phpstan": "1.10.19",
+    "phpstan/phpstan": "1.10.21",
     "phpunit/phpunit": "10.2.2",
     "squizlabs/php_codesniffer": "3.7.2"
   }

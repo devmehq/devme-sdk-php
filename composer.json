@@ -81,7 +81,7 @@
     "ext-mbstring": "*",
     "guzzlehttp/guzzle": "^7",
     "guzzlehttp/psr7": "^1 || ^2",
-    "jane-php/open-api-runtime": "^7.1"
+    "jane-php/open-api-runtime": "^8.0"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "3.75.0",
